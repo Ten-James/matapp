@@ -1,10 +1,10 @@
-import { context } from "../../App";
-import { useContext, useEffect, useState, useRef, createContext } from "react";
+import { context } from "../../../App";
+import React, { useContext, useEffect, useState, useRef, createContext } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import InformationView from "./information";
-import IngredientsView from "./ingredients";
-import Navigation from "./navigation";
+import InformationView from "../information";
+import IngredientsView from "../ingredients";
+import Navigation from "../navigation";
 
 export const AdminContext = createContext();
 

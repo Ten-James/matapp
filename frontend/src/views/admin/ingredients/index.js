@@ -1,10 +1,10 @@
-import { useContext, useEffect } from "react";
-import { context } from "../../App";
-import { AdminContext } from "./admin";
+import React, { useContext, useEffect } from "react";
+import { context } from "../../../App";
+import { AdminContext } from "../main";
 
-import "../../styles/admin/ingredients.css";
+import "../../../styles/admin/ingredients.css";
 
-import { Button, Panel } from "../../components/panel";
+import { Button, Panel } from "../../../components/panel";
 
 const IngredientsView = () => {
   const { Ingredients, setIngredients, Selected, setSelected } = useContext(AdminContext);

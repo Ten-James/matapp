@@ -1,8 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
-import { useState } from "react";
+import React, { useState } from "react";
 
-import "../../styles/admin/navigation.css";
-import LogoSVG from "../../components/logo";
+import "../../../styles/admin/navigation.css";
+import LogoSVG from "../../../components/logo";
 const Navigation = ({ user }) => {
   const [Expanded, setExpanded] = useState(false);
   const location = useLocation();
@@ -66,7 +66,7 @@ const Navigation = ({ user }) => {
         />
       </div>
       <div className="logo">
-        <LogoSVG class="small" />
+        <LogoSVG type="small" />
       </div>
     </div>
   );

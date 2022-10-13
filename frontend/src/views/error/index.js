@@ -1,6 +1,6 @@
-import LogoSVG from "../components/logo";
-import { context } from "../App";
-import { useContext, useEffect } from "react";
+import LogoSVG from "../../components/logo";
+import { context } from "../../App";
+import React, { useContext, useEffect } from "react";
 const ErrorPage = () => {
   const setLoading = useContext(context).setLoading;
   useEffect(() => {

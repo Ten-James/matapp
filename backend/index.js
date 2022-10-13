@@ -5,6 +5,7 @@ import { Server } from "socket.io";
 import md5 from "md5";
 import { fileURLToPath } from "url";
 import { GetLog, Log } from "./logger.js";
+import ProcessTables from "./tables/index.js";
 
 const app = Express();
 const httpServer = createServer(app);
@@ -39,7 +40,9 @@ const sendInfo = (socket) => {
 
 io.on("connection", (socket) => {
   console.log(`new Socket ${socket.id}`);
-  //get public machine data
+
+  ProcessTables(socket);
+
   socket.on("login", ({ name, pass }) => {
     Log(socket.request.socket.remoteAddress, "login attempt");
     connection.query(
@@ -62,17 +65,6 @@ io.on("connection", (socket) => {
       if (err) throw err;
       socket.emit("branches", result);
     });
-  });
-
-  socket.on("get_ingredients", () => {
-    Log(socket.request.socket.remoteAddress, "get_ingredients");
-    connection.query(
-      "SELECT i.id, i.name, t.name as 'Category' FROM ingredients i LEFT JOIN ingredients_types t ON i.ingredient_type_id = t.id",
-      (err, result) => {
-        if (err) throw err;
-        socket.emit("ingredients", result);
-      }
-    );
   });
 
   socket.on("sql", ({ sql }) => {

@@ -1,8 +1,8 @@
-import { useRef, useContext } from "react";
+import React, { useRef, useContext } from "react";
 import { CSSTransition } from "react-transition-group";
 
-import { context } from "../App";
-import LogoSVG from "../components/logo";
+import { context } from "../../App";
+import LogoSVG from "../../components/logo";
 
 export const Loader = (props) => {
   const loading = useContext(context).loading;

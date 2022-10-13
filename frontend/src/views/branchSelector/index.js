@@ -1,8 +1,8 @@
-import LogoSVG from "../components/logo";
-import { Panel, Button } from "../components/panel";
-import { useEffect, useContext } from "react";
-import { context } from "../App";
-import { GenerateFries } from "../misc/fries";
+import LogoSVG from "../../components/logo";
+import { Panel, Button } from "../../components/panel";
+import React, { useEffect, useContext } from "react";
+import { context } from "../../App";
+import { GenerateFries } from "../../misc/fries";
 
 const BranchSelector = ({ branches }) => {
   const socket = useContext(context).socket;

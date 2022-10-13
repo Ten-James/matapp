@@ -1,7 +1,8 @@
-import "../styles/logo.css";
-const LogoSVG = (props) => {
+import React from "react";
+import { LogoContainer } from "./style";
+const LogoSVG = ({ type, ...props }) => {
   return (
-    <div className={"logo-cont" + props.class}>
+    <LogoContainer type={type}>
       <svg className="logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 562.96 337.85">
         <g id="mat-m">
           <path
@@ -55,7 +56,7 @@ const LogoSVG = (props) => {
           />
         </g>
       </svg>
-    </div>
+    </LogoContainer>
   );
 };
 export default LogoSVG;
