@@ -1,0 +1,14 @@
+{
+  "name": "matapp",
+  "version": "1.0.0",
+  "description": "Program for Restaurants",
+  "scripts": {
+    "dev": "cd MatAppClient && npm run dev & cd backend && npm run start"
+  },
+  "author": "James",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ten-James/matapp/issues"
+  },
+  "homepage": "https://github.com/Ten-James/matapp#readme"
+}

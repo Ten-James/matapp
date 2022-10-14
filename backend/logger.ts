@@ -1,6 +1,12 @@
-let stack = [];
+interface Log {
+  time: string;
+  ip: string;
+  message: string;
+}
 
-const Log = (ip, message) => {
+let stack: Log[] = [];
+
+const Log = (ip: string, message: string): void => {
   const log = {
     ip: ip,
     message: message,
@@ -12,7 +18,7 @@ const Log = (ip, message) => {
   }
 };
 
-const GetLog = () => {
+const GetLog = (): string[] => {
   return stack.map((log) => `[${log.time}][${log.ip}] ${log.message}`);
 };
 
