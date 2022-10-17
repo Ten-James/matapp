@@ -3,43 +3,22 @@ import { useContext, useEffect, useState, useRef, createContext, FormEvent } fro
 import { Routes, Route } from "react-router-dom";
 
 import InformationView from "./information";
-import IngredientsView from "./ingredients";
+import TableView from "./tableview/tableView";
 import Navigation from "./navigation";
-
-export interface Ingredients {
-  id: number;
-  name: string;
-  Category: string;
-}
-
-interface AdminContext {
-  Ingredients: Ingredients[];
-  setIngredients: (ingredients: Ingredients[]) => void;
-  SelectedRow: number[];
-  setSelectedRow: (selectedRow: number[]) => void;
-}
-
-interface User {
-  id: number;
-  name: string;
-  access: number;
-  branch_id: number;
-}
+import { AdminContext, Ingredient, User } from "../../types";
 
 const defaultData: AdminContext = {
-  Ingredients: [],
-  setIngredients: () => {},
   SelectedRow: [],
   setSelectedRow: () => {},
 };
 
-export const AdminContext = createContext(defaultData);
+export const AdminContexter = createContext(defaultData);
 
 const Admin = () => {
   const setLoading = useContext(context).setLoading;
   const socket = useContext(context).socket;
 
-  const [Ingredients, setIngredients] = useState<Ingredients[]>([]);
+  const [Ingredients, setIngredients] = useState<Ingredient[]>([]);
   const [SelectedRow, setSelectedRow] = useState<number[]>([]);
   const [User, setUser] = useState<User | null>(null);
   const [Status, setStatus] = useState("");
@@ -81,16 +60,19 @@ const Admin = () => {
     );
   }
   return (
-    <AdminContext.Provider value={{ Ingredients, setIngredients, SelectedRow, setSelectedRow }}>
+    <AdminContexter.Provider value={{ SelectedRow, setSelectedRow }}>
       <div className="App App-grid">
         <Navigation user={User.access} />
         <Routes>
           <Route path="/branches" element={<h2>Branches</h2>} />
-          <Route path="/ingredients" element={<IngredientsView />} />
+          <Route
+            path="/ingredients"
+            element={<TableView data={Ingredients} setData={setIngredients} displayName="Ingredients" socketString="ingredients" />}
+          />
           <Route path="/information" element={<InformationView />} />
         </Routes>
       </div>
-    </AdminContext.Provider>
+    </AdminContexter.Provider>
   );
 };
 export default Admin;

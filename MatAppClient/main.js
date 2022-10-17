@@ -6,8 +6,15 @@ const IS_DEV = process.env.IS_IN_DEVELOPMENT || false;
 function createWindow() {
   // Create the main Electron window
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1280,
+    height: 800,
+    minHeight: 1280,
+    minWidth: 800,
+    title: "matApp",
+    roundedCorners: false,
+    frame: true,
+    thickFrame: false,
+    hasShadow: false,
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true,
@@ -15,8 +22,10 @@ function createWindow() {
   });
 
   if (IS_DEV) {
-    win.loadURL("http://localhost:5174");
-    win.webContents.openDevTools();
+    win.loadURL("http://localhost:5173");
+    win.webContents.openDevTools({
+      mode: "detach",
+    });
   } else {
     win.loadURL(`file://${path.join(__dirname, "..", "dist", "index.html")}`);
   }

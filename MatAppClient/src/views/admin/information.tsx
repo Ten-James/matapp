@@ -3,14 +3,7 @@ import { useContext, useEffect, useState, useRef } from "react";
 import { Panel } from "../../components/panel";
 import { context } from "../../App";
 import "../../styles/admin/information.css";
-
-interface Information {
-  uptime: string;
-  memory: string;
-  clients: number;
-  time: string;
-  data: string[];
-}
+import { Information } from "../../types";
 
 const InformationView = () => {
   const [Info, setInfo] = useState<Information>({
