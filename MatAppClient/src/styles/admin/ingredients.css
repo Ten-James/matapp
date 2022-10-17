@@ -1,0 +1,27 @@
+.d-grid {
+    display: grid;
+    grid-template: 
+    "name" auto
+     "parameters" auto
+     "table" 1fr
+     "button" auto;
+}
+
+.d-name {
+    grid-area: name;
+    text-align: left;
+}
+.d-parameters {
+    grid-area: parameters;
+    text-align: right;
+}
+.d-table {
+    grid-area: table;
+}
+.d-buttons {
+    grid-area: button;
+}
+.d-table-container {
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}

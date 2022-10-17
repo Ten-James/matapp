@@ -1,0 +1,23 @@
+.s-grid {
+    display: grid;
+    grid-template: 
+    "name name" auto
+     "status data" 1fr
+     "login data" 1fr
+     / 1fr 1fr;
+}
+
+.s-name {
+    grid-area: name;
+    text-align: left;
+}
+
+.s-status {
+    grid-area: status;
+}
+.s-data {
+    grid-area:  data;
+}
+.s-login {
+    grid-area: login;
+}
