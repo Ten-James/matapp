@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useMemo } from "react";
 import { context } from "../../App";
 import { AdminContext } from "./admin";
 
@@ -6,9 +6,16 @@ import "../../styles/admin/ingredients.css";
 
 import { Button, Panel } from "../../components/panel";
 
+interface FilterData {
+  filterMatch: () => {};
+  sort: () => {};
+}
+
 const IngredientsView = () => {
   const { Ingredients, setIngredients, SelectedRow, setSelectedRow } = useContext(AdminContext);
   const [Show, setShow] = useState(Ingredients);
+  const [Filter, setFilter] = useState();
+  // setShow(useMemo(() =>{Ingredients.filter(Filter.filterMatch).sort(Filter.sort)},[Filter, Ingredients]);
   const { socket } = useContext(context);
   socket.on("ingredients", (data) => {
     setIngredients(data);
