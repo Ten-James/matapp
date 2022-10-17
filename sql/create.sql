@@ -1,3 +1,5 @@
+-- First sql code for creating the database, its already behind current db
+
 CREATE table
     serve_sessions (
         id INTEGER PRIMARY KEY NOT NULL AUTO_INCREMENT,
