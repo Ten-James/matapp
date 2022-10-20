@@ -12,34 +12,34 @@ import { AppContext } from "./types";
 const socket = socketIOClient("http://localhost:2238");
 
 export const context: React.Context<AppContext> = createContext<AppContext>({
-  loading: true,
-  socket: socket,
-  branches: [],
-  setLoading: () => {},
-  setBranches: () => {},
+	loading: true,
+	socket: socket,
+	branches: [],
+	setLoading: () => {},
+	setBranches: () => {},
 });
 
 const App = () => {
-  const [loading, setLoading] = useState(true);
-  const [branches, setBranches] = useState<Branch[]>([]);
+	const [loading, setLoading] = useState(true);
+	const [branches, setBranches] = useState<Branch[]>([]);
 
-  const contextValue: AppContext = {
-    loading,
-    socket,
-    branches,
-    setLoading: setLoading,
-    setBranches: setBranches,
-  };
-  return (
-    <context.Provider value={contextValue}>
-      <Loader>
-        <Routes>
-          <Route path="/branches" element={<BranchSelector branches={branches} />} />
-          <Route path="/admin/*" element={<Admin />} />
-          <Route path="*" element={<ErrorPage />} />
-        </Routes>
-      </Loader>
-    </context.Provider>
-  );
+	const contextValue: AppContext = {
+		loading,
+		socket,
+		branches,
+		setLoading: setLoading,
+		setBranches: setBranches,
+	};
+	return (
+		<context.Provider value={contextValue}>
+			<Loader>
+				<Routes>
+					<Route path='/branches' element={<BranchSelector branches={branches} />} />
+					<Route path='/admin/*' element={<Admin />} />
+					<Route path='*' element={<ErrorPage />} />
+				</Routes>
+			</Loader>
+		</context.Provider>
+	);
 };
 export default App;
