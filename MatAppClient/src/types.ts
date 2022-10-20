@@ -45,6 +45,13 @@ export interface User extends BaseProp {
   access: number;
   branchId: number;
 }
+export interface UserDisplay extends BaseProp {
+  id: number;
+  name: string;
+  password: string;
+  access: number;
+  branchName: string;
+}
 
 export interface Sort {
   name: string;

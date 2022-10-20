@@ -27,23 +27,23 @@ const InformationView = () => {
     return () => clearInterval(int);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
-    <div className="s-grid">
-      <h1 className="s-name">Information</h1>
-      <Panel class="s-status">
+    <div className='s-grid'>
+      <h1 className='s-name'>Information</h1>
+      <Panel class='s-status'>
         <h2>Current Server info:</h2>
         {Info.uptime && <div>Update: {Info.uptime}</div>}
         {Info.memory && <div>Memory Usage: {Info.memory}</div>}
         {Info.clients && <div>Current Clients: {Info.clients}</div>}
         {Info.time && <div>Updated: {Info.time}</div>}
       </Panel>
-      <Panel class="s-data">
+      <Panel class='s-data'>
         <h2>Server data log:</h2>
-        {Info.data && Info.data.map((e) => <div key={Info.data.indexOf(e)}>{e}</div>)}
+        <div>{Info.data && Info.data.map((e) => <div key={Info.data.indexOf(e)}>{e}</div>)}</div>
       </Panel>
       {
-        <Panel class="s-login">
+        <Panel class='s-login'>
           <h2>Direct SQL Commands</h2>
-          <input ref={sqlRef} type="text" placeholder="Sql" />
+          <input ref={sqlRef} type='text' placeholder='Sql' />
           <button
             onClick={() => {
               if (!sqlRef.current) return;

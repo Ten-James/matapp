@@ -5,6 +5,7 @@
      "status data" 1fr
      "login data" 1fr
      / 1fr 1fr;
+     height: 100vh;
 }
 
 .s-name {
@@ -17,6 +18,10 @@
 }
 .s-data {
     grid-area:  data;
+}
+.s-data > div {
+    overflow-y: scroll;
+    height: 90%;
 }
 .s-login {
     grid-area: login;

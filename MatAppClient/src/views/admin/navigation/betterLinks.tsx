@@ -6,6 +6,7 @@ interface BetterLinkProps {
   requiredAdmin?: boolean;
   expandedText: string;
   icon: string;
+  onClick?: () => void;
 }
 
 interface SubBetterLinkProps {
@@ -16,7 +17,7 @@ interface SubBetterLinkProps {
   children: JSX.Element | JSX.Element[];
 }
 
-export const BetterLink = ({ to, expandedText, icon, requiredAdmin }: BetterLinkProps) => {
+export const BetterLink = ({ to, expandedText, icon, requiredAdmin, onClick }: BetterLinkProps) => {
   requiredAdmin = requiredAdmin || false;
   const { isExpanded, userAccess } = useContext(navigationContext);
   return !(userAccess >= (requiredAdmin ? 2 : 1)) ? (
@@ -25,7 +26,7 @@ export const BetterLink = ({ to, expandedText, icon, requiredAdmin }: BetterLink
       {isExpanded ? expandedText : ""}
     </div>
   ) : (
-    <Link className='nav-link' to={to}>
+    <Link className='nav-link' to={to} onClick={onClick}>
       <span className='material-symbols-outlined'>{icon}</span>
       {isExpanded ? expandedText : ""}
     </Link>
