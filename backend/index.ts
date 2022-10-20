@@ -42,7 +42,7 @@ interface LoginProps {
 interface User {
   name: string;
   id: number;
-  branch_id: number;
+  branchId: number;
   access: number;
 }
 
@@ -50,7 +50,7 @@ io.on("connection", (socket: Socket) => {
   socket.on("login", ({ name, pass }: LoginProps): void => {
     Log(socket.handshake.address, "login attempt");
     connection.query(
-      `SELECT name, id, branch_id, access FROM users WHERE name = '${name}' AND password = '${md5(pass)}'`,
+      `SELECT name, id, branchId, access FROM users WHERE name = '${name}' AND password = '${md5(pass)}'`,
       (err: MysqlError, result: User[]): void => {
         if (err) throw err;
         if (result.length === 0) {
@@ -73,7 +73,7 @@ io.on("connection", (socket: Socket) => {
   socket.on("get_ingredients", () => {
     Log(socket.handshake.address, "get_ingredients");
     connection.query(
-      "SELECT i.id, i.name, i.cost, t.name as 'Category' FROM ingredients i LEFT JOIN ingredients_types t ON i.ingredient_type_id = t.id",
+      "SELECT i.id, i.name, i.cost, t.name as 'category' FROM ingredients i LEFT JOIN ingredients_types t ON i.ingredient_type_id = t.id",
       (err, result) => {
         if (err) throw err;
         socket.emit("ingredients", result);

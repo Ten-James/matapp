@@ -1,61 +1,64 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { navigationContext } from "./index";
 interface BetterLinkProps {
   to: string;
-  expanded: boolean;
+  requiredAdmin?: boolean;
   expandedText: string;
-  enabled: boolean;
-  icon: JSX.Element | string;
+  icon: string;
 }
 
 interface SubBetterLinkProps {
-  location: string;
   to: string;
-  expanded: boolean;
   expandedText: string;
-  enabled: boolean;
-  icon: JSX.Element | string;
+  requiredAdmin?: boolean;
+  icon: string;
   children: JSX.Element | JSX.Element[];
 }
 
-export const BetterLink = ({ to, expandedText, expanded, enabled, icon }: BetterLinkProps) => {
-  return !enabled ? (
-    <div className="nav-link disabled">
-      {icon}
-      {expanded ? expandedText : ""}
+export const BetterLink = ({ to, expandedText, icon, requiredAdmin }: BetterLinkProps) => {
+  requiredAdmin = requiredAdmin || false;
+  const { isExpanded, userAccess } = useContext(navigationContext);
+  return !(userAccess >= (requiredAdmin ? 2 : 1)) ? (
+    <div className='nav-link disabled'>
+      <span className='material-symbols-outlined'>{icon}</span>
+      {isExpanded ? expandedText : ""}
     </div>
   ) : (
-    <Link className="nav-link" to={to}>
-      {icon}
-      {expanded ? expandedText : ""}
+    <Link className='nav-link' to={to}>
+      <span className='material-symbols-outlined'>{icon}</span>
+      {isExpanded ? expandedText : ""}
     </Link>
   );
 };
 
-export const SubBetterLink = ({ to, expandedText, expanded, enabled, icon, children, location }: SubBetterLinkProps) => {
+export const SubBetterLink = ({ to, expandedText, icon, children, requiredAdmin }: SubBetterLinkProps) => {
+  requiredAdmin = requiredAdmin || false;
+  const { isExpanded, userAccess, location } = useContext(navigationContext);
   return location.includes(to) ? (
-    <div className="nav-link-selected">
-      {!enabled ? (
-        <div className="nav-link disabled">
-          {icon}
-          {expanded ? expandedText : ""}
+    <div className='nav-link-selected'>
+      {!(userAccess >= (requiredAdmin ? 2 : 1)) ? (
+        <div className='nav-link disabled'>
+          <span className='material-symbols-outlined'>{icon}</span>
+          {isExpanded ? expandedText : ""}
         </div>
       ) : (
-        <Link className="nav-header" to={to}>
-          {icon}
-          {expanded ? expandedText : ""}
+        <Link className='nav-header' to={to}>
+          <span className='material-symbols-outlined'>{icon}</span>
+          {isExpanded ? expandedText : ""}
         </Link>
       )}
       {children}
     </div>
-  ) : !enabled ? (
-    <div className="nav-link disabled">
-      {icon}
-      {expanded ? expandedText : ""}
+  ) : !(userAccess >= (requiredAdmin ? 2 : 1)) ? (
+    <div className='nav-link disabled'>
+      <span className='material-symbols-outlined'>{icon}</span>
+      {isExpanded ? expandedText : ""}
     </div>
   ) : (
-    <Link className="nav-link" to={to}>
-      {icon}
-      {expanded ? expandedText : ""}
+    <Link className='nav-link' to={to}>
+      <span className='material-symbols-outlined'>{icon}</span>
+      {isExpanded ? expandedText : ""}
     </Link>
   );
 };

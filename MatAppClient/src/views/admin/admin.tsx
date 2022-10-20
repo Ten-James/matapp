@@ -3,25 +3,36 @@ import { useContext, useEffect, useState, useRef, createContext, FormEvent } fro
 import { Routes, Route } from "react-router-dom";
 
 import InformationView from "./information";
-import TableView from "./tableview/tableView";
+import TableView from "./tableView/";
 import Navigation from "./navigation";
-import { AdminContext, Ingredient, User } from "../../types";
+import { AdminContextType, Ingredient, User } from "../../types";
 
-const defaultData: AdminContext = {
-  SelectedRow: [],
-  setSelectedRow: () => {},
+const defaultData: AdminContextType = {
+  selectedIDs: [],
+  setSelectedIDs: () => {},
+  refresh: () => {},
 };
 
-export const AdminContexter = createContext(defaultData);
+export const AdminContext = createContext(defaultData);
 
 const Admin = () => {
   const setLoading = useContext(context).setLoading;
   const socket = useContext(context).socket;
 
   const [Ingredients, setIngredients] = useState<Ingredient[]>([]);
-  const [SelectedRow, setSelectedRow] = useState<number[]>([]);
-  const [User, setUser] = useState<User | null>(null);
+  const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
+  const [user, setUser] = useState<User>({
+    id: 1,
+    name: "admin",
+    access: 2,
+    branchId: 0,
+  });
   const [Status, setStatus] = useState("");
+
+  const refresh = () => {
+    setSelectedIDs([]);
+    setIngredients([]);
+  };
 
   const nameRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
@@ -37,7 +48,7 @@ const Admin = () => {
     }
   });
 
-  if (!User) {
+  if (!user) {
     const Login = (e: FormEvent) => {
       e.preventDefault();
       if (!nameRef.current || !passRef.current) return;
@@ -47,12 +58,12 @@ const Admin = () => {
       });
     };
     return (
-      <div className="App App-grid">
-        <Navigation user={0} />
+      <div className='App App-grid'>
+        <Navigation userAccess={0} />
         <form onSubmit={Login}>
           <h1>Log in:</h1>
-          <input ref={nameRef} type="text" placeholder="Branch Username" />
-          <input ref={passRef} type="password" placeholder="Password" />
+          <input ref={nameRef} type='text' placeholder='Branch Username' />
+          <input ref={passRef} type='password' placeholder='Password' />
           <div>{Status}</div>
           <button>Log in</button>
         </form>
@@ -60,19 +71,19 @@ const Admin = () => {
     );
   }
   return (
-    <AdminContexter.Provider value={{ SelectedRow, setSelectedRow }}>
-      <div className="App App-grid">
-        <Navigation user={User.access} />
+    <AdminContext.Provider value={{ selectedIDs, setSelectedIDs, refresh }}>
+      <div className='App App-grid'>
+        <Navigation userAccess={user.access} />
         <Routes>
-          <Route path="/branches" element={<h2>Branches</h2>} />
+          <Route path='/branches' element={<h2>Branches</h2>} />
           <Route
-            path="/ingredients"
-            element={<TableView data={Ingredients} setData={setIngredients} displayName="Ingredients" socketString="ingredients" />}
+            path='/ingredients'
+            element={<TableView data={Ingredients} setData={setIngredients} displayName='Ingredients' socketString='ingredients' />}
           />
-          <Route path="/information" element={<InformationView />} />
+          <Route path='/information' element={<InformationView />} />
         </Routes>
       </div>
-    </AdminContexter.Provider>
+    </AdminContext.Provider>
   );
 };
 export default Admin;

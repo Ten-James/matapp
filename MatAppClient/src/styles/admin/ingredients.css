@@ -3,8 +3,10 @@
     grid-template: 
     "name" auto
      "parameters" auto
+     "thead" auto
      "table" 1fr
      "button" auto;
+     height: 100vh;
 }
 
 .d-name {
@@ -15,7 +17,10 @@
     grid-area: parameters;
     text-align: right;
 }
-.d-table {
+.d-table-header {
+    grid-area: thead;
+}
+.d-table-content {
     grid-area: table;
 }
 .d-buttons {

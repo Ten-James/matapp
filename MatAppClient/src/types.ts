@@ -11,9 +11,10 @@ export interface AppContext {
   setLoading: (loading: boolean) => void;
   setBranches: (branches: Branch[]) => void;
 }
-export interface AdminContext {
-  SelectedRow: number[];
-  setSelectedRow: (selectedRow: number[]) => void;
+export interface AdminContextType {
+  selectedIDs: number[];
+  setSelectedIDs: (selectedIDs: number[]) => void;
+  refresh: () => void;
 }
 
 export interface Information {
@@ -35,12 +36,17 @@ export interface BaseProp {
 export interface Ingredient extends BaseProp {
   id: number;
   name: string;
-  Category: string;
+  category: string;
 }
 
 export interface User extends BaseProp {
   id: number;
   name: string;
   access: number;
-  branch_id: number;
+  branchId: number;
+}
+
+export interface Sort {
+  name: string;
+  type: string;
 }

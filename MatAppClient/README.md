@@ -2,7 +2,6 @@
 
 Client for Restaurant system. It is an application that allows users to order food and drinks from a restaurant. Also, it allows the restaurant to manage the orders and the menu.
 
-
 generated using vite
 
 ## JS libraries
@@ -14,4 +13,3 @@ generated using vite
 - [socket.io-client](https://socket.io/)
 - [react-transition-group](https://reactcommunity.org/react-transition-group/)
 - [electron](https://www.electronjs.org/)
-
