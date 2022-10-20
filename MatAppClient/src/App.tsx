@@ -1,6 +1,6 @@
 import React, { useState, createContext } from "react";
 import { Routes, Route } from "react-router";
-import "./styles/style.css";
+import "./style.css";
 import socketIOClient from "socket.io-client";
 
 import Loader from "./views/loading";

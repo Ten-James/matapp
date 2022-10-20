@@ -2,7 +2,7 @@ import { context } from "../../App";
 import { useContext, useEffect, useState, useRef, createContext, FormEvent } from "react";
 import { Routes, Route } from "react-router-dom";
 
-import InformationView from "./information";
+import InformationView from "./information/information";
 import TableView from "./tableView/";
 import Navigation from "./navigation";
 import { AdminContextType, Ingredient, User, UserDisplay } from "../../types";

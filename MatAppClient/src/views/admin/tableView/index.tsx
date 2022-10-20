@@ -4,7 +4,7 @@ import { AdminContext } from "../admin";
 import ParamButtons from "./paramButtons";
 import { textUpperFirst } from "../../../misc/utils";
 
-import "../../../styles/admin/ingredients.css";
+import "./tableView.css";
 
 import { Button, Panel } from "../../../components/panel";
 import { FilterData, BaseProp, Sort } from "../../../types";

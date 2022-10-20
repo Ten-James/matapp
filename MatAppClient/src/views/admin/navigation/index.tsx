@@ -2,7 +2,7 @@ import { useLocation } from "react-router-dom";
 import { useState, createContext, useContext } from "react";
 import { BetterLink, SubBetterLink } from "./betterLinks";
 
-import "../../../styles/admin/navigation.css";
+import "./navigation.css";
 import LogoSVG from "../../../components/logo";
 import { AdminContext } from "../admin";
 

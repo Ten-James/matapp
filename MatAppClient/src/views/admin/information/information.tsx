@@ -1,9 +1,9 @@
 import { useContext, useEffect, useState, useRef } from "react";
 
-import { Panel } from "../../components/panel";
-import { context } from "../../App";
-import "../../styles/admin/information.css";
-import { Information } from "../../types";
+import { Panel } from "../../../components/panel";
+import { context } from "../../../App";
+import "./information.css";
+import { Information } from "../../../types";
 
 const InformationView = () => {
 	const [Info, setInfo] = useState<Information>({
