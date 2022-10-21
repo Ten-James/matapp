@@ -16,6 +16,24 @@ interface Props<T> {
 	displayName: string;
 }
 
+const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
+	if (ord) {
+		if (t === "string") {
+			// @ts-ignore
+			return (a: T, b: T): number => a[e].localeCompare(b[e]);
+		}
+		// @ts-ignore
+		return (a: T, b: T): number => a[e] - b[e];
+	} else {
+		if (t === "string") {
+			// @ts-ignore
+			return (a: T, b: T): number => b[e].localeCompare(a[e]);
+		}
+		// @ts-ignore
+		return (a: T, b: T): number => b[e] - a[e];
+	}
+};
+
 const TableView = <T extends BaseProp>({ data, setData, socketString, displayName }: Props<T>) => {
 	const { selectedIDs, setSelectedIDs } = useContext(AdminContext);
 	const { socket } = useContext(context);
@@ -30,7 +48,6 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 	});
 
 	socket.on(socketString, (data: T[]) => {
-		console.log("getting data");
 		setData(data);
 		setShow(data.filter(filter.filterMatch).sort(filter.sort));
 	});
@@ -42,7 +59,6 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 
 	useEffect(() => {
 		if (data.length === 0) {
-			console.log("no data");
 			socket.emit(`get_${socketString}`);
 		}
 		setSelectedIDs([]);
@@ -74,11 +90,39 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 					<div
 						style={{
 							display: "grid",
+							width: "90%",
+							margin: "0.3em auto",
 							gridTemplateColumns: "repeat(" + Object.keys(show[0]).length.toString() + ", 1fr)",
 						}}
 					>
 						{Object.keys(show[0]).map((e) => (
-							<div key={e}>{textUpperFirst(e)}</div>
+							<div key={e}>
+								<div className='d-table-header-label'>
+									{textUpperFirst(e)}
+									<span
+										className='material-symbols-outlined d-table-header-asc'
+										onClick={() => {
+											setFilter({
+												filterMatch: filter.filterMatch,
+												sort: MakeSort(e, typeof show[0][e], true),
+											});
+										}}
+									>
+										expand_more
+									</span>
+									<span
+										className='material-symbols-outlined d-table-header-dsc'
+										onClick={() => {
+											setFilter({
+												filterMatch: filter.filterMatch,
+												sort: MakeSort(e, typeof show[0][e], false),
+											});
+										}}
+									>
+										expand_less
+									</span>
+								</div>
+							</div>
 						))}
 					</div>
 				)}
@@ -97,11 +141,14 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 						}
 						style={{
 							display: "grid",
+							width: "90%",
 							gridTemplateColumns: "repeat(" + Object.keys(show[0]).length.toString() + ", 1fr)",
 							outline: selectedIDs.includes(e.id) ? "1px solid #6bb0b3" : "unset",
-							padding: "0.5em",
+							padding: "0.5em 1em",
+							margin: "0.4em auto",
 						}}
 						key={e.id}
+						class='inset'
 					>
 						{Object.keys(e).map((f) => (
 							// @ts-ignore
@@ -111,7 +158,6 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 				))}
 			</div>
 			<div className='d-buttons'>
-				{JSON.stringify(selectedIDs)}
 				<Button>
 					<span className='material-symbols-outlined'>add</span>
 					Add

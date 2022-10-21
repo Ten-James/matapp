@@ -11,33 +11,13 @@ interface Props<T extends BaseProp> {
 	categories: string[];
 }
 
-const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
-	if (ord) {
-		if (t === "string") {
-			// @ts-ignore
-			return (a: T, b: T): number => a[e].localeCompare(b[e]);
-		}
-		// @ts-ignore
-		return (a: T, b: T): number => a[e] - b[e];
-	} else {
-		if (t === "string") {
-			// @ts-ignore
-			return (a: T, b: T): number => b[e].localeCompare(a[e]);
-		}
-		// @ts-ignore
-		return (a: T, b: T): number => b[e] - a[e];
-	}
-};
-
 const ParamButtons = <T extends BaseProp>({ filter, setFilter, sorts, showCategory, categories }: Props<T>) => {
 	const searchRef = useRef<HTMLInputElement | null>(null);
 	const filterSelect = useRef<HTMLSelectElement | null>(null);
 	const sortSelect = useRef<HTMLSelectElement | null>(null);
 	return (
 		<>
-			<label htmlFor='search'>
-				<span className='material-symbols-outlined'>search</span>
-			</label>
+			<span className='material-symbols-outlined'>search</span>
 			<input
 				placeholder='Search'
 				id='search'
@@ -98,7 +78,7 @@ const ParamButtons = <T extends BaseProp>({ filter, setFilter, sorts, showCatego
 				</>
 			)}
 
-			<label htmlFor='sort'>Sort:</label>
+			{/* <label htmlFor='sort'>Sort:</label>
 			<select
 				id='sort'
 				ref={sortSelect}
@@ -123,7 +103,7 @@ const ParamButtons = <T extends BaseProp>({ filter, setFilter, sorts, showCatego
 						{textUpperFirst(e.name)} desc
 					</option>
 				))}
-			</select>
+			</select> */}
 		</>
 	);
 };

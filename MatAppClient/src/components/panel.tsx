@@ -8,7 +8,7 @@ interface PanelProps {
 }
 export const Panel = (props: PanelProps) => {
 	return (
-		<div style={props.style} className={"panel " + props.class} onClick={props.onClick}>
+		<div style={props.style} className={"panel " + (props.class ? props.class : "")} onClick={props.onClick}>
 			{props.children}
 		</div>
 	);

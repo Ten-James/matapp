@@ -79,12 +79,15 @@ const Admin = () => {
 				<Routes>
 					<Route path='/branches' element={<h2>Branches</h2>} />
 					<Route
-						path='/ingredients'
+						path='table/ingredients'
 						element={
 							<TableView data={ingredients} setData={setIngredients} displayName='Ingredients' socketString='ingredients' />
 						}
 					/>
-					<Route path='/users' element={<TableView data={users} setData={setUsers} displayName='Users' socketString='users' />} />
+					<Route
+						path='table/users'
+						element={<TableView data={users} setData={setUsers} displayName='Users' socketString='users' />}
+					/>
 					<Route path='/information' element={<InformationView />} />
 				</Routes>
 			</div>

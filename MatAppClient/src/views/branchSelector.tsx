@@ -14,10 +14,8 @@ const BranchSelector = ({ branches }: Props) => {
 	const setLoading = useContext(context).setLoading;
 	useEffect(() => {
 		GenerateFries();
-		console.log("get");
 		setTimeout(() => socket.emit("get_branches"), 3000);
 		socket.on("branches", (data: Branch[]) => {
-			console.log("set");
 			setLoading(false);
 			//duplicate data for testing
 			setBranches(data.concat(data));

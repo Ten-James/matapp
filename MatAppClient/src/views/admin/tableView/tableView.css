@@ -15,18 +15,72 @@
 }
 .d-parameters {
     grid-area: parameters;
-    text-align: right;
+    display: flex;
+    justify-content: right;
+    align-items: center;
 }
+.d-parameters input,select {
+    margin-left: 1em;
+    margin-right: 2em;
+}
+
 .d-table-header {
     grid-area: thead;
+}
+
+.d-table-header > div{
+    font-weight: 600;
+    font-size: 1.3em;
+    padding: 0 1em;
+    display: grid;
+    grid-template-columns: auto 1fr;
 }
 .d-table-content {
     grid-area: table;
 }
+.d-table-content .panel {
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.d-table-content .panel:hover {
+    cursor: pointer;
+    scale: 1.05;
+}
+
 .d-buttons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
     grid-area: button;
 }
+.d-buttons button {
+    margin: 0 1em;
+    padding: 0.5em 4em;
+    border-radius: 41px;
+}
+
 .d-table-container {
     overflow-y: scroll;
     scroll-behavior: smooth;
+}
+
+.d-table-header-label {
+    position: relative;
+    width: max-content;
+}
+
+.d-table-header-asc {
+    right: 0;
+    position: absolute;
+    transform: translate(30px, 75%);
+    cursor: pointer;
+}
+
+.d-table-header-dsc {
+    right: 0;
+    top: 50%;
+    position: absolute;
+    transform: translate(30px, -75%);
+    cursor: pointer;
 }

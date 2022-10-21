@@ -51,6 +51,7 @@ export interface UserDisplay extends BaseProp {
 	password: string;
 	access: number;
 	branchName: string;
+	allergens: string;
 }
 
 export interface Sort {
