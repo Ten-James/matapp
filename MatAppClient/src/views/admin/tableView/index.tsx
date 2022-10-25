@@ -35,7 +35,7 @@ const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
 };
 
 const TableView = <T extends BaseProp>({ data, setData, socketString, displayName }: Props<T>) => {
-	const { selectedIDs, setSelectedIDs } = useContext(AdminContext);
+	const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
 	const { socket } = useContext(context);
 
 	const [show, setShow] = useState(data);
@@ -77,20 +77,14 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 		<div className='d-grid'>
 			<h1 className='d-name'>{displayName}</h1>
 			<div className='d-parameters'>
-				<ParamButtons
-					filter={filter}
-					setFilter={setFilter}
-					sorts={sort}
-					showCategory={categories.length > 1}
-					categories={categories}
-				/>
+				<ParamButtons filter={filter} setFilter={setFilter} showCategory={categories.length > 1} categories={categories} />
 			</div>
 			<div className='d-table-header'>
 				{show.length > 0 && (
 					<div
 						style={{
 							display: "grid",
-							width: "90%",
+							width: "85%",
 							margin: "0.3em auto",
 							gridTemplateColumns: "repeat(" + Object.keys(show[0]).length.toString() + ", 1fr)",
 						}}
@@ -141,7 +135,7 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 						}
 						style={{
 							display: "grid",
-							width: "90%",
+							width: "85%",
 							gridTemplateColumns: "repeat(" + Object.keys(show[0]).length.toString() + ", 1fr)",
 							outline: selectedIDs.includes(e.id) ? "1px solid #6bb0b3" : "unset",
 							padding: "0.5em 1em",
@@ -158,7 +152,7 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 				))}
 			</div>
 			<div className='d-buttons'>
-				<Button>
+				<Button onClick={() => setDialog("add")}>
 					<span className='material-symbols-outlined'>add</span>
 					Add
 				</Button>

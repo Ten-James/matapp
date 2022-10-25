@@ -15,6 +15,11 @@ body{
     font-family: 'Cairo';
     background-color: #efe6dd;
 }
+
+#root, body {
+    transition: none;
+}
+
 .App {
     width: 100vw;
     height: 100vh;

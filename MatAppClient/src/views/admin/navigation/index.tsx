@@ -35,7 +35,7 @@ const Navigation = ({ userAccess }: NavigationProps) => {
 						<div className='logo' onClick={() => setExpanded(!Expanded)}>
 							<LogoSVG class='small' />
 						</div>
-						<div style={{ transform: Expanded ? "translateX(1em)" : "translateX(0em)" }}>
+						<div style={{ transform: Expanded ? "translateX(1em)" : "translateX(-0.2em)" }}>
 							<SubBetterLink to='branches' expandedText='Branches' icon='store' count={2}>
 								<BetterLink
 									to='branches/reports'
@@ -46,7 +46,7 @@ const Navigation = ({ userAccess }: NavigationProps) => {
 								<BetterLink
 									to='branches/storage'
 									expandedText='Storage'
-									icon='kitchen'
+									icon='warehouse'
 									onClick={() => setExpanded(false)}
 								/>
 							</SubBetterLink>

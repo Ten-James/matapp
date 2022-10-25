@@ -6,15 +6,13 @@ import { textUpperFirst } from "../../../misc/utils";
 interface Props<T extends BaseProp> {
 	filter: FilterData<T>;
 	setFilter: (filter: FilterData<T>) => void;
-	sorts: Sort[];
 	showCategory: boolean;
 	categories: string[];
 }
 
-const ParamButtons = <T extends BaseProp>({ filter, setFilter, sorts, showCategory, categories }: Props<T>) => {
+const ParamButtons = <T extends BaseProp>({ filter, setFilter, showCategory, categories }: Props<T>) => {
 	const searchRef = useRef<HTMLInputElement | null>(null);
 	const filterSelect = useRef<HTMLSelectElement | null>(null);
-	const sortSelect = useRef<HTMLSelectElement | null>(null);
 	return (
 		<>
 			<span className='material-symbols-outlined'>search</span>

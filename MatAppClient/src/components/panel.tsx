@@ -4,7 +4,7 @@ interface PanelProps {
 	class?: string;
 	style?: React.CSSProperties;
 	children: React.ReactNode;
-	onClick?: () => void;
+	onClick?: (event) => void;
 }
 export const Panel = (props: PanelProps) => {
 	return (

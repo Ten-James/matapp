@@ -1,6 +1,5 @@
 import React, { useState, createContext } from "react";
 import { Routes, Route } from "react-router";
-import "./style.css";
 import socketIOClient from "socket.io-client";
 
 import Loader from "./views/loading";
@@ -21,6 +20,7 @@ export const context: React.Context<AppContext> = createContext<AppContext>({
 
 const App = () => {
 	const [loading, setLoading] = useState(true);
+	//TODO- move to branchSelector
 	const [branches, setBranches] = useState<Branch[]>([]);
 
 	const contextValue: AppContext = {

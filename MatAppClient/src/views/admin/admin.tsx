@@ -5,12 +5,18 @@ import { Routes, Route } from "react-router-dom";
 import InformationView from "./information/information";
 import TableView from "./tableView/";
 import Navigation from "./navigation";
-import { AdminContextType, Ingredient, User, UserDisplay } from "../../types";
+import { GenerateFries } from "../../misc/fries";
+import { AdminContextType, Ingredient, User, UserDisplay, DialogType, Branch } from "../../types";
+import { AddDialog } from "./dialog";
 
 const defaultData: AdminContextType = {
 	selectedIDs: [],
 	setSelectedIDs: () => {},
 	refresh: () => {},
+	dialog: "hidden",
+	setDialog: () => {},
+	branches: [],
+	setBranches: () => {},
 };
 
 export const AdminContext = createContext(defaultData);
@@ -21,6 +27,8 @@ const Admin = () => {
 
 	const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 	const [users, setUsers] = useState<UserDisplay[]>([]);
+	const [branches, setBranches] = useState<Branch[]>([]);
+	const [dialog, setDialog] = useState<DialogType>("hidden");
 
 	const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
 	const [user, setUser] = useState<User>({
@@ -39,7 +47,8 @@ const Admin = () => {
 	const nameRef = useRef<HTMLInputElement>(null);
 	const passRef = useRef<HTMLInputElement>(null);
 	useEffect(() => {
-		setLoading(false);
+		GenerateFries();
+		setTimeout(() => setLoading(false), 1000);
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
 
 	socket.on("login", (data) => {
@@ -73,11 +82,15 @@ const Admin = () => {
 		);
 	}
 	return (
-		<AdminContext.Provider value={{ selectedIDs, setSelectedIDs, refresh }}>
+		<AdminContext.Provider value={{ selectedIDs, setSelectedIDs, refresh, dialog, setDialog, branches, setBranches }}>
+			{dialog === "add" && <AddDialog />}
 			<div className='App App-grid'>
 				<Navigation userAccess={user.access} />
 				<Routes>
-					<Route path='/branches' element={<h2>Branches</h2>} />
+					<Route
+						path='/branches'
+						element={<TableView data={branches} setData={setBranches} displayName='Branches' socketString='branches' />}
+					/>
 					<Route
 						path='table/ingredients'
 						element={
