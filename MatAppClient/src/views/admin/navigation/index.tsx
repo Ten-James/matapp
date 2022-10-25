@@ -69,12 +69,8 @@ const Navigation = ({ userAccess }: NavigationProps) => {
 							/>
 							<BetterLink to={location.pathname} expandedText='Refresh' icon='sync' onClick={refresh} />
 						</div>
-						<button onClick={() => setExpanded(!Expanded)}>
-							{Expanded ? (
-								<span className='material-symbols-outlined'>west</span>
-							) : (
-								<span className='material-symbols-outlined'>east</span>
-							)}
+						<button className={Expanded ? "child-rot" : ""} onClick={() => setExpanded(!Expanded)}>
+							<span className='material-symbols-outlined'>east</span>
 						</button>
 					</div>
 				</div>

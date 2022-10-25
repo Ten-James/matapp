@@ -40,7 +40,9 @@
     padding-left: 0.2em;
 }
 
-
+.child-rot span {
+    transform: scaleX(-1);
+}
 
 .nav div > button {
     height: 5em;
