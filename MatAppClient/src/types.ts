@@ -7,10 +7,13 @@ export interface Branch extends BaseProp {
 export interface AppContext {
 	loading: boolean;
 	socket: Socket;
+	language: LanguageType;
+	setLanguage: (language: LanguageType) => void;
 	branches: Branch[];
 	setLoading: (loading: boolean) => void;
 	setBranches: (branches: Branch[]) => void;
 }
+export type LanguageType = "english" | "czech";
 
 export type DialogType = "hidden" | "add" | "edit" | "edit_multiple" | "delete";
 
@@ -45,6 +48,7 @@ export interface Ingredient extends BaseProp {
 	name: string;
 	text: string;
 	category: string;
+	allergens: string;
 }
 
 export interface User extends BaseProp {
@@ -65,4 +69,14 @@ export interface UserDisplay extends BaseProp {
 export interface Sort {
 	name: string;
 	type: string;
+}
+
+export interface BranchIngredients extends BaseProp {
+	name: string;
+	category: string;
+	count: number;
+}
+
+export interface BaseBranchProps<T extends BaseProp> extends Branch {
+	data: T[];
 }

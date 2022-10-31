@@ -6,8 +6,9 @@ import InformationView from "./information/information";
 import TableView from "./tableView/";
 import Navigation from "./navigation";
 import { GenerateFries } from "../../misc/fries";
-import { AdminContextType, Ingredient, User, UserDisplay, DialogType, Branch } from "../../types";
+import { AdminContextType, Ingredient, User, UserDisplay, DialogType, Branch, BaseBranchProps, BranchIngredients } from "../../types";
 import { AddDialog } from "./dialog";
+import TableViewSection from "./tableView/tableViewSection";
 
 const defaultData: AdminContextType = {
 	selectedIDs: [],
@@ -28,6 +29,7 @@ const Admin = () => {
 	const [ingredients, setIngredients] = useState<Ingredient[]>([]);
 	const [users, setUsers] = useState<UserDisplay[]>([]);
 	const [branches, setBranches] = useState<Branch[]>([]);
+	const [branchesStorages, setBranchesStorages] = useState<BaseBranchProps<BranchIngredients>[]>([]);
 	const [dialog, setDialog] = useState<DialogType>("hidden");
 
 	const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
@@ -91,6 +93,18 @@ const Admin = () => {
 						path='/branches'
 						element={<TableView data={branches} setData={setBranches} displayName='Branches' socketString='branches' />}
 					/>
+					<Route
+						path='/branches/storage'
+						element={
+							<TableViewSection
+								data={branchesStorages}
+								setData={setBranchesStorages}
+								displayName='Branches Storage'
+								socketString='branches_storage'
+							/>
+						}
+					/>
+
 					<Route
 						path='table/ingredients'
 						element={

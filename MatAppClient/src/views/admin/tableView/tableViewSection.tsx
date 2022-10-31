@@ -1,18 +1,17 @@
 import { useContext, useState, useEffect, useMemo } from "react";
 import { context } from "../../../App";
 import { AdminContext } from "../admin";
-import { Translate } from "../../../misc/transcripter";
 import ParamButtons from "./paramButtons";
 import { textUpperFirst } from "../../../misc/utils";
 
 import "./tableView.css";
 
 import { Button, Panel } from "../../../components/panel";
-import { FilterData, BaseProp, Sort } from "../../../types";
+import { FilterData, BaseProp, Sort, BaseBranchProps } from "../../../types";
 
-interface Props<T> {
-	data: T[];
-	setData: (data: T[]) => void;
+interface Props<T extends BaseProp> {
+	data: BaseBranchProps<T>[];
+	setData: (data: BaseBranchProps<T>[]) => void;
 	socketString: string;
 	displayName: string;
 }
@@ -35,9 +34,9 @@ const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
 	}
 };
 
-const TableView = <T extends BaseProp>({ data, setData, socketString, displayName }: Props<T>) => {
+const TableViewSection = <T extends BaseProp>({ data, setData, socketString, displayName }: Props<T>) => {
 	const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
-	const { socket, language } = useContext(context);
+	const { socket } = useContext(context);
 
 	const [show, setShow] = useState(data);
 	const [sort, setSort] = useState<Sort[]>([{ name: "id", type: "number" }]);
@@ -48,14 +47,21 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 		sort: (a, b) => 1,
 	});
 
-	socket.on(socketString, (data: T[]) => {
+	socket.on(socketString, (data: BaseBranchProps<T>[]) => {
+		if (data.length === 0) return;
 		setData(data);
-		setShow(data.filter(filter.filterMatch).sort(filter.sort));
+		data.forEach((x) => x.data.filter(filter.filterMatch).sort(filter.sort));
+		setShow(data);
 	});
 
 	useMemo(() => {
 		if (data.length === 0) return setShow([]);
-		setShow(data.filter(filter.filterMatch).sort(filter.sort));
+		let tmp = data;
+		console.log(tmp);
+		tmp.forEach((x) => {
+			x.data.filter(filter.filterMatch).sort(filter.sort);
+		});
+		setShow(tmp);
 	}, [filter, data]);
 
 	useEffect(() => {
@@ -69,14 +75,18 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 		});
 		if (data.length === 0) return;
 		// @ts-ignore
-		setSort(Object.keys(data[0]).map<Sort>((e) => ({ name: e, type: typeof data[0][e] })));
+		setSort(Object.keys(data[0].data[0]).map<Sort>((e) => ({ name: e, type: typeof data[0].data[0][e] })));
+		let tmp = [];
+
 		// @ts-ignore
-		setCategories(data.map((e) => e.category).filter((e, i, a) => a.indexOf(e) === i));
+		data.forEach((x) => x.data.forEach((e) => tmp.push(e.category)));
+		tmp.filter((e, i, a) => a.indexOf(e) === i);
+		setCategories(tmp);
 	}, [data]);
 
 	return (
 		<div className='d-grid'>
-			<h1 className='d-name'>{Translate(displayName, language)}</h1>
+			<h1 className='d-name'>{displayName}</h1>
 			<div className='d-parameters'>
 				<ParamButtons filter={filter} setFilter={setFilter} showCategory={categories.length > 1} categories={categories} />
 			</div>
@@ -93,7 +103,7 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 						{Object.keys(show[0]).map((e) => (
 							<div key={e}>
 								<div className='d-table-header-label'>
-									{textUpperFirst(Translate(e, language))}
+									{textUpperFirst(e)}
 									<span
 										className='material-symbols-outlined d-table-header-asc'
 										onClick={() => {
@@ -129,27 +139,43 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 					height: "100%",
 				}}
 			>
-				{show.map((e) => (
-					<Panel
-						onClick={() =>
-							setSelectedIDs(selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id])
-						}
-						style={{
-							display: "grid",
-							width: "85%",
-							gridTemplateColumns: "repeat(" + Object.keys(show[0]).length.toString() + ", 1fr)",
-							outline: selectedIDs.includes(e.id) ? "1px solid #6bb0b3" : "unset",
-							padding: "0.5em 1em",
-							margin: "0.4em auto",
-						}}
-						key={e.id}
-						class='inset'
-					>
-						{Object.keys(e).map((f) => (
-							// @ts-ignore
-							<div key={f}>{Translate(e[f], language)}</div>
+				{show.map((x) => (
+					<div key={x.id}>
+						<h2
+							style={{
+								display: "grid",
+								width: "85%",
+								padding: "0.5em 1em",
+								margin: "0.4em auto",
+							}}
+						>
+							{x.name} {x.location}
+						</h2>
+						{x.data.map((e) => (
+							<Panel
+								onClick={() =>
+									setSelectedIDs(
+										selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id]
+									)
+								}
+								style={{
+									display: "grid",
+									width: "85%",
+									gridTemplateColumns: "repeat(" + Object.keys(show[0]).length.toString() + ", 1fr)",
+									outline: selectedIDs.includes(e.id) ? "1px solid #6bb0b3" : "unset",
+									padding: "0.5em 1em",
+									margin: "0.4em auto",
+								}}
+								key={e.id}
+								class='inset'
+							>
+								{Object.keys(e).map((f) => (
+									// @ts-ignore
+									<div key={f}>{e[f]}</div>
+								))}
+							</Panel>
 						))}
-					</Panel>
+					</div>
 				))}
 			</div>
 			<div className='d-buttons'>
@@ -170,4 +196,4 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 	);
 };
 
-export default TableView;
+export default TableViewSection;

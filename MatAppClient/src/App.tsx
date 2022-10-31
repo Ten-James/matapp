@@ -7,12 +7,14 @@ import BranchSelector from "./views/branchSelector";
 import Admin from "./views/admin/admin";
 import ErrorPage from "./views/errorPage";
 import { Branch } from "./types";
-import { AppContext } from "./types";
+import { AppContext, LanguageType } from "./types";
 const socket = socketIOClient("http://localhost:2238");
 
 export const context: React.Context<AppContext> = createContext<AppContext>({
 	loading: true,
 	socket: socket,
+	language: "english",
+	setLanguage: () => {},
 	branches: [],
 	setLoading: () => {},
 	setBranches: () => {},
@@ -20,6 +22,7 @@ export const context: React.Context<AppContext> = createContext<AppContext>({
 
 const App = () => {
 	const [loading, setLoading] = useState(true);
+	const [language, setLanguage] = useState<LanguageType>("czech");
 	//TODO- move to branchSelector
 	const [branches, setBranches] = useState<Branch[]>([]);
 
@@ -27,9 +30,12 @@ const App = () => {
 		loading,
 		socket,
 		branches,
+		language,
+		setLanguage,
 		setLoading: setLoading,
 		setBranches: setBranches,
 	};
+
 	return (
 		<context.Provider value={contextValue}>
 			<Loader>
