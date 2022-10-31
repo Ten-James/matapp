@@ -4,6 +4,8 @@ import { BetterLink, SubBetterLink } from "./betterLinks";
 
 import "./navigation.css";
 import LogoSVG from "../../../components/logo";
+import { context } from "../../../App";
+import { Translate } from "../../../misc/transcripter";
 import { AdminContext } from "../admin";
 
 interface NavigationProps {
@@ -24,6 +26,7 @@ export const navigationContext = createContext<NavigationContext>({
 
 const Navigation = ({ userAccess }: NavigationProps) => {
 	const { refresh } = useContext(AdminContext);
+	const { language } = useContext(context);
 	const [Expanded, setExpanded] = useState(false);
 	const location = useLocation();
 
@@ -36,38 +39,53 @@ const Navigation = ({ userAccess }: NavigationProps) => {
 							<LogoSVG class='small' />
 						</div>
 						<div style={{ transform: Expanded ? "translateX(1em)" : "translateX(-0.2em)" }}>
-							<SubBetterLink to='branches' expandedText='Branches' icon='store' count={2}>
+							<SubBetterLink to='branches' expandedText={Translate("Branches", language)} icon='store' count={2}>
 								<BetterLink
 									to='branches/reports'
-									expandedText='Reports'
+									expandedText={Translate("Reports", language)}
 									icon='receipt_long'
 									onClick={() => setExpanded(false)}
 								/>
 								<BetterLink
 									to='branches/storage'
-									expandedText='Storage'
+									expandedText={Translate("Storage", language)}
 									icon='warehouse'
 									onClick={() => setExpanded(false)}
 								/>
 							</SubBetterLink>
-							<SubBetterLink to='table' expandedText='Table' icon='storage' count={3}>
-								<BetterLink to='table/users' expandedText='Users' icon='group' onClick={() => setExpanded(false)} />
+							<SubBetterLink to='table' expandedText={Translate("Tables", language)} icon='storage' count={3}>
+								<BetterLink
+									to='table/users'
+									expandedText={Translate("Users", language)}
+									icon='group'
+									onClick={() => setExpanded(false)}
+								/>
 								<BetterLink
 									to='table/ingredients'
-									expandedText='Ingredients'
+									expandedText={Translate("Ingredients", language)}
 									icon='kitchen'
 									onClick={() => setExpanded(false)}
 								/>
-								<BetterLink to='table/dishes' expandedText='Dishes' icon='restaurant' onClick={() => setExpanded(false)} />
+								<BetterLink
+									to='table/dishes'
+									expandedText={Translate("Dishes", language)}
+									icon='restaurant'
+									onClick={() => setExpanded(false)}
+								/>
 							</SubBetterLink>
 							<BetterLink
 								to='information'
 								requiredAdmin
-								expandedText='Information'
+								expandedText={Translate("Information", language)}
 								icon='info'
 								onClick={() => setExpanded(false)}
 							/>
-							<BetterLink to={location.pathname} expandedText='Refresh' icon='sync' onClick={refresh} />
+							<BetterLink
+								to={location.pathname}
+								expandedText={Translate("Refresh", language)}
+								icon='sync'
+								onClick={refresh}
+							/>
 						</div>
 						<button className={Expanded ? "child-rot" : ""} onClick={() => setExpanded(!Expanded)}>
 							<span className='material-symbols-outlined'>east</span>

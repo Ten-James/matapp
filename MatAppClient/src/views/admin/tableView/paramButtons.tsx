@@ -1,7 +1,7 @@
-import { useRef } from "react";
-import { Button } from "../../../components/panel";
+import { useRef, useContext } from "react";
 import { FilterData, BaseProp, Sort } from "../../../types";
-import { textUpperFirst } from "../../../misc/utils";
+import { context } from "../../../App";
+import { Translate } from "../../../misc/transcripter";
 
 interface Props<T extends BaseProp> {
 	filter: FilterData<T>;
@@ -11,6 +11,7 @@ interface Props<T extends BaseProp> {
 }
 
 const ParamButtons = <T extends BaseProp>({ filter, setFilter, showCategory, categories }: Props<T>) => {
+	const { language } = useContext(context);
 	const searchRef = useRef<HTMLInputElement | null>(null);
 	const filterSelect = useRef<HTMLSelectElement | null>(null);
 	return (
@@ -49,7 +50,7 @@ const ParamButtons = <T extends BaseProp>({ filter, setFilter, showCategory, cat
 			/>
 			{showCategory && (
 				<>
-					<label htmlFor='filter'>Filter Category</label>
+					<label htmlFor='filter'>{Translate("Filter Category", language)}</label>
 					<select
 						id='filter'
 						ref={filterSelect}

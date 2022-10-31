@@ -6,7 +6,7 @@ data.pop(0)
 dataText = ""
 for line in data:
     dat = line.replace("\n","").split(",")
-    dataText += dat[0] + ": {english: \""+dat[1]+"\", czech: \""+dat[2]+"\" },"
+    dataText += "\""+dat[0] + "\": {english: \""+dat[1]+"\", czech: \""+dat[2]+"\" },"
 
 fullText = """import { LanguageType } from "../types";
 
@@ -16,9 +16,9 @@ const data: { [key: string]: { [key: string]: string } } = {
 };
 
 export const Translate = (txt: string, lang: LanguageType): string => {
-	txt = `${txt}`.toLowerCase();
-	if (data[txt] !== undefined) {
-		return data[txt][lang];
+	const newtxt = `${txt}`.toLowerCase();
+	if (data[newtxt] !== undefined) {
+		return data[newtxt][lang];
 	}
 	return txt;
 };

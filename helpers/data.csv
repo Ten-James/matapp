@@ -4,3 +4,20 @@ users,Users,Uživatelé
 uname,Username,Uživatelské jméno
 name,Name,Název
 branchname,Branch name,Název pobočky
+password,Password,Heslo
+access,Access,Práva
+branches,Branches,Pobočky
+tables,Tables,Tabulky
+ingreidents,Ingreidents,Ingredience
+dishes,Dishes,Pokrmy
+information,Information,Informace
+reports,Reports,Účtenky
+storage,Storage,Sklad
+branches storage,Branches Storage,Sklad poboček
+location,Location,Lokace
+all,All,Všechny
+category,Category,Katergorie
+add,Add,Přidat
+edit,Edit,Upravit
+delete,Delete,Odstranit
+filter category,Filter Category, Filtrace Katergorií

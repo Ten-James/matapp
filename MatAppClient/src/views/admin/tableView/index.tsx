@@ -155,15 +155,15 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
 			<div className='d-buttons'>
 				<Button onClick={() => setDialog("add")}>
 					<span className='material-symbols-outlined'>add</span>
-					Add
+					{Translate("add", language)}
 				</Button>
 				<Button>
 					<span className='material-symbols-outlined'>edit</span>
-					Edit
+					{Translate("edit", language)}
 				</Button>
 				<Button>
 					<span className='material-symbols-outlined'>delete</span>
-					Delete
+					{Translate("delete", language)}
 				</Button>
 			</div>
 		</div>
