@@ -54,3 +54,9 @@ h1 {
     width: 88px;
     height: 15px;
 }
+
+.lang-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+}

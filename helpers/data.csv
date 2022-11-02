@@ -8,7 +8,7 @@ password,Password,Heslo
 access,Access,Práva
 branches,Branches,Pobočky
 tables,Tables,Tabulky
-ingreidents,Ingreidents,Ingredience
+ingredients,Ingredients,Ingredience
 dishes,Dishes,Pokrmy
 information,Information,Informace
 reports,Reports,Účtenky
@@ -20,4 +20,13 @@ category,Category,Katergorie
 add,Add,Přidat
 edit,Edit,Upravit
 delete,Delete,Odstranit
-filter category,Filter Category, Filtrace Katergorií
+filter category,Filter Category,Filtrace Katergorií
+count,Count,Počet
+search,Search,Vyhledat
+cost,Cost,Cena
+allergens,Allergens,Alergeny
+current server info,Current server info,Aktuálni Info serveru
+updated time,Updated time,Čas aktualizace
+memory usage,Memory usage,Využití paměti
+current clients,Current clients, Aktuální Uživatelé
+update,Update,Čas provozu

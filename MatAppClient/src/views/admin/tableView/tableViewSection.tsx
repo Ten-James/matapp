@@ -2,6 +2,7 @@ import { useContext, useState, useEffect, useMemo } from "react";
 import { context } from "../../../App";
 import { AdminContext } from "../admin";
 import ParamButtons from "./paramButtons";
+import { Translate } from "../../../misc/transcripter";
 import { textUpperFirst } from "../../../misc/utils";
 
 import "./tableView.css";
@@ -36,7 +37,7 @@ const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
 
 const TableViewSection = <T extends BaseProp>({ data, setData, socketString, displayName }: Props<T>) => {
 	const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
-	const { socket } = useContext(context);
+	const { socket, language } = useContext(context);
 
 	const [show, setShow] = useState(data);
 	const [sort, setSort] = useState<Sort[]>([{ name: "id", type: "number" }]);
@@ -56,10 +57,12 @@ const TableViewSection = <T extends BaseProp>({ data, setData, socketString, dis
 
 	useMemo(() => {
 		if (data.length === 0) return setShow([]);
-		let tmp = data;
-		console.log(tmp);
-		tmp.forEach((x) => {
-			x.data.filter(filter.filterMatch).sort(filter.sort);
+		let tmp = [];
+		data.forEach((x) => {
+			tmp.push({
+				...x,
+				data: x.data.filter(filter.filterMatch).sort(filter.sort),
+			});
 		});
 		setShow(tmp);
 	}, [filter, data]);
@@ -80,13 +83,13 @@ const TableViewSection = <T extends BaseProp>({ data, setData, socketString, dis
 
 		// @ts-ignore
 		data.forEach((x) => x.data.forEach((e) => tmp.push(e.category)));
-		tmp.filter((e, i, a) => a.indexOf(e) === i);
+		tmp = [...new Set(tmp)];
 		setCategories(tmp);
 	}, [data]);
 
 	return (
 		<div className='d-grid'>
-			<h1 className='d-name'>{displayName}</h1>
+			<h1 className='d-name'>{Translate(displayName, language)}</h1>
 			<div className='d-parameters'>
 				<ParamButtons filter={filter} setFilter={setFilter} showCategory={categories.length > 1} categories={categories} />
 			</div>
@@ -100,10 +103,10 @@ const TableViewSection = <T extends BaseProp>({ data, setData, socketString, dis
 							gridTemplateColumns: "repeat(" + Object.keys(show[0]).length.toString() + ", 1fr)",
 						}}
 					>
-						{Object.keys(show[0]).map((e) => (
+						{Object.keys(show[0].data[0]).map((e) => (
 							<div key={e}>
 								<div className='d-table-header-label'>
-									{textUpperFirst(e)}
+									{textUpperFirst(Translate(e, language))}
 									<span
 										className='material-symbols-outlined d-table-header-asc'
 										onClick={() => {
@@ -171,7 +174,7 @@ const TableViewSection = <T extends BaseProp>({ data, setData, socketString, dis
 							>
 								{Object.keys(e).map((f) => (
 									// @ts-ignore
-									<div key={f}>{e[f]}</div>
+									<div key={f}>{Translate(e[f])}</div>
 								))}
 							</Panel>
 						))}

@@ -4,6 +4,7 @@ import { Panel } from "../../../components/panel";
 import { context } from "../../../App";
 import "./information.css";
 import { Information } from "../../../types";
+import { Translate } from "../../../misc/transcripter";
 
 const InformationView = () => {
 	const [Info, setInfo] = useState<Information>({
@@ -15,10 +16,11 @@ const InformationView = () => {
 	});
 	const sqlRef = useRef<HTMLInputElement | null>(null);
 
-	const { socket } = useContext(context);
+	const { socket, language } = useContext(context);
 	socket.on("info", (data) => {
 		setInfo(data);
 	});
+
 	useEffect(() => {
 		socket.emit("get_info");
 		const int = setInterval(() => {
@@ -26,15 +28,32 @@ const InformationView = () => {
 		}, 5000);
 		return () => clearInterval(int);
 	}, []); // eslint-disable-line react-hooks/exhaustive-deps
+
 	return (
 		<div className='s-grid'>
-			<h1 className='s-name'>Information</h1>
+			<h1 className='s-name'>{Translate("information", language)}</h1>
 			<Panel class='s-status'>
-				<h2>Current Server info:</h2>
-				{Info.uptime && <div>Update: {Info.uptime}</div>}
-				{Info.memory && <div>Memory Usage: {Info.memory}</div>}
-				{Info.clients && <div>Current Clients: {Info.clients}</div>}
-				{Info.time && <div>Updated: {Info.time}</div>}
+				<h2>{Translate("Current Server info", language)}:</h2>
+				{Info.uptime && (
+					<div>
+						{Translate("Update", language)}: {Info.uptime}
+					</div>
+				)}
+				{Info.memory && (
+					<div>
+						{Translate("Memory Usage", language)}: {Info.memory}
+					</div>
+				)}
+				{Info.clients && (
+					<div>
+						{Translate("Current Clients", language)}: {Info.clients}
+					</div>
+				)}
+				{Info.time && (
+					<div>
+						{Translate("Updated time", language)}: {Info.time}
+					</div>
+				)}
 			</Panel>
 			<Panel class='s-data'>
 				<h2>Server data log:</h2>

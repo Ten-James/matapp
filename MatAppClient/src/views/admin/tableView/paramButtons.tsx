@@ -18,7 +18,7 @@ const ParamButtons = <T extends BaseProp>({ filter, setFilter, showCategory, cat
 		<>
 			<span className='material-symbols-outlined'>search</span>
 			<input
-				placeholder='Search'
+				placeholder={Translate("search", language)}
 				id='search'
 				type='text'
 				ref={searchRef}
@@ -66,7 +66,7 @@ const ParamButtons = <T extends BaseProp>({ filter, setFilter, showCategory, cat
 						}}
 					>
 						<option key={-1} value=''>
-							All
+							{Translate("all", language)}
 						</option>
 						{categories.map((e, index) => (
 							<option key={index} value={e}>
