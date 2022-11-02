@@ -25,26 +25,30 @@ const sendInfo = (socket: Socket) => {
 	const min = Math.floor(sec / 60);
 	sec -= min * 60;
 	const uptime = `${days} days, ${hrs} hours, ${min} minutes, ${Math.floor(sec)} seconds`;
-	socket.emit("info", {
-		uptime: uptime,
-		clients: io.engine.clientsCount,
-		memory: Math.floor(process.memoryUsage().heapTotal / 1024 / 1024) + "MB",
-		time: new Date().toLocaleTimeString(),
-		data: GetLog(),
-	});
+
+	connection.query(
+		`SELECT SUM(data_length + index_length) / 1024 / 1024 AS \"size\", SUM(TABLE_ROWS) AS \"rows\"
+	FROM information_schema.TABLES 
+	WHERE table_schema = "matapp" 
+	GROUP BY table_schema;
+	`,
+		(err, result) => {
+			if (err) throw err;
+			const databaseData = result[0];
+			socket.emit("info", {
+				uptime: uptime,
+				clients: io.engine.clientsCount,
+				memory: Math.floor(process.memoryUsage().heapTotal / 1024 / 1024) + "MB",
+				time: new Date().toLocaleTimeString(),
+				data: GetLog(),
+				database: [databaseData.size, databaseData.rows],
+			});
+		}
+	);
 };
 
 io.on("connection", (socket: Socket) => {
 	ProcessTables(socket);
-	socket.on("sql", ({ sql }: { sql: string }) => {
-		Log(socket.handshake.address, sql);
-		connection.query(sql, (err, result) => {
-			if (err) Log(socket.handshake.address, `${err}`);
-			else Log(socket.handshake.address, JSON.stringify(result));
-			sendInfo(socket);
-		});
-	});
-
 	socket.on("get_info", () => {
 		sendInfo(socket);
 	});

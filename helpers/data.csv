@@ -30,3 +30,5 @@ updated time,Updated time,Čas aktualizace
 memory usage,Memory usage,Využití paměti
 current clients,Current clients, Aktuální Uživatelé
 update,Update,Čas provozu
+database size,Database Size,Velikost Databáze
+database rows,Database Rows,Počet řádků v Databázi

@@ -13,7 +13,7 @@
     "typescript": "^4.8.4"
   },
   "scripts": {
-    "start": "nodemon --exec ts-node index.ts",
+    "dev": "nodemon --exec ts-node index.ts",
     "build": "yarn tsc && node dist/index.js"
   },
   "devDependencies": {

@@ -13,8 +13,8 @@ const InformationView = () => {
 		clients: 0,
 		time: "",
 		data: [""],
+		database: [""],
 	});
-	const sqlRef = useRef<HTMLInputElement | null>(null);
 
 	const { socket, language } = useContext(context);
 	socket.on("info", (data) => {
@@ -60,17 +60,19 @@ const InformationView = () => {
 				<div>{Info.data && Info.data.map((e) => <div key={Info.data.indexOf(e)}>{e}</div>)}</div>
 			</Panel>
 			{
-				<Panel class='s-login'>
-					<h2>Direct SQL Commands</h2>
-					<input ref={sqlRef} type='text' placeholder='Sql' />
-					<button
-						onClick={() => {
-							if (!sqlRef.current) return;
-							socket.emit("sql", { sql: sqlRef.current.value });
-						}}
-					>
-						send
-					</button>
+				<Panel class='s-database-info'>
+					<h2>Database Info:</h2>
+
+					{Info.database && (
+						<>
+							<div>
+								{Translate("Database Size", language)}: {Info.database[0]} MB
+							</div>
+							<div>
+								{Translate("Database Rows", language)}: {Info.database[1]}
+							</div>
+						</>
+					)}
 				</Panel>
 			}
 		</div>

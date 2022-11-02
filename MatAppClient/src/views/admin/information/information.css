@@ -23,6 +23,6 @@
     overflow-y: scroll;
     height: 90%;
 }
-.s-login {
+.s-database-info {
     grid-area: login;
 }

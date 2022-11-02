@@ -33,6 +33,7 @@ export interface Information {
 	clients: number;
 	time: string;
 	data: string[];
+	database: string[];
 }
 export interface FilterData<T extends BaseProp> {
 	filterMatch: (x: T, index?: number) => boolean;

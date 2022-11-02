@@ -1,8 +1,9 @@
 import { Panel, Button } from "../../../components/panel";
 import { useContext, useEffect, useState, useRef } from "react";
-import { TextAttributeDialog } from "./components";
+import { TextAttributeDialog, TextAttributeWithCombo } from "./components";
 import "./style.css";
 import { AdminContext } from "../admin";
+import * as Handlers from "./handlers";
 
 interface BaseDialogProp {
 	header: string;
@@ -14,18 +15,8 @@ const BaseDialog = ({ header, children }: BaseDialogProp) => {
 	const [translateY, setTranslateY] = useState("-100vh");
 	const { setDialog } = useContext(AdminContext);
 
-	const handleHide = (e) => {
-		e.preventDefault();
-		setTranslateY("-100vh");
-		setTimeout(() => setDialog("hidden"), 500);
-	};
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		if (!form.current) return;
-		console.log(form);
-		setTranslateY("-100vh");
-		setTimeout(() => setDialog("hidden"), 500);
-	};
+	const handleHide = (e: Event) => Handlers.hide(e, setTranslateY, setDialog);
+	const handleSubmit = (e: Event) => Handlers.submit(e, form.current, setTranslateY, setDialog);
 
 	useEffect(() => {
 		setTimeout(() => {
@@ -54,6 +45,8 @@ export const AddDialog = () => {
 		<BaseDialog header='Add Ingredient'>
 			<TextAttributeDialog name='name' required />
 			<TextAttributeDialog name='cost' isNumber />
+			<TextAttributeWithCombo name='text' isNumber combo={["ks", "ml"]} />
+			<TextAttributeDialog name='category' required />
 			{error && <p className='error'>{error}</p>}
 		</BaseDialog>
 	);

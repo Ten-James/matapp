@@ -13,7 +13,31 @@ export const TextAttributeDialog = ({ name, required = false, isNumber }: TextAt
 			<label htmlFor={name}>
 				{textUpperFirst(name)} {required && "*"}
 			</label>
-			<input id={name} type={isNumber ? "number" : "text"} ref={ref} />
+			<input id={name} name={name} type={isNumber ? "number" : "text"} ref={ref} />
+		</div>
+	);
+};
+
+interface TextAttributeDialogWithComboProp extends TextAttributeDialogProp {
+	combo: string[];
+}
+
+export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo }: TextAttributeDialogWithComboProp) => {
+	const ref = useRef<HTMLInputElement | null>(null);
+	return (
+		<div>
+			<label htmlFor={name + "-text"}>
+				{textUpperFirst(name)} {required && "*"}
+			</label>
+			<input id={name + "-text"} name={name + "-text"} type={isNumber ? "number" : "text"} ref={ref} />
+			<select id={name + "-combo"} name={name + "-combo"}>
+				{combo &&
+					combo.map((x, ind) => (
+						<option key={ind} value={x}>
+							{x}
+						</option>
+					))}
+			</select>
 		</div>
 	);
 };
