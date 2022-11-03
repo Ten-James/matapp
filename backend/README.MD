@@ -10,3 +10,27 @@ Also use process memory to store data.
 - [mysql](https://www.mysql.com/)
 - [md5](https://www.npmjs.com/package/md5)
 - [nodemon](https://nodemon.io/)
+
+## Installation
+
+Install [Node.js](https://nodejs.org/en/)
+Then run the following commands:
+
+```bash
+npm install
+```
+
+## Usage
+
+Development version: (uses nodemon and ts-node)
+
+```bash
+npm run dev
+```
+
+Production version: (better performance)
+
+```bash
+npm run build
+node dist/index.js
+```

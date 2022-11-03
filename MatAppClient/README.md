@@ -13,3 +13,45 @@ generated using vite
 - [socket.io-client](https://socket.io/)
 - [react-transition-group](https://reactcommunity.org/react-transition-group/)
 - [electron](https://www.electronjs.org/)
+
+## Installation
+
+Install [Node.js](https://nodejs.org/en/)
+
+Then run the following commands:
+
+```bash
+npm install
+```
+
+## Usage
+
+### Web
+
+Development version: (uses vite)
+
+```bash
+npm run dev
+```
+
+Production version:
+
+```bash
+npm run build
+```
+
+### Electron
+
+Development version: (need to run web version)
+
+```bash
+npm run dev
+npm run electron:dev
+```
+
+Production version:
+
+```bash
+npm run build
+npm run electron:build
+```
