@@ -37,7 +37,7 @@ with open('../readme.md', 'w') as readme:
         if content[ind2].startswith('#'):
             count = content[ind2].count('#') - 1
             replaced1 = content[ind2].replace("#","").replace("\n","")[1::]
-            replaced = content[ind2].replace("#","").replace("\n","").replace(" ","-").lower()
+            replaced = content[ind2].replace("#","").replace("\n","").replace(" ","-").lower()[1::]
             readme.write(f'{"  " * count}* [{replaced1}](readme.md#{replaced})\n')
 
     while index < len(content):
