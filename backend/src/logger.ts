@@ -1,15 +1,9 @@
 const fs = require("fs");
+import { TypeLogType } from "./types";
+let stack: TypeLogType[] = [];
 
-interface Log {
-	time: string;
-	ip: string;
-	message: string;
-}
-
-let stack: Log[] = [];
-
-const Log = (ip: string, message: string): void => {
-	const log = {
+const writeLog = (ip: string, message: string): void => {
+	const log: TypeLogType = {
 		ip: ip,
 		message: message,
 		time: new Date().toLocaleTimeString(),
@@ -32,8 +26,8 @@ const Log = (ip: string, message: string): void => {
 	}
 };
 
-const GetLog = (): string[] => {
+const getLogsAsString = (): string[] => {
 	return stack.map((log) => `[${log.time}][${log.ip}] ${log.message}`);
 };
 
-export { Log, GetLog };
+export { writeLog, getLogsAsString };

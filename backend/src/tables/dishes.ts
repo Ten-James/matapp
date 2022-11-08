@@ -1,22 +1,21 @@
-import { isTemplateExpression } from "typescript";
+import { MysqlError } from "mysql";
+import { TypeDish, TypeDishIngredient } from "../types";
 import connection from "../database";
-import { Log } from "../logger";
-
-//TODO add types
+import { writeLog } from "../logger";
 
 const processDishes = (socket) => {
 	socket.on("get_dishes", () => {
-		Log(socket.handshake.address, "get_dishes");
+		writeLog(socket.handshake.address, "get_dishes");
 		connection.query(
 			"SELECT d.id, d.name, d.cost, dc.name as 'category' FROM dishes d LEFT JOIN dish_categories dc ON d.category_id = dc.id",
-			(err, result) => {
+			(err: MysqlError, result: TypeDish[]) => {
 				if (err) throw err;
-				let data = [];
+				let data: TypeDish[] = [];
 				result.forEach((x) => {
 					connection.query(
 						"SELECT CONCAT(di.count,'x ', i.name) as 'name', di.line FROM dish$ingredients di LEFT JOIN ingredients i ON di.ingredient_id = i.id WHERE dish_id = " +
 							x.id,
-						(err2, result2) => {
+						(err2: MysqlError, result2: TypeDishIngredient[]) => {
 							if (err2) throw err2;
 							const lines = [...new Set(result2.map((x) => x.line))];
 							const ingredients = lines.map((line) =>

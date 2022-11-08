@@ -1,17 +1,16 @@
 import connection from "../database";
-import { Log } from "../logger";
-import { User, LoginProps } from "../types";
+import { writeLog } from "../logger";
+import { TypeUser, TypeLoginProps } from "../types";
 import { MysqlError } from "mysql";
 import md5 from "md5";
 import { Socket } from "socket.io";
 
-// TODO add Types
 const processUsers = (socket: Socket) => {
 	socket.on("get_users", () => {
-		Log(socket.handshake.address, "get_users");
+		writeLog(socket.handshake.address, "get_users");
 		connection.query(
 			"SELECT u.id, u.name, u.access, b.name as 'branchName' FROM users u LEFT JOIN branches b on u.branch_id = b.id",
-			(err, result) => {
+			(err: MysqlError, result: TypeUser[]) => {
 				if (err) throw err;
 				socket.emit(
 					"users",
@@ -27,11 +26,11 @@ const processUsers = (socket: Socket) => {
 		);
 	});
 
-	socket.on("login", ({ name, pass }: LoginProps): void => {
-		Log(socket.handshake.address, "login attempt");
+	socket.on("login", ({ name, pass }: TypeLoginProps): void => {
+		writeLog(socket.handshake.address, "login attempt");
 		connection.query(
 			`SELECT name, id, branchId, access FROM users WHERE name = '${name}' AND password = '${md5(pass)}'`,
-			(err: MysqlError, result: User[]): void => {
+			(err: MysqlError, result: TypeUser[]): void => {
 				if (err) throw err;
 				if (result.length === 0) {
 					socket.emit("login", { status: false });
