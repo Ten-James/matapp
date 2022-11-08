@@ -4,9 +4,21 @@ import { Routes, Route } from "react-router-dom";
 
 import InformationView from "./information/information";
 import TableView from "./tableView/";
+import TableViewDishes from "./tableView/tableViewDishes";
 import Navigation from "./navigation";
 import { GenerateFries } from "../../misc/fries";
-import { AdminContextType, Ingredient, User, UserDisplay, DialogType, Branch, BaseBranchProps, BranchIngredients } from "../../types";
+import {
+	AdminContextType,
+	Ingredient,
+	User,
+	UserDisplay,
+	DialogType,
+	Branch,
+	BaseBranchProps,
+	BranchIngredients,
+	BranchOrders,
+	Dishes,
+} from "../../types";
 import { AddDialog } from "./dialog";
 import TableViewSection from "./tableView/tableViewSection";
 
@@ -27,9 +39,11 @@ const Admin = () => {
 	const socket = useContext(context).socket;
 
 	const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+	const [dishes, setDishes] = useState<Dishes[]>([]);
 	const [users, setUsers] = useState<UserDisplay[]>([]);
 	const [branches, setBranches] = useState<Branch[]>([]);
 	const [branchesStorages, setBranchesStorages] = useState<BaseBranchProps<BranchIngredients>[]>([]);
+	const [branchesOrders, setBranchesOrders] = useState<BaseBranchProps<BranchOrders>[]>([]);
 	const [dialog, setDialog] = useState<DialogType>("hidden");
 
 	const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
@@ -104,7 +118,22 @@ const Admin = () => {
 							/>
 						}
 					/>
+					<Route
+						path='/branches/orders'
+						element={
+							<TableViewSection
+								data={branchesOrders}
+								setData={setBranchesOrders}
+								displayName='Branches Orders'
+								socketString='branches_orders'
+							/>
+						}
+					/>
 
+					<Route
+						path='table/dishes'
+						element={<TableViewDishes data={dishes} setData={setDishes} displayName='Dishes' socketString='dishes' />}
+					/>
 					<Route
 						path='table/ingredients'
 						element={

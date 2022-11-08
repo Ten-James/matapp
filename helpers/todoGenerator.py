@@ -1,7 +1,6 @@
 # Write todo list to readme.md from all files in the project
 
 import os
-import re
 
 # Get all files in the project
 sourceFiles = []
@@ -61,7 +60,6 @@ with open('../readme.md', 'w') as readme:
     
     while index < len(content):
         if content[index].startswith('#'):
-            index += 1
             break
         index += 1
     

@@ -1,8 +1,9 @@
 import connection from "../database";
 import { Log } from "../logger";
 import { Ingredient } from "../types";
+import { Socket } from "socket.io";
 
-const processIngredients = (socket) => {
+const processIngredients = (socket: Socket) => {
 	socket.on("get_ingredients", () => {
 		Log(socket.handshake.address, "get_ingredients");
 		connection.query(
@@ -11,7 +12,7 @@ const processIngredients = (socket) => {
       LEFT JOIN ingredient_allergens ia ON i.id = ia.ingredient_id
       LEFT JOIN ingredient_text_extensions ie ON i.ingredient_text_extension_id = ie.id
       GROUP BY i.id, i.name, i.cost, t.name ,i.text , ie.text`,
-			(err, result) => {
+			(err, result: Ingredient[]) => {
 				if (err) throw err;
 				result = result.map((x: Ingredient) => {
 					x.allergens = x.allergens !== "unset" ? x.allergens.split(" ").sort().join(" ") : x.allergens;

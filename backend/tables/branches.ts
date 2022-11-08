@@ -1,6 +1,8 @@
 import connection from "../database";
 import { Log } from "../logger";
 
+//TODO add types
+
 const processBranches = (socket) => {
 	socket.on("get_branches", () => {
 		Log(socket.handshake.address, "get_branches");

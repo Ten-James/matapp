@@ -29,7 +29,7 @@
 }
 
 .d-table-header > div{
-    font-weight: 600;
+    font-weight: 600 ;
     font-size: 1.3em;
     padding: 0 1em;
     display: grid;

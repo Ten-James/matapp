@@ -3,8 +3,10 @@ import { Log } from "../logger";
 import { User, LoginProps } from "../types";
 import { MysqlError } from "mysql";
 import md5 from "md5";
+import { Socket } from "socket.io";
 
-const processUsers = (socket) => {
+// TODO add Types
+const processUsers = (socket: Socket) => {
 	socket.on("get_users", () => {
 		Log(socket.handshake.address, "get_users");
 		connection.query(

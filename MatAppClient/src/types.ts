@@ -45,11 +45,17 @@ export interface BaseProp {
 }
 
 export interface Ingredient extends BaseProp {
-	id: number;
 	name: string;
 	text: string;
 	category: string;
 	allergens: string;
+}
+
+export interface Dishes extends BaseProp {
+	name: string;
+	cost: string;
+	ingredients: string[];
+	category: string;
 }
 
 export interface User extends BaseProp {
@@ -77,7 +83,14 @@ export interface BranchIngredients extends BaseProp {
 	category: string;
 	count: number;
 }
+export interface BranchOrders extends BaseProp {
+	date: string;
+	dishes: string;
+	cost: number;
+	type: string;
+}
 
 export interface BaseBranchProps<T extends BaseProp> extends Branch {
+	sessionTime?: number;
 	data: T[];
 }

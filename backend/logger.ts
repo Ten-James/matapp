@@ -1,3 +1,5 @@
+const fs = require("fs");
+
 interface Log {
 	time: string;
 	ip: string;
@@ -13,6 +15,10 @@ const Log = (ip: string, message: string): void => {
 		time: new Date().toLocaleTimeString(),
 	};
 	stack.push(log);
+	// append to file
+	fs.appendFile(`logs/${new Date().toLocaleDateString()}.log`, `[${log.time}][${log.ip}] ${log.message}\r`, (err) => {
+		if (err) throw err;
+	});
 	if (stack.length > 1) {
 		if (
 			stack[stack.length - 2].time === log.time &&

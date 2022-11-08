@@ -39,7 +39,7 @@ const Navigation = ({ userAccess }: NavigationProps) => {
 							<LogoSVG class='small' />
 						</div>
 						<div style={{ transform: Expanded ? "translateX(1em)" : "translateX(-0.2em)" }}>
-							<SubBetterLink to='branches' expandedText={Translate("Branches", language)} icon='store' count={2}>
+							<SubBetterLink to='branches' expandedText={Translate("Branches", language)} icon='store' count={3}>
 								<BetterLink
 									to='branches/reports'
 									expandedText={Translate("Reports", language)}
@@ -50,6 +50,12 @@ const Navigation = ({ userAccess }: NavigationProps) => {
 									to='branches/storage'
 									expandedText={Translate("Storage", language)}
 									icon='warehouse'
+									onClick={() => setExpanded(false)}
+								/>
+								<BetterLink
+									to='branches/orders'
+									expandedText={Translate("Orders", language)}
+									icon='list_alt'
 									onClick={() => setExpanded(false)}
 								/>
 							</SubBetterLink>
