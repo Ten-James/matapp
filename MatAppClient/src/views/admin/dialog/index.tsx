@@ -1,7 +1,13 @@
 import { useContext, useEffect, useRef, useState } from "react";
+import { context } from "../../../App";
 import { Button, Panel } from "../../../components/panel";
+import { Translate } from "../../../misc/transcripter";
 import { AdminContext } from "../admin";
-import { TextAttributeDialog, TextAttributeWithCombo } from "./components";
+import {
+  ComboBoxAttributeDialog,
+  TextAttributeDialog,
+  TextAttributeWithCombo,
+} from "./components";
 import * as Handlers from "./handlers";
 import "./style.css";
 
@@ -11,6 +17,7 @@ interface BaseDialogProp {
 }
 
 const BaseDialog = ({ header, children }: BaseDialogProp) => {
+  const { language } = useContext(context);
   const form = useRef<HTMLFormElement | null>(null);
   const [translateY, setTranslateY] = useState("-100vh");
   const { setDialog } = useContext(AdminContext);
@@ -28,11 +35,13 @@ const BaseDialog = ({ header, children }: BaseDialogProp) => {
   return (
     <form ref={form} className="dialog-background">
       <Panel class="dialog" style={{ transform: `translateY(${translateY})` }}>
-        <h1>{header}</h1>
-        <div className="container">{children}</div>
-        <div className="buttons">
-          <Button onClick={handleHide}>Cancel</Button>
-          <Button onClick={handleSubmit}>Confirm</Button>
+        <h1 className="dialog-header">{Translate(header, language)}</h1>
+        <div className="dialog-content">{children}</div>
+        <div className="dialog-buttons">
+          <Button onClick={handleHide}>{Translate("cancel", language)}</Button>
+          <Button onClick={handleSubmit}>
+            {Translate("confirm", language)}
+          </Button>
         </div>
       </Panel>
     </form>
@@ -45,9 +54,24 @@ export const AddDialog = () => {
   return (
     <BaseDialog header="Add Ingredient">
       <TextAttributeDialog name="name" required />
+      <ComboBoxAttributeDialog
+        name="category"
+        required
+        combo={["ahoj", "veta", "beta", "gamma", "delta", "test"]}
+      />
       <TextAttributeDialog name="cost" isNumber />
-      <TextAttributeWithCombo name="text" isNumber combo={["ks", "ml"]} />
-      <TextAttributeDialog name="category" required />
+      <TextAttributeWithCombo
+        name="text"
+        isNumber
+        required
+        combo={["ks", "ml"]}
+      />
+      <TextAttributeDialog name="name2" required />
+      <TextAttributeDialog name="name3" required />
+      <TextAttributeDialog name="name4" required />
+      <TextAttributeDialog name="name5" required />
+      <TextAttributeDialog name="name6" required />
+
       {error && <p className="error">{error}</p>}
     </BaseDialog>
   );

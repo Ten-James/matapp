@@ -11,3 +11,99 @@
 .dialog-background + div {
   filter: blur(10px);
 }
+.dialog-header {
+  margin: 0;
+  font-weight: bolder;
+}
+.dialog-buttons {
+  display: flex;
+  justify-content: space-around;
+}
+.dialog-buttons > * {
+  height: 4rem;
+  width: 8rem;
+  border-radius: 2rem;
+  font-size: 1.3em;
+}
+.dialog-content {
+  padding: 2rem 1rem;
+  max-height: 25em;
+  overflow-y: scroll;
+}
+
+.combo-input .combo-select {
+  position: absolute;
+  display: none;
+  top: 100%;
+  right: 0;
+  width: 100%;
+  max-height: 5em;
+  overflow-y: scroll;
+}
+
+.combo-select > input[type='button'] {
+  display: block;
+}
+.combo-input:focus-within input[type='text'] {
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+}
+
+.combo-input:focus-within .combo-select {
+  display: block;
+}
+
+.dialog-line {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0.5rem 0;
+}
+.dialog-line > label {
+  font-size: 1.5em;
+  font-weight: regular;
+}
+.required {
+  font-weight: bold;
+}
+.dialog-line > div {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  width: 60%;
+}
+.dialog-line > div > input {
+  height: 2em;
+}
+
+.dialog-line > div > select {
+  height: 2em;
+}
+
+.text-with-combo > div > input
+{
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.text-with-combo > div > select {
+  border-radius: 0 0.5rem 0.5rem 0;
+}
+
+.dialog-line input {
+  font-weight: normal;
+  font-family: "Cairo";
+  width: 100%;
+  font-size: 1.2em;
+  padding: 0 0.5rem;
+  border-radius: 0.5rem;
+  border: unset;
+}
+.dialog select {
+  padding: 0;
+  margin: 0;
+  border-radius: 0.5rem;
+  font-size: 1.2em;
+  border: unset;
+}
