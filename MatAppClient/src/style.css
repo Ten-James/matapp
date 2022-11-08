@@ -1,6 +1,6 @@
 /* #231f20, #db2955, #6bb0b3, #d782ba, #efe6dd */
 
-@import url("https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap');
 
 * {
   margin: 0;
@@ -12,7 +12,7 @@ body {
   height: 100vh;
   margin: 0;
   overflow-y: hidden;
-  font-family: "Cairo";
+  font-family: 'Cairo';
   background-color: #efe6dd;
 }
 

@@ -1,12 +1,13 @@
-import "./logo.css";
+import './logo.css';
 
+// TODO: class should be choose value not string
 interface Props {
   class?: string;
 }
 
 const LogoSVG = (props: Props) => {
   return (
-    <div className={"logo-cont" + props.class}>
+    <div className={'logo-cont' + props.class}>
       <svg
         className="logo"
         xmlns="http://www.w3.org/2000/svg"

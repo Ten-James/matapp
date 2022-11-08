@@ -1,7 +1,7 @@
-import { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { context } from "../App";
-import LogoSVG from "../components/logo";
+import { useContext, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { context } from '../App';
+import LogoSVG from '../components/logo';
 const ErrorPage = () => {
   const setLoading = useContext(context).setLoading;
   useEffect(() => {

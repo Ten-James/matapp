@@ -35,8 +35,8 @@
   margin: 1em auto;
   display: grid;
   grid-template:
-    "a a b"
-    "c c b"
+    'a a b'
+    'c c b'
     / 1fr 1fr 1fr;
 }
 .branch-name {

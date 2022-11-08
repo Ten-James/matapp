@@ -1,14 +1,14 @@
-import { useContext, useEffect, useMemo, useState } from "react";
-import { context } from "../../../App";
-import { Translate } from "../../../misc/transcripter";
-import { textUpperFirst } from "../../../misc/utils";
-import { AdminContext } from "../admin";
-import ParamButtons from "./paramButtons";
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { context } from '../../../App';
+import { Translate } from '../../../misc/transcripter';
+import { textUpperFirst } from '../../../misc/utils';
+import { AdminContext } from '../admin';
+import ParamButtons from './paramButtons';
 
-import "./tableView.css";
+import './tableView.css';
 
-import { Button, Panel } from "../../../components/panel";
-import { BaseBranchProps, BaseProp, FilterData, Sort } from "../../../types";
+import { Button, Panel } from '../../../components/panel';
+import { BaseBranchProps, BaseProp, FilterData, Sort } from '../../../types';
 
 interface Props<T extends BaseProp> {
   data: BaseBranchProps<T>[];
@@ -19,14 +19,14 @@ interface Props<T extends BaseProp> {
 
 const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
   if (ord) {
-    if (t === "string") {
+    if (t === 'string') {
       // @ts-ignore
       return (a: T, b: T): number => a[e].localeCompare(b[e]);
     }
     // @ts-ignore
     return (a: T, b: T): number => a[e] - b[e];
   } else {
-    if (t === "string") {
+    if (t === 'string') {
       // @ts-ignore
       return (a: T, b: T): number => b[e].localeCompare(a[e]);
     }
@@ -35,17 +35,14 @@ const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
   }
 };
 
-const TableViewSection = <T extends BaseProp>({
-  data,
-  setData,
-  socketString,
-  displayName,
-}: Props<T>) => {
+// TODO this file have lots of common with index.tsx and should be cleaned up
+
+const TableViewSection = <T extends BaseProp>({ data, setData, socketString, displayName }: Props<T>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
   const { socket, language } = useContext(context);
 
   const [show, setShow] = useState(data);
-  const [sort, setSort] = useState<Sort[]>([{ name: "id", type: "number" }]);
+  const [sort, setSort] = useState<Sort[]>([{ name: 'id', type: 'number' }]);
   const [categories, setCategories] = useState<string[]>([]);
 
   const [filter, setFilter] = useState<FilterData<T>>({
@@ -87,7 +84,7 @@ const TableViewSection = <T extends BaseProp>({
       Object.keys(data[0].data[0]).map<Sort>((e) => ({
         name: e,
         type: typeof data[0].data[0][e],
-      }))
+      })),
     );
     let tmp = [];
 
@@ -112,11 +109,10 @@ const TableViewSection = <T extends BaseProp>({
         {show.length > 0 && (
           <div
             style={{
-              display: "grid",
-              width: "85%",
-              margin: "0.3em auto",
-              gridTemplateColumns:
-                "repeat(" + Object.keys(show[0]).length.toString() + ", 1fr)",
+              display: 'grid',
+              width: '85%',
+              margin: '0.3em auto',
+              gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr)',
             }}
           >
             {Object.keys(show[0].data[0]).map((e) => (
@@ -154,43 +150,32 @@ const TableViewSection = <T extends BaseProp>({
       <div
         className="d-table-content"
         style={{
-          overflowY: "scroll",
-          height: "100%",
+          overflowY: 'scroll',
+          height: '100%',
         }}
       >
         {show.map((x) => (
           <div key={x.id}>
             <h2
               style={{
-                display: "grid",
-                width: "85%",
-                padding: "0.5em 1em",
-                margin: "0.4em auto",
+                display: 'grid',
+                width: '85%',
+                padding: '0.5em 1em',
+                margin: '0.4em auto',
               }}
             >
               {x.name} {x.location}
             </h2>
             {x.data.map((e) => (
               <Panel
-                onClick={() =>
-                  setSelectedIDs(
-                    selectedIDs.includes(e.id)
-                      ? selectedIDs.filter((x) => x !== e.id)
-                      : [...selectedIDs, e.id]
-                  )
-                }
+                onClick={() => setSelectedIDs(selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id])}
                 style={{
-                  display: "grid",
-                  width: "85%",
-                  gridTemplateColumns:
-                    "repeat(" +
-                    Object.keys(show[0]).length.toString() +
-                    ", 1fr)",
-                  outline: selectedIDs.includes(e.id)
-                    ? "1px solid #6bb0b3"
-                    : "unset",
-                  padding: "0.5em 1em",
-                  margin: "0.4em auto",
+                  display: 'grid',
+                  width: '85%',
+                  gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr)',
+                  outline: selectedIDs.includes(e.id) ? '1px solid #6bb0b3' : 'unset',
+                  padding: '0.5em 1em',
+                  margin: '0.4em auto',
                 }}
                 key={e.id}
                 class="inset"
@@ -205,7 +190,7 @@ const TableViewSection = <T extends BaseProp>({
         ))}
       </div>
       <div className="d-buttons">
-        <Button onClick={() => setDialog("add")}>
+        <Button onClick={() => setDialog('add')}>
           <span className="material-symbols-outlined">add</span>
           Add
         </Button>

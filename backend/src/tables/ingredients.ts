@@ -1,12 +1,12 @@
-import { MysqlError } from "mysql";
-import { Socket } from "socket.io";
-import connection from "../database";
-import { writeLog } from "../logger";
-import { TypeIngredient } from "../types";
+import { MysqlError } from 'mysql';
+import { Socket } from 'socket.io';
+import connection from '../database';
+import { writeLog } from '../logger';
+import { TypeIngredient } from '../types';
 
 const processIngredients = (socket: Socket) => {
-  socket.on("get_ingredients", () => {
-    writeLog(socket.handshake.address, "get_ingredients");
+  socket.on('get_ingredients', () => {
+    writeLog(socket.handshake.address, 'get_ingredients');
     connection.query(
       `SELECT i.id, i.name, CONCAT(i.text," ", ie.text) as "text", i.cost, t.name as 'category', IFNULL(GROUP_CONCAT(ia.num SEPARATOR ' '),"-") as 'allergens' FROM ingredients i 
       LEFT JOIN ingredient_types t ON i.ingredient_type_id = t.id
@@ -16,14 +16,11 @@ const processIngredients = (socket: Socket) => {
       (err: MysqlError, result: TypeIngredient[]) => {
         if (err) throw err;
         result = result.map((x: TypeIngredient) => {
-          x.allergens =
-            x.allergens !== "unset"
-              ? x.allergens.split(" ").sort().join(" ")
-              : x.allergens;
+          x.allergens = x.allergens !== 'unset' ? x.allergens.split(' ').sort().join(' ') : x.allergens;
           return x;
         });
-        socket.emit("ingredients", result);
-      }
+        socket.emit('ingredients', result);
+      },
     );
   });
 };

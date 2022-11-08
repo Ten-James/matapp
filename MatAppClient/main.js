@@ -1,5 +1,5 @@
-import { app, BrowserWindow } from "electron";
-import path from "path";
+import { app, BrowserWindow } from 'electron';
+import path from 'path';
 
 const IS_DEV = process.env.IS_IN_DEVELOPMENT || false;
 
@@ -8,7 +8,7 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1280,
     height: 800,
-    title: "matApp",
+    title: 'matApp',
     roundedCorners: false,
     frame: true,
     thickFrame: false,
@@ -20,24 +20,24 @@ function createWindow() {
   });
 
   if (IS_DEV) {
-    win.loadURL("http://localhost:5173");
+    win.loadURL('http://localhost:5173');
     win.webContents.openDevTools({
-      mode: "detach",
+      mode: 'detach',
     });
   } else {
-    win.loadURL(`file://${path.join(__dirname, "..", "dist", "index.html")}`);
+    win.loadURL(`file://${path.join(__dirname, '..', 'dist', 'index.html')}`);
   }
 }
 
 app.whenReady().then(createWindow);
 
-app.on("window-all-closed", () => {
-  if (process.platform !== "darwin") {
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-app.on("activate", () => {
+app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }

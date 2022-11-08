@@ -1,9 +1,9 @@
-import { useContext, useEffect } from "react";
-import { context } from "../App";
-import LogoSVG from "../components/logo";
-import { Button, Panel } from "../components/panel";
-import { GenerateFries } from "../misc/fries";
-import { Branch } from "../types";
+import { useContext, useEffect } from 'react';
+import { context } from '../App';
+import LogoSVG from '../components/logo';
+import { Button, Panel } from '../components/panel';
+import { GenerateFries } from '../misc/fries';
+import { Branch } from '../types';
 interface Props {
   branches: Branch[];
 }
@@ -14,8 +14,8 @@ const BranchSelector = ({ branches }: Props) => {
   const setLoading = useContext(context).setLoading;
   useEffect(() => {
     GenerateFries();
-    setTimeout(() => socket.emit("get_branches"), 3000);
-    socket.on("branches", (data: Branch[]) => {
+    setTimeout(() => socket.emit('get_branches'), 3000);
+    socket.on('branches', (data: Branch[]) => {
       setLoading(false);
       //duplicate data for testing
       setBranches(data.concat(data));
@@ -26,12 +26,15 @@ const BranchSelector = ({ branches }: Props) => {
     <div className="App">
       <Panel
         class="center center-child"
-        style={{ width: "max(40vw,400px)", height: "80vh" }}
+        style={{ width: 'max(40vw,400px)', height: '80vh' }}
       >
         <LogoSVG class="upper" />
         <div className="branches">
           {branches.map((branch) => (
-            <Panel class="branch" key={branch.id}>
+            <Panel
+              class="branch"
+              key={branch.id}
+            >
               <div className="branch-name">{branch.name}</div>
               <div className="branch-location">{branch.location}</div>
               <Button class="branch-button">Log in</Button>

@@ -1,39 +1,21 @@
-import {
-  createContext,
-  FormEvent,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { Route, Routes } from "react-router-dom";
-import { context } from "../../App";
+import { createContext, FormEvent, useContext, useEffect, useRef, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { context } from '../../App';
 
-import { GenerateFries } from "../../misc/fries";
-import {
-  AdminContextType,
-  BaseBranchProps,
-  Branch,
-  BranchIngredients,
-  BranchOrders,
-  DialogType,
-  Dishes,
-  Ingredient,
-  User,
-  UserDisplay,
-} from "../../types";
-import { AddDialog } from "./dialog";
-import InformationView from "./information/information";
-import Navigation from "./navigation";
-import TableView from "./tableView/";
-import TableViewDishes from "./tableView/tableViewDishes";
-import TableViewSection from "./tableView/tableViewSection";
+import { GenerateFries } from '../../misc/fries';
+import { AdminContextType, BaseBranchProps, Branch, BranchIngredients, BranchOrders, DialogType, Dishes, Ingredient, User, UserDisplay } from '../../types';
+import { AddDialog } from './dialog';
+import InformationView from './information/information';
+import Navigation from './navigation';
+import TableView from './tableView/';
+import TableViewDishes from './tableView/tableViewDishes';
+import TableViewSection from './tableView/tableViewSection';
 
 const defaultData: AdminContextType = {
   selectedIDs: [],
   setSelectedIDs: () => {},
   refresh: () => {},
-  dialog: "hidden",
+  dialog: 'hidden',
   setDialog: () => {},
   branches: [],
   setBranches: () => {},
@@ -49,22 +31,18 @@ const Admin = () => {
   const [dishes, setDishes] = useState<Dishes[]>([]);
   const [users, setUsers] = useState<UserDisplay[]>([]);
   const [branches, setBranches] = useState<Branch[]>([]);
-  const [branchesStorages, setBranchesStorages] = useState<
-    BaseBranchProps<BranchIngredients>[]
-  >([]);
-  const [branchesOrders, setBranchesOrders] = useState<
-    BaseBranchProps<BranchOrders>[]
-  >([]);
-  const [dialog, setDialog] = useState<DialogType>("hidden");
+  const [branchesStorages, setBranchesStorages] = useState<BaseBranchProps<BranchIngredients>[]>([]);
+  const [branchesOrders, setBranchesOrders] = useState<BaseBranchProps<BranchOrders>[]>([]);
+  const [dialog, setDialog] = useState<DialogType>('hidden');
 
   const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
   const [user, setUser] = useState<User>({
     id: 1,
-    name: "admin",
+    name: 'admin',
     access: 2,
     branchId: 0,
   });
-  const [Status, setStatus] = useState("");
+  const [Status, setStatus] = useState('');
 
   const refresh = () => {
     setSelectedIDs([]);
@@ -78,11 +56,11 @@ const Admin = () => {
     setTimeout(() => setLoading(false), 1000);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  socket.on("login", (data) => {
+  socket.on('login', (data) => {
     if (data.status) {
       setUser(data.user);
     } else {
-      setStatus("Wrong password or username");
+      setStatus('Wrong password or username');
     }
   });
 
@@ -90,7 +68,7 @@ const Admin = () => {
     const Login = (e: FormEvent) => {
       e.preventDefault();
       if (!nameRef.current || !passRef.current) return;
-      socket.emit("login", {
+      socket.emit('login', {
         name: nameRef.current.value,
         pass: passRef.current.value,
       });
@@ -100,8 +78,16 @@ const Admin = () => {
         <Navigation userAccess={0} />
         <form onSubmit={Login}>
           <h1>Log in:</h1>
-          <input ref={nameRef} type="text" placeholder="Branch Username" />
-          <input ref={passRef} type="password" placeholder="Password" />
+          <input
+            ref={nameRef}
+            type="text"
+            placeholder="Branch Username"
+          />
+          <input
+            ref={passRef}
+            type="password"
+            placeholder="Password"
+          />
           <div>{Status}</div>
           <button>Log in</button>
         </form>
@@ -120,7 +106,7 @@ const Admin = () => {
         setBranches,
       }}
     >
-      {dialog === "add" && <AddDialog />}
+      {dialog === 'add' && <AddDialog />}
       <div className="App App-grid">
         <Navigation userAccess={user.access} />
         <Routes>
@@ -191,7 +177,10 @@ const Admin = () => {
               />
             }
           />
-          <Route path="/information" element={<InformationView />} />
+          <Route
+            path="/information"
+            element={<InformationView />}
+          />
         </Routes>
       </div>
     </AdminContext.Provider>

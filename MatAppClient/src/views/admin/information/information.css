@@ -1,9 +1,9 @@
 .s-grid {
   display: grid;
   grid-template:
-    "name name" auto
-    "status data" 1fr
-    "login data" 1fr
+    'name name' auto
+    'status data' 1fr
+    'login data' 1fr
     / 1fr 1fr;
   height: 100vh;
 }

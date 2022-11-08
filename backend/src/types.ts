@@ -40,6 +40,7 @@ export interface TypeUser {
   name: string;
   id: number;
   branchId: number;
+  branchName: string;
   access: number;
 }
 

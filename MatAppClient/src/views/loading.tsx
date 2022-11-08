@@ -1,8 +1,8 @@
-import { useContext, useRef } from "react";
-import { CSSTransition } from "react-transition-group";
+import { useContext, useRef } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
-import { context } from "../App";
-import LogoSVG from "../components/logo";
+import { context } from '../App';
+import LogoSVG from '../components/logo';
 
 interface Props {
   children: React.ReactNode;
@@ -20,7 +20,10 @@ const Loader = (props: Props) => {
         classNames="waiting"
         unmountOnExit
       >
-        <div ref={waiting} className="waiting">
+        <div
+          ref={waiting}
+          className="waiting"
+        >
           <LogoSVG class="" />
           <div className="fries"></div>
         </div>

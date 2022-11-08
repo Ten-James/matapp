@@ -1,4 +1,4 @@
-import { Socket } from "socket.io-client";
+import { Socket } from 'socket.io-client';
 export interface Branch extends BaseProp {
   id: number;
   name: string;
@@ -13,9 +13,9 @@ export interface AppContext {
   setLoading: (loading: boolean) => void;
   setBranches: (branches: Branch[]) => void;
 }
-export type LanguageType = "english" | "czech";
+export type LanguageType = 'english' | 'czech';
 
-export type DialogType = "hidden" | "add" | "edit" | "edit_multiple" | "delete";
+export type DialogType = 'hidden' | 'add' | 'edit' | 'edit_multiple' | 'delete';
 
 export interface AdminContextType {
   selectedIDs: number[];

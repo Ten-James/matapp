@@ -119,7 +119,7 @@
 .App-grid {
   display: grid;
   grid-template:
-    "nav content" 1fr
-    "nav footer" 2em
+    'nav content' 1fr
+    'nav footer' 2em
     / 7em 1fr;
 }

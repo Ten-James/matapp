@@ -82,8 +82,7 @@
   height: 2em;
 }
 
-.text-with-combo > div > input
-{
+.text-with-combo > div > input {
   border-radius: 0.5rem 0 0 0.5rem;
 }
 
@@ -93,7 +92,7 @@
 
 .dialog-line input {
   font-weight: normal;
-  font-family: "Cairo";
+  font-family: 'Cairo';
   width: 100%;
   font-size: 1.2em;
   padding: 0 0.5rem;

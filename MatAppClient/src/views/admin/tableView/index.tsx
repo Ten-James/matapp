@@ -1,14 +1,14 @@
-import { useContext, useEffect, useMemo, useState } from "react";
-import { context } from "../../../App";
-import { Translate } from "../../../misc/transcripter";
-import { textUpperFirst } from "../../../misc/utils";
-import { AdminContext } from "../admin";
-import ParamButtons from "./paramButtons";
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { context } from '../../../App';
+import { Translate } from '../../../misc/transcripter';
+import { textUpperFirst } from '../../../misc/utils';
+import { AdminContext } from '../admin';
+import ParamButtons from './paramButtons';
 
-import "./tableView.css";
+import './tableView.css';
 
-import { Button, Panel } from "../../../components/panel";
-import { BaseProp, FilterData, Sort } from "../../../types";
+import { Button, Panel } from '../../../components/panel';
+import { BaseProp, FilterData, Sort } from '../../../types';
 
 interface Props<T> {
   data: T[];
@@ -19,14 +19,14 @@ interface Props<T> {
 
 const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
   if (ord) {
-    if (t === "string") {
+    if (t === 'string') {
       // @ts-ignore
       return (a: T, b: T): number => a[e].localeCompare(b[e]);
     }
     // @ts-ignore
     return (a: T, b: T): number => a[e] - b[e];
   } else {
-    if (t === "string") {
+    if (t === 'string') {
       // @ts-ignore
       return (a: T, b: T): number => b[e].localeCompare(a[e]);
     }
@@ -35,17 +35,14 @@ const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
   }
 };
 
-const TableView = <T extends BaseProp>({
-  data,
-  setData,
-  socketString,
-  displayName,
-}: Props<T>) => {
+// TODO this file is messy and needs to be cleaned up
+
+const TableView = <T extends BaseProp>({ data, setData, socketString, displayName }: Props<T>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
   const { socket, language } = useContext(context);
 
   const [show, setShow] = useState(data);
-  const [sort, setSort] = useState<Sort[]>([{ name: "id", type: "number" }]);
+  const [sort, setSort] = useState<Sort[]>([{ name: 'id', type: 'number' }]);
   const [categories, setCategories] = useState<string[]>([]);
 
   const [filter, setFilter] = useState<FilterData<T>>({
@@ -77,11 +74,11 @@ const TableView = <T extends BaseProp>({
       Object.keys(data[0]).map<Sort>((e) => ({
         name: e,
         type: typeof data[0][e],
-      }))
+      })),
     );
     setCategories(
       // @ts-ignore
-      data.map((e) => e.category).filter((e, i, a) => a.indexOf(e) === i)
+      data.map((e) => e.category).filter((e, i, a) => a.indexOf(e) === i),
     );
   }, [data]);
 
@@ -100,11 +97,10 @@ const TableView = <T extends BaseProp>({
         {show.length > 0 && (
           <div
             style={{
-              display: "grid",
-              width: "85%",
-              margin: "0.3em auto",
-              gridTemplateColumns:
-                "repeat(" + Object.keys(show[0]).length.toString() + ", 1fr)",
+              display: 'grid',
+              width: '85%',
+              margin: '0.3em auto',
+              gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr)',
             }}
           >
             {Object.keys(show[0]).map((e) => (
@@ -142,29 +138,20 @@ const TableView = <T extends BaseProp>({
       <div
         className="d-table-content"
         style={{
-          overflowY: "scroll",
-          height: "100%",
+          overflowY: 'scroll',
+          height: '100%',
         }}
       >
         {show.map((e) => (
           <Panel
-            onClick={() =>
-              setSelectedIDs(
-                selectedIDs.includes(e.id)
-                  ? selectedIDs.filter((x) => x !== e.id)
-                  : [...selectedIDs, e.id]
-              )
-            }
+            onClick={() => setSelectedIDs(selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id])}
             style={{
-              display: "grid",
-              width: "85%",
-              gridTemplateColumns:
-                "repeat(" + Object.keys(show[0]).length.toString() + ", 1fr)",
-              outline: selectedIDs.includes(e.id)
-                ? "1px solid #6bb0b3"
-                : "unset",
-              padding: "0.5em 2em",
-              margin: "0.4em auto",
+              display: 'grid',
+              width: '85%',
+              gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr)',
+              outline: selectedIDs.includes(e.id) ? '1px solid #6bb0b3' : 'unset',
+              padding: '0.5em 2em',
+              margin: '0.4em auto',
             }}
             key={e.id}
             class="inset"
@@ -177,17 +164,17 @@ const TableView = <T extends BaseProp>({
         ))}
       </div>
       <div className="d-buttons">
-        <Button onClick={() => setDialog("add")}>
+        <Button onClick={() => setDialog('add')}>
           <span className="material-symbols-outlined">add</span>
-          {Translate("add", language)}
+          {Translate('add', language)}
         </Button>
         <Button>
           <span className="material-symbols-outlined">edit</span>
-          {Translate("edit", language)}
+          {Translate('edit', language)}
         </Button>
         <Button>
           <span className="material-symbols-outlined">delete</span>
-          {Translate("delete", language)}
+          {Translate('delete', language)}
         </Button>
       </div>
     </div>

@@ -1,7 +1,7 @@
-import { useContext, useRef } from "react";
-import { context } from "../../../App";
-import { Translate } from "../../../misc/transcripter";
-import { BaseProp, FilterData } from "../../../types";
+import { useContext, useRef } from 'react';
+import { context } from '../../../App';
+import { Translate } from '../../../misc/transcripter';
+import { BaseProp, FilterData } from '../../../types';
 
 interface Props<T extends BaseProp> {
   filter: FilterData<T>;
@@ -10,12 +10,7 @@ interface Props<T extends BaseProp> {
   categories: string[];
 }
 
-const ParamButtons = <T extends BaseProp>({
-  filter,
-  setFilter,
-  showCategory,
-  categories,
-}: Props<T>) => {
+const ParamButtons = <T extends BaseProp>({ filter, setFilter, showCategory, categories }: Props<T>) => {
   const { language } = useContext(context);
   const searchRef = useRef<HTMLInputElement | null>(null);
   const filterSelect = useRef<HTMLSelectElement | null>(null);
@@ -23,7 +18,7 @@ const ParamButtons = <T extends BaseProp>({
     <>
       <span className="material-symbols-outlined">search</span>
       <input
-        placeholder={Translate("search", language)}
+        placeholder={Translate('search', language)}
         id="search"
         type="text"
         ref={searchRef}
@@ -35,11 +30,9 @@ const ParamButtons = <T extends BaseProp>({
               filterMatch: (x) => {
                 return (
                   // @ts-ignore
-                  x["category"].includes(filterSelect.current.value) &&
+                  x['category'].includes(filterSelect.current.value) &&
                   // @ts-ignore
-                  x["name"]
-                    .toLowerCase()
-                    .includes(searchRef.current.value.toLowerCase())
+                  x['name'].toLowerCase().includes(searchRef.current.value.toLowerCase())
                 );
               },
               sort: filter.sort,
@@ -48,9 +41,7 @@ const ParamButtons = <T extends BaseProp>({
             filterMatch: (x) => {
               return (
                 // @ts-ignore
-                x["name"]
-                  .toLowerCase()
-                  .includes(searchRef.current.value.toLowerCase())
+                x['name'].toLowerCase().includes(searchRef.current.value.toLowerCase())
               );
             },
             sort: filter.sort,
@@ -59,9 +50,7 @@ const ParamButtons = <T extends BaseProp>({
       />
       {showCategory && (
         <>
-          <label htmlFor="filter">
-            {Translate("Filter Category", language)}
-          </label>
+          <label htmlFor="filter">{Translate('Filter Category', language)}</label>
           <select
             id="filter"
             ref={filterSelect}
@@ -70,17 +59,23 @@ const ParamButtons = <T extends BaseProp>({
               setFilter({
                 filterMatch: (x) => {
                   // @ts-ignore
-                  return x["category"].includes(filterSelect.current.value);
+                  return x['category'].includes(filterSelect.current.value);
                 },
                 sort: filter.sort,
               });
             }}
           >
-            <option key={-1} value="">
-              {Translate("all", language)}
+            <option
+              key={-1}
+              value=""
+            >
+              {Translate('all', language)}
             </option>
             {categories.map((e, index) => (
-              <option key={index} value={e}>
+              <option
+                key={index}
+                value={e}
+              >
                 {e}
               </option>
             ))}

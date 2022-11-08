@@ -1,11 +1,11 @@
 .d-grid {
   display: grid;
   grid-template:
-    "name" auto
-    "parameters" auto
-    "thead" auto
-    "table" 1fr
-    "button" auto;
+    'name' auto
+    'parameters' auto
+    'thead' auto
+    'table' 1fr
+    'button' auto;
   height: 100vh;
 }
 
