@@ -1,28 +1,28 @@
 .s-grid {
-    display: grid;
-    grid-template: 
+  display: grid;
+  grid-template:
     "name name" auto
-     "status data" 1fr
-     "login data" 1fr
-     / 1fr 1fr;
-     height: 100vh;
+    "status data" 1fr
+    "login data" 1fr
+    / 1fr 1fr;
+  height: 100vh;
 }
 
 .s-name {
-    grid-area: name;
-    text-align: left;
+  grid-area: name;
+  text-align: left;
 }
 
 .s-status {
-    grid-area: status;
+  grid-area: status;
 }
 .s-data {
-    grid-area:  data;
+  grid-area: data;
 }
 .s-data > div {
-    overflow-y: scroll;
-    height: 90%;
+  overflow-y: scroll;
+  height: 90%;
 }
 .s-database-info {
-    grid-area: login;
+  grid-area: login;
 }

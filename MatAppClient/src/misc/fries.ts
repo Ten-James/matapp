@@ -12,7 +12,9 @@ export const GenerateFries = () => {
     const frie = document.createElement("div");
     frie.classList.add("frie");
     fries.appendChild(frie);
-    frie.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
+    frie.style.transform = `translate(-50%, -50%) rotate(${
+      Math.random() * 360
+    }deg)`;
     frie.style.transition = `all cubic-bezier(.32,.63,.43,.97) ${liveTime}ms`;
     frie.style.opacity = "0";
     frie.style.left = `${sx}vw`;
@@ -21,7 +23,9 @@ export const GenerateFries = () => {
     setTimeout(() => {
       frie.style.left = `${fx + 50}vw`;
       frie.style.top = `${fy + 50}vh`;
-      frie.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
+      frie.style.transform = `translate(-50%, -50%) rotate(${
+        Math.random() * 360
+      }deg)`;
       frie.style.opacity = "1";
     }, 100);
     setTimeout(() => {

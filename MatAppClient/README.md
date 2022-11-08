@@ -1,6 +1,7 @@
 # MatAPP client
 
-Client for Restaurant system. It is an application that allows users to order food and drinks from a restaurant. Also, it allows the restaurant to manage the orders and the menu.
+Client for Restaurant system. It is an application that allows users to order food and drinks from a restaurant. Also, it allows the
+restaurant to manage the orders and the menu.
 
 generated using vite
 

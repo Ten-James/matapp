@@ -1,78 +1,75 @@
 .panel {
-    padding: 2.5em;
-    margin: 1em;
-    border-radius: 41px;
-    background: #efe6dd;
-    box-shadow:  19px 19px 38px #e5ddd4,
-                 -19px -19px 38px #f9efe6;
+  padding: 2.5em;
+  margin: 1em;
+  border-radius: 41px;
+  background: #efe6dd;
+  box-shadow: 19px 19px 38px #e5ddd4, -19px -19px 38px #f9efe6;
 }
 
-.inset{
-    box-shadow: inset 19px 19px 38px #f9efe6,
-                inset -19px -19px 38px #e5ddd4;
+.inset {
+  box-shadow: inset 19px 19px 38px #f9efe6, inset -19px -19px 38px #e5ddd4;
 }
 
 .center {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .center-child {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .branches {
-    width: 80%;
-    padding: 2em;
-    overflow-y: scroll;
-    scroll-behavior: smooth;
+  width: 80%;
+  padding: 2em;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
 }
 
 .branch {
-    width: calc(100%-5em);
-    margin: 1em auto;
-    display: grid;
-    grid-template: 
+  width: calc(100%-5em);
+  margin: 1em auto;
+  display: grid;
+  grid-template:
     "a a b"
-    "c c b" 
+    "c c b"
     / 1fr 1fr 1fr;
 }
 .branch-name {
-    grid-area: a;
-    font-size: 1.5em;
-    font-weight: 600;
-    text-transform: uppercase;
+  grid-area: a;
+  font-size: 1.5em;
+  font-weight: 600;
+  text-transform: uppercase;
 }
 .branch-location {
-    grid-area: c;
+  grid-area: c;
 }
 .branch-button {
-    grid-area: b;
+  grid-area: b;
 }
 
 .button {
-    width: 5em;
-    height: 5em;
-    border: none;
-    padding: 0;
-    margin-left: auto;
-    align-self: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    background: #efe6dd;
-    box-shadow:  5px 5px 9px #e5ddd4,
-                 -5px -5px 9px #f9efe6;
+  width: 5em;
+  height: 5em;
+  border: none;
+  padding: 0;
+  margin-left: auto;
+  align-self: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  background: #efe6dd;
+  box-shadow: 5px 5px 9px #e5ddd4, -5px -5px 9px #f9efe6;
 }
 
-.button:hover{
-    scale: 1.1;
+.button:hover {
+  scale: 1.1;
 }
-.button:hover span{
-    rotate: -360deg;
+.button:hover span {
+  rotate: -360deg;
 }

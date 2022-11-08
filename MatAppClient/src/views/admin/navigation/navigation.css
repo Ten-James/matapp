@@ -1,133 +1,125 @@
 .nav {
-    position: absolute;
-    display: grid;
-    height: 100vh;
-    transition: all 500ms ease-in-out;
+  position: absolute;
+  display: grid;
+  height: 100vh;
+  transition: all 500ms ease-in-out;
 }
 .nav-container {
-    position: relative;
-    z-index: 1;
-    width: 112px;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: space-between;
+  position: relative;
+  z-index: 1;
+  width: 112px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
 }
 
 .nav-container > div > .single {
-    padding: 1em 3em !important;
+  padding: 1em 3em !important;
 }
 
 .single {
-    flex-direction: row !important;
-
+  flex-direction: row !important;
 }
 
 .nav * {
-    transition: all 500ms ease-in-out;
+  transition: all 500ms ease-in-out;
 }
 .nav .text {
-    overflow: hidden;
-    width: 0;
+  overflow: hidden;
+  width: 0;
 }
 
 .nav .child {
-    overflow: hidden;
-    height: 0;
+  overflow: hidden;
+  height: 0;
 }
 
 .nav p {
-    padding-left: 0.2em;
+  padding-left: 0.2em;
 }
 
 .child-rot span {
-    transform: scaleX(-1);
+  transform: scaleX(-1);
 }
 
 .nav div > button {
-    height: 5em;
-    border: none;
-    padding: 0;
-    align-self: center;
-    border-radius: 50%;
-    background: #efe6dd;
-    box-shadow:  19px 19px 38px #e5ddd4,
-                 -19px -19px 38px #f9efe6;
+  height: 5em;
+  border: none;
+  padding: 0;
+  align-self: center;
+  border-radius: 50%;
+  background: #efe6dd;
+  box-shadow: 19px 19px 38px #e5ddd4, -19px -19px 38px #f9efe6;
 }
-.nav  .logo {
-    align-self: center;
-    height: 5em;
-    width: 5em;
+.nav .logo {
+  align-self: center;
+  height: 5em;
+  width: 5em;
 }
 .disabled {
-    opacity: 0.5;
-    pointer-events: none;
+  opacity: 0.5;
+  pointer-events: none;
 }
 .nav-link {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    padding: 1em 0.7em;
-    margin: 1em;
-    border-radius: 41px;
-    align-items: center;
-    justify-content: center;
-    background: #efe6dd;
-    color: #231f20;
-    text-decoration: none;
-    box-shadow:  5px 5px 9px #e5ddd4,
-                 -5px -5px 9px #f9efe6;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 1em 0.7em;
+  margin: 1em;
+  border-radius: 41px;
+  align-items: center;
+  justify-content: center;
+  background: #efe6dd;
+  color: #231f20;
+  text-decoration: none;
+  box-shadow: 5px 5px 9px #e5ddd4, -5px -5px 9px #f9efe6;
 }
 
 .nav-link:hover {
-    scale: 1.05;
+  scale: 1.05;
 }
 .nav-link:hover > span {
-    rotate : -360deg;
+  rotate: -360deg;
 }
 .nav-link:hover .nav-header > span {
-    rotate : -360deg;
+  rotate: -360deg;
 }
 
-
 .nav-header {
-    color: #231f20;
-    margin: 0 2em;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    text-decoration: none;
+  color: #231f20;
+  margin: 0 2em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  text-decoration: none;
 }
 
 .nav-link-selected {
-    padding: 1em 0 !important;
-    text-align: center;
-    display: block;
-    margin: 1em;
-    border-radius: 41px;
-    align-items: center;
-    background: #efe6dd;
-    color: #231f20;
-    text-decoration: none;
-    box-shadow:  5px 5px 9px #e5ddd4,
-                 -5px -5px 9px #f9efe6;
-
+  padding: 1em 0 !important;
+  text-align: center;
+  display: block;
+  margin: 1em;
+  border-radius: 41px;
+  align-items: center;
+  background: #efe6dd;
+  color: #231f20;
+  text-decoration: none;
+  box-shadow: 5px 5px 9px #e5ddd4, -5px -5px 9px #f9efe6;
 }
 .nav-link > .nav-link {
-    margin: 1em;
-    border-radius: 41px;
-    background: #efe6dd;
-    box-shadow: inset 5px 5px 9px #e5ddd4,
-                inset -5px -5px 9px #f9efe6;
+  margin: 1em;
+  border-radius: 41px;
+  background: #efe6dd;
+  box-shadow: inset 5px 5px 9px #e5ddd4, inset -5px -5px 9px #f9efe6;
 }
 
-
 .App-grid {
-    display: grid;
-    grid-template: 
-        "nav content" 1fr
-        "nav footer" 2em
-        / 7em 1fr;
+  display: grid;
+  grid-template:
+    "nav content" 1fr
+    "nav footer" 2em
+    / 7em 1fr;
 }
