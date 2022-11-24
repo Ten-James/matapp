@@ -3,7 +3,7 @@ import { context } from '../../../App';
 import { Button, Panel } from '../../../components/panel';
 import { Translate } from '../../../misc/transcripter';
 import { AdminContext } from '../admin';
-import { ComboBoxAttributeDialog, TextAttributeDialog, TextAttributeWithCombo } from './components';
+import IngredientDialogBase from '../../../forms/ingredientDialogBase';
 import * as Handlers from './handlers';
 import './style.css';
 
@@ -52,46 +52,7 @@ export const AddDialog = () => {
 
   return (
     <BaseDialog header="Add Ingredient">
-      <TextAttributeDialog
-        name="name"
-        required
-      />
-      <ComboBoxAttributeDialog
-        name="category"
-        required
-        combo={['ahoj', 'veta', 'beta', 'gamma', 'delta', 'test']}
-      />
-      <TextAttributeDialog
-        name="cost"
-        isNumber
-      />
-      <TextAttributeWithCombo
-        name="text"
-        isNumber
-        required
-        combo={['ks', 'ml']}
-      />
-      <TextAttributeDialog
-        name="name2"
-        required
-      />
-      <TextAttributeDialog
-        name="name3"
-        required
-      />
-      <TextAttributeDialog
-        name="name4"
-        required
-      />
-      <TextAttributeDialog
-        name="name5"
-        required
-      />
-      <TextAttributeDialog
-        name="name6"
-        required
-      />
-
+      <IngredientDialogBase />
       {error && <p className="error">{error}</p>}
     </BaseDialog>
   );

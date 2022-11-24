@@ -1,7 +1,7 @@
 import { useContext, useRef, useState } from 'react';
-import { context } from '../../../App';
-import { Translate } from '../../../misc/transcripter';
-import { textUpperFirst } from '../../../misc/utils';
+import { context } from '../App';
+import { Translate } from '../misc/transcripter';
+import { textUpperFirst } from '../misc/utils';
 
 interface TextAttributeDialogProp {
   name: string;
@@ -23,7 +23,7 @@ export const TextAttributeDialog = ({ name, required = false, isNumber }: TextAt
         <input
           id={name}
           name={name}
-          type={isNumber ? 'number' : 'text'}
+          type={isNumber ? 'number' : name === 'password' ? 'password' : 'text'}
           ref={ref}
         />
       </div>
@@ -103,6 +103,33 @@ export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextA
               />
             ))}
         </div>
+      </div>
+    </div>
+  );
+};
+
+interface RadioGroupDialogProp {
+  name: string;
+  radios: string[];
+}
+export const RadioGroupDialog = ({ name, radios }: RadioGroupDialogProp) => {
+  const { language } = useContext(context);
+  return (
+    <div className="dialog-line line-noflex">
+      <label>{textUpperFirst(Translate(name, language))}</label>
+      <div className="dialog-radios">
+        {radios &&
+          radios.map((x, ind) => (
+            <>
+              <label htmlFor={name + ind}>{x}</label>
+              <input
+                type="radio"
+                id={name + ind}
+                name={name}
+                value={x}
+              />
+            </>
+          ))}
       </div>
     </div>
   );
