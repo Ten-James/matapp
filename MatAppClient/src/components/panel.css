@@ -70,5 +70,5 @@
   scale: 1.1;
 }
 .button:hover span {
-  rotate: -360deg;
+  scale: 1.05;
 }

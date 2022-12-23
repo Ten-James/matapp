@@ -1,4 +1,4 @@
-import { TextAttributeDialog, ComboBoxAttributeDialog, TextAttributeWithCombo, RadioGroupDialog } from '../components/dialogLines';
+import { TextAttributeDialog, ComboBoxAttributeDialog, TextAttributeWithCombo, CheckboxGroupDialog } from '../components/dialogLines';
 
 const IngredientDialogBase = () => {
   return (
@@ -22,7 +22,7 @@ const IngredientDialogBase = () => {
         required
         combo={['ks', 'ml']}
       />
-      <RadioGroupDialog
+      <CheckboxGroupDialog
         name="allergens"
         radios={['1', '2', '3', '4', '5', '6', '7', '8', '9']}
       />

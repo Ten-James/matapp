@@ -80,10 +80,10 @@
   scale: 1.05;
 }
 .nav-link:hover > span {
-  rotate: -360deg;
+  scale: 1.05;
 }
 .nav-link:hover .nav-header > span {
-  rotate: -360deg;
+  scale: 1.05;
 }
 
 .nav-header {

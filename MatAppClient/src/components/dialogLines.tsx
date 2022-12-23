@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { context } from '../App';
 import { Translate } from '../misc/transcripter';
 import { textUpperFirst } from '../misc/utils';
@@ -95,9 +95,8 @@ export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextA
         <div className="combo-select">
           {values &&
             values.map((x) => (
-              <input
+              <button
                 key={x}
-                type="button"
                 onClick={() => (document.querySelector<HTMLInputElement>(`#${name}-text`).value = x)}
                 value={x}
               />
@@ -108,11 +107,12 @@ export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextA
   );
 };
 
-interface RadioGroupDialogProp {
+interface CheckboxGroupDialogProp {
   name: string;
   radios: string[];
 }
-export const RadioGroupDialog = ({ name, radios }: RadioGroupDialogProp) => {
+
+export const CheckboxGroupDialog = ({ name, radios }: CheckboxGroupDialogProp) => {
   const { language } = useContext(context);
   return (
     <div className="dialog-line line-noflex">
@@ -120,15 +120,15 @@ export const RadioGroupDialog = ({ name, radios }: RadioGroupDialogProp) => {
       <div className="dialog-radios">
         {radios &&
           radios.map((x, ind) => (
-            <>
-              <label htmlFor={name + ind}>{x}</label>
+            <React.Fragment key={ind}>
               <input
-                type="radio"
+                type="checkbox"
                 id={name + ind}
                 name={name}
                 value={x}
               />
-            </>
+              <label htmlFor={name + ind}>{x}</label>
+            </React.Fragment>
           ))}
       </div>
     </div>

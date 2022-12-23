@@ -7,7 +7,7 @@ export const submit = (e: Event, form: HTMLFormElement | null, setTranslateY: (s
   e.preventDefault();
   if (!form) return;
   let data = {};
-  let arr = [...form.querySelectorAll('input, select')];
+  let arr = [...form.querySelectorAll('input:not([type="checkbox"]), select')];
   // @ts-ignore
   arr.forEach((e) => (data[e.id] = e.value));
   console.log(data);
