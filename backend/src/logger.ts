@@ -1,13 +1,13 @@
 const fs = require('fs');
-import { TypeLogType } from './types';
-let stack: TypeLogType[] = [];
+import { ILogType } from './types';
+let stack: ILogType[] = [];
 
 const writeLog = (ip: string, message: string): void => {
-  const log: TypeLogType = {
+  const log: ILogType = {
     ip: ip,
     message: message,
     time: new Date().toLocaleTimeString(),
-  };
+  } as const;
   stack.push(log);
   // append to file
   fs.appendFile(`logs/${new Date().toLocaleDateString()}.log`, `[${log.time}][${log.ip}] ${log.message}\r`, (err) => {

@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { context } from '../../App';
 
 import { GenerateFries } from '../../misc/fries';
-import { AdminContextType, BaseBranchProps, Branch, BranchIngredients, BranchOrders, DialogType, Dishes, Ingredient, User, UserDisplay } from '../../types';
+import type { AdminContextType, DialogType, IBranch, IBranchData, IDish, IIngredient, IUser } from '../../types';
 import { AddDialog } from './dialog';
 import InformationView from './information/information';
 import Navigation from './navigation';
@@ -27,16 +27,16 @@ const Admin = () => {
   const setLoading = useContext(context).setLoading;
   const socket = useContext(context).socket;
 
-  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
-  const [dishes, setDishes] = useState<Dishes[]>([]);
-  const [users, setUsers] = useState<UserDisplay[]>([]);
-  const [branches, setBranches] = useState<Branch[]>([]);
-  const [branchesStorages, setBranchesStorages] = useState<BaseBranchProps<BranchIngredients>[]>([]);
-  const [branchesOrders, setBranchesOrders] = useState<BaseBranchProps<BranchOrders>[]>([]);
+  const [ingredients, setIngredients] = useState<IIngredient[]>([]);
+  const [dishes, setDishes] = useState<IDish[]>([]);
+  const [users, setUsers] = useState<IUser[]>([]);
+  const [branches, setBranches] = useState<IBranch[]>([]);
+  const [branchesStorages, setBranchesStorages] = useState<IBranchData<IIngredient>[]>([]);
+  const [branchesOrders, setBranchesOrders] = useState<IBranchData<any>[]>([]);
   const [dialog, setDialog] = useState<DialogType>('hidden');
 
   const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
-  const [user, setUser] = useState<User>({
+  const [user, setUser] = useState<IUser>({
     id: 1,
     name: 'admin',
     access: 2,

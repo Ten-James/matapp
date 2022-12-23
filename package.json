@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Program for Restaurants",
   "scripts": {
-    "dev": "cd MatAppClient && npm run dev & cd backend && npm run start"
+    "backend": "cd backend && npm run dev",
+    "frontend": "cd MatAppClient && npm run dev"
   },
   "author": "James",
   "license": "ISC",

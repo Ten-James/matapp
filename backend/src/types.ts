@@ -1,50 +1,23 @@
-export interface TypeIngredient {
-  id: number;
-  name: string;
-  cost: number;
-  text: string;
-  category: string;
-  allergens: string;
-}
+export * from '../../src/types';
 
-export interface TypeBranch {
-  id: number;
-  name: string;
-  location: string;
-}
-export interface TypeDish {
-  id: number;
-  name: string;
-  cost: number;
-  category: string;
-  ingredients?: string[];
-}
-export interface TypeDishIngredient {
+export interface IDishIngredient {
   name: string;
   line: number;
 }
 
-export interface TypeBranchStorageItem {
+export interface IBranchStorageItem {
   id: number;
   name: string;
   category: string;
   count: number;
 }
 
-export interface TypeLoginProps {
+export interface ILoginProps {
   name: string;
   pass: string;
 }
 
-export interface TypeUser {
-  name: string;
-  id: number;
-  branchId: number;
-  branchName: string;
-  access: number;
-}
-
-export interface TypeLogType {
+export interface ILogType {
   time: string;
   ip: string;
   message: string;

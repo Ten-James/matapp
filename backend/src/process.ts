@@ -32,7 +32,7 @@ const sendInfo = (socket: Socket) => {
         memory: Math.floor(process.memoryUsage().heapTotal / 1024 / 1024) + 'MB',
         time: new Date().toLocaleTimeString(),
         data: getLogsAsString(),
-        database: [databaseData.size, databaseData.rows],
+        database: [databaseData.size, databaseData.rows] as const,
       });
     },
   );

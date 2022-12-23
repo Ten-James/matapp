@@ -1,8 +1,8 @@
-import { MysqlError } from 'mysql';
-import { Socket } from 'socket.io';
+import type { MysqlError } from 'mysql';
+import type { Socket } from 'socket.io';
+import type { IIngredient } from '../types';
 import connection from '../database';
 import { writeLog } from '../logger';
-import { TypeIngredient } from '../types';
 
 const processIngredients = (socket: Socket) => {
   socket.on('get_ingredients', () => {
@@ -13,9 +13,9 @@ const processIngredients = (socket: Socket) => {
       LEFT JOIN ingredient_allergens ia ON i.id = ia.ingredient_id
       LEFT JOIN ingredient_text_extensions ie ON i.ingredient_text_extension_id = ie.id
       GROUP BY i.id, i.name, i.cost, t.name ,i.text , ie.text`,
-      (err: MysqlError, result: TypeIngredient[]) => {
+      (err: MysqlError, result: IIngredient[]) => {
         if (err) throw err;
-        result = result.map((x: TypeIngredient) => {
+        result = result.map((x: IIngredient) => {
           x.allergens = x.allergens !== 'unset' ? x.allergens.split(' ').sort().join(' ') : x.allergens;
           return x;
         });
