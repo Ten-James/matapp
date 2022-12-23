@@ -1,14 +1,14 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { context } from '../../../App';
-import { Translate } from '../../../misc/transcripter';
 import { textUpperFirst } from '../../../misc/utils';
 import { AdminContext } from '../admin';
-import ParamButtons from './paramButtons';
+import ParamButtons from './components/paramButtons';
 
 import './tableView.css';
 
 import { Button, Panel } from '../../../components/panel';
-import { BaseProp, FilterData, Sort } from '../../../types';
+import { IBaseModel, FilterData, Sort } from '../../../types';
+import { BaseButtons } from './components/baseButtons';
 
 interface Props<T> {
   data: T[];
@@ -17,7 +17,7 @@ interface Props<T> {
   displayName: string;
 }
 
-const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
+const MakeSort = <T extends IBaseModel>(e: string, t: string, ord: boolean) => {
   if (ord) {
     if (t === 'string') {
       // @ts-ignore
@@ -35,56 +35,33 @@ const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
   }
 };
 
-// TODO this file is messy and needs to be cleaned up
+const defaultFilter = { filterMatch: (x) => true, sort: (a, b) => 1 };
 
-const TableView = <T extends BaseProp>({ data, setData, socketString, displayName }: Props<T>) => {
-  const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
-  const { socket, language } = useContext(context);
+const TableView = <T extends IBaseModel>({ data, setData, socketString, displayName }: Props<T>) => {
+  const { selectedIDs, setSelectedIDs } = useContext(AdminContext);
+  const { socket, translate } = useContext(context);
 
-  const [show, setShow] = useState(data);
-  const [sort, setSort] = useState<Sort[]>([{ name: 'id', type: 'number' }]);
-  const [categories, setCategories] = useState<string[]>([]);
-
-  const [filter, setFilter] = useState<FilterData<T>>({
-    filterMatch: (x) => true,
-    sort: (a, b) => 1,
-  });
+  const [filter, setFilter] = useState<FilterData<T>>(defaultFilter);
 
   socket.on(socketString, (data: T[]) => {
     setData(data);
-    setShow(data.filter(filter.filterMatch).sort(filter.sort));
   });
-
-  useMemo(() => {
-    if (data.length === 0) return setShow([]);
-    setShow(data.filter(filter.filterMatch).sort(filter.sort));
-  }, [filter, data]);
 
   useEffect(() => {
     if (data.length === 0) {
       socket.emit(`get_${socketString}`);
     }
     setSelectedIDs([]);
-    setFilter({
-      filterMatch: (x) => true,
-      sort: (a, b) => 1,
-    });
-    if (data.length === 0) return;
-    setSort(
-      Object.keys(data[0]).map<Sort>((e) => ({
-        name: e,
-        type: typeof data[0][e],
-      })),
-    );
-    setCategories(
-      // @ts-ignore
-      data.map((e) => e.category).filter((e, i, a) => a.indexOf(e) === i),
-    );
+    setFilter(defaultFilter);
   }, [data]);
+
+  const show = useMemo(() => (data.length === 0 ? [] : data.filter(filter.filterMatch).sort(filter.sort)), [filter, data]);
+
+  const categories = useMemo(() => (data.length === 0 ? [] : Object.keys(data[0]).filter((e) => typeof data[0][e] === 'string')), [data]);
 
   return (
     <div className="d-grid">
-      <h1 className="d-name">{Translate(displayName, language)}</h1>
+      <h1 className="d-name">{translate(displayName)}</h1>
       <div className="d-parameters">
         <ParamButtons
           filter={filter}
@@ -106,7 +83,7 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
             {Object.keys(show[0]).map((e) => (
               <div key={e}>
                 <div className="d-table-header-label">
-                  {textUpperFirst(Translate(e, language))}
+                  {textUpperFirst(translate(e))}
                   <span
                     className="material-symbols-outlined d-table-header-asc"
                     onClick={() => {
@@ -158,24 +135,13 @@ const TableView = <T extends BaseProp>({ data, setData, socketString, displayNam
           >
             {Object.keys(e).map((f) => (
               // @ts-ignore
-              <div key={f}>{Translate(e[f], language)}</div>
+              <div key={f}>{translate(e[f], language)}</div>
             ))}
           </Panel>
         ))}
       </div>
       <div className="d-buttons">
-        <Button onClick={() => setDialog('add')}>
-          <span className="material-symbols-outlined">add</span>
-          {Translate('add', language)}
-        </Button>
-        <Button>
-          <span className="material-symbols-outlined">edit</span>
-          {Translate('edit', language)}
-        </Button>
-        <Button>
-          <span className="material-symbols-outlined">delete</span>
-          {Translate('delete', language)}
-        </Button>
+        <BaseButtons />
       </div>
     </div>
   );

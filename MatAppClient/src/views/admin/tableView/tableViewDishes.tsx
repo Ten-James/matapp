@@ -1,14 +1,14 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { context } from '../../../App';
-import { Translate } from '../../../misc/transcripter';
 import { textUpperFirst } from '../../../misc/utils';
 import { AdminContext } from '../admin';
-import ParamButtons from './paramButtons';
+import ParamButtons from './components/paramButtons';
 
 import './tableView.css';
 
-import { Button, Panel } from '../../../components/panel';
-import { BaseProp, Dishes, FilterData, Sort } from '../../../types';
+import { Panel } from '../../../components/panel';
+import { IBaseModel, IDish, FilterData, Sort } from '../../../types';
+import { BaseButtons } from './components/baseButtons';
 
 interface Props<T> {
   data: T[];
@@ -17,7 +17,7 @@ interface Props<T> {
   displayName: string;
 }
 
-const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
+const MakeSort = <T extends IBaseModel>(e: string, t: string, ord: boolean) => {
   if (ord) {
     if (t === 'string') {
       // @ts-ignore
@@ -35,55 +35,33 @@ const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
   }
 };
 
-// TODO this file have lots of common with index.tsx and should be cleaned up
+const defaultFilter = { filterMatch: (x) => true, sort: (a, b) => 1 };
 
-const TableViewDishes = ({ data, setData, socketString, displayName }: Props<Dishes>) => {
+const TableViewDishes = ({ data, setData, socketString, displayName }: Props<IDish>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
-  const { socket, language } = useContext(context);
+  const { socket, translate } = useContext(context);
 
-  const [show, setShow] = useState(data);
-  const [sort, setSort] = useState<Sort[]>([{ name: 'id', type: 'number' }]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [filter, setFilter] = useState<FilterData<IDish>>(defaultFilter);
 
-  const [filter, setFilter] = useState<FilterData<Dishes>>({
-    filterMatch: (x) => true,
-    sort: (a, b) => 1,
-  });
-
-  socket.on(socketString, (data: Dishes[]) => {
+  socket.on(socketString, (data: IDish[]) => {
     setData(data);
-    setShow(data.filter(filter.filterMatch).sort(filter.sort));
   });
-
-  useMemo(() => {
-    if (data.length === 0) return setShow([]);
-    setShow(data.filter(filter.filterMatch).sort(filter.sort));
-  }, [filter, data]);
 
   useEffect(() => {
     if (data.length === 0) {
       socket.emit(`get_${socketString}`);
     }
     setSelectedIDs([]);
-    setFilter({
-      filterMatch: (x) => true,
-      sort: (a, b) => 1,
-    });
-    if (data.length === 0) return;
-    // @ts-ignore
-    setSort(
-      Object.keys(data[0]).map<Sort>((e) => ({
-        name: e,
-        type: typeof data[0][e],
-      })),
-    );
-    // @ts-ignore
-    setCategories(data.map((e) => e.category).filter((e, i, a) => a.indexOf(e) === i));
+    setFilter(defaultFilter);
   }, [data]);
+
+  const show = useMemo(() => (data.length === 0 ? [] : data.filter(filter.filterMatch).sort(filter.sort)), [filter, data]);
+
+  const categories = useMemo(() => (data.length === 0 ? [] : Object.keys(data[0]).filter((e) => typeof data[0][e] === 'string')), [data]);
 
   return (
     <div className="d-grid">
-      <h1 className="d-name">{Translate(displayName, language)}</h1>
+      <h1 className="d-name">{translate(displayName)}</h1>
       <div className="d-parameters">
         <ParamButtons
           filter={filter}
@@ -107,7 +85,7 @@ const TableViewDishes = ({ data, setData, socketString, displayName }: Props<Dis
                 e !== 'ingredients' && (
                   <div key={e}>
                     <div className="d-table-header-label">
-                      {textUpperFirst(Translate(e, language))}
+                      {textUpperFirst(translate(e))}
                       <span
                         className="material-symbols-outlined d-table-header-asc"
                         onClick={() => {
@@ -145,56 +123,43 @@ const TableViewDishes = ({ data, setData, socketString, displayName }: Props<Dis
         }}
       >
         {show.map((e) => (
-          <>
-            <Panel
-              onClick={() => setSelectedIDs(selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id])}
+          <Panel
+            onClick={() => setSelectedIDs(selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id])}
+            style={{
+              width: '85%',
+              outline: selectedIDs.includes(e.id) ? '1px solid #6bb0b3' : 'unset',
+              padding: '0.5em 2em',
+              margin: '0.4em auto',
+            }}
+            key={e.id}
+            class="inset"
+          >
+            <div
               style={{
-                width: '85%',
-                outline: selectedIDs.includes(e.id) ? '1px solid #6bb0b3' : 'unset',
-                padding: '0.5em 2em',
-                margin: '0.4em auto',
+                display: 'grid',
+                gridTemplateColumns: 'repeat(' + (Object.keys(show[0]).length - 1).toString() + ', 1fr)',
               }}
-              key={e.id}
-              class="inset"
             >
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(' + (Object.keys(show[0]).length - 1).toString() + ', 1fr)',
-                }}
-              >
-                <div>{e.id}</div>
-                <div>{e.name}</div>
-                <div>{e.cost}</div>
-                <div>{e.category}</div>
-              </div>
-              <div
-                style={{
-                  fontWeight: '600',
-                  fontSize: '1.2em',
-                  marginTop: '0.5em',
-                }}
-              >
-                {Translate('Ingredients', language)}:
-              </div>
-              <div>{selectedIDs.includes(e.id) ? e.ingredients.map((e) => <div>{e}</div>) : <div>{e.ingredients[0]}...</div>}</div>
-            </Panel>
-          </>
+              <div>{e.id}</div>
+              <div>{e.name}</div>
+              <div>{e.cost}</div>
+              <div>{e.category}</div>
+            </div>
+            <div
+              style={{
+                fontWeight: '600',
+                fontSize: '1.2em',
+                marginTop: '0.5em',
+              }}
+            >
+              {translate('Ingredients')}:
+            </div>
+            <div>{selectedIDs.includes(e.id) ? e.ingredients.map((e) => <div>{e}</div>) : <div>{e.ingredients[0]}...</div>}</div>
+          </Panel>
         ))}
       </div>
       <div className="d-buttons">
-        <Button onClick={() => setDialog('add')}>
-          <span className="material-symbols-outlined">add</span>
-          {Translate('add', language)}
-        </Button>
-        <Button>
-          <span className="material-symbols-outlined">edit</span>
-          {Translate('edit', language)}
-        </Button>
-        <Button>
-          <span className="material-symbols-outlined">delete</span>
-          {Translate('delete', language)}
-        </Button>
+        <BaseButtons />
       </div>
     </div>
   );

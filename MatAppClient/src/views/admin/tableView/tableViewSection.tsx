@@ -1,23 +1,23 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { context } from '../../../App';
-import { Translate } from '../../../misc/transcripter';
 import { textUpperFirst } from '../../../misc/utils';
 import { AdminContext } from '../admin';
-import ParamButtons from './paramButtons';
+import ParamButtons from './components/paramButtons';
 
 import './tableView.css';
 
 import { Button, Panel } from '../../../components/panel';
-import { BaseBranchProps, BaseProp, FilterData, Sort } from '../../../types';
+import { IBranchData, IBaseModel, FilterData, Sort } from '../../../types';
+import { BaseButtons } from './components/baseButtons';
 
-interface Props<T extends BaseProp> {
-  data: BaseBranchProps<T>[];
-  setData: (data: BaseBranchProps<T>[]) => void;
+interface Props<T extends IBaseModel> {
+  data: IBranchData<T>[];
+  setData: (data: IBranchData<T>[]) => void;
   socketString: string;
   displayName: string;
 }
 
-const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
+const MakeSort = <T extends IBaseModel>(e: string, t: string, ord: boolean) => {
   if (ord) {
     if (t === 'string') {
       // @ts-ignore
@@ -35,68 +35,48 @@ const MakeSort = <T extends BaseProp>(e: string, t: string, ord: boolean) => {
   }
 };
 
-// TODO this file have lots of common with index.tsx and should be cleaned up
+const defaultFilter = { filterMatch: (x) => true, sort: (a, b) => 1 };
 
-const TableViewSection = <T extends BaseProp>({ data, setData, socketString, displayName }: Props<T>) => {
+const TableViewSection = <T extends IBaseModel>({ data, setData, socketString, displayName }: Props<T>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
-  const { socket, language } = useContext(context);
+  const { socket, translate } = useContext(context);
 
-  const [show, setShow] = useState(data);
-  const [sort, setSort] = useState<Sort[]>([{ name: 'id', type: 'number' }]);
-  const [categories, setCategories] = useState<string[]>([]);
+  const [filter, setFilter] = useState<FilterData<T>>(defaultFilter);
 
-  const [filter, setFilter] = useState<FilterData<T>>({
-    filterMatch: (x) => true,
-    sort: (a, b) => 1,
-  });
-
-  socket.on(socketString, (data: BaseBranchProps<T>[]) => {
+  socket.on(socketString, (data: IBranchData<T>[]) => {
     if (data.length === 0) return;
     setData(data);
-    data.forEach((x) => x.data.filter(filter.filterMatch).sort(filter.sort));
-    setShow(data);
   });
-
-  useMemo(() => {
-    if (data.length === 0) return setShow([]);
-    let tmp = [];
-    data.forEach((x) => {
-      tmp.push({
-        ...x,
-        data: x.data.filter(filter.filterMatch).sort(filter.sort),
-      });
-    });
-    setShow(tmp);
-  }, [filter, data]);
 
   useEffect(() => {
     if (data.length === 0) {
       socket.emit(`get_${socketString}`);
     }
     setSelectedIDs([]);
-    setFilter({
-      filterMatch: (x) => true,
-      sort: (a, b) => 1,
-    });
-    if (data.length === 0) return;
-    // @ts-ignore
-    setSort(
-      Object.keys(data[0].data[0]).map<Sort>((e) => ({
-        name: e,
-        type: typeof data[0].data[0][e],
-      })),
-    );
-    let tmp = [];
+    setFilter(defaultFilter);
+  }, [data]);
 
+  const show = useMemo(
+    () =>
+      data.length === 0
+        ? []
+        : data.map((x) => {
+            return { ...x, data: x.data.filter(filter.filterMatch).sort(filter.sort) };
+          }),
+    [filter, data],
+  );
+
+  const categories = useMemo(() => {
+    if (data.length === 0) return [];
+    let tmp = [];
     // @ts-ignore
     data.forEach((x) => x.data.forEach((e) => tmp.push(e.category)));
-    tmp = [...new Set(tmp)];
-    setCategories(tmp);
+    return [...new Set(tmp)];
   }, [data]);
 
   return (
     <div className="d-grid">
-      <h1 className="d-name">{Translate(displayName, language)}</h1>
+      <h1 className="d-name">{translate(displayName)}</h1>
       <div className="d-parameters">
         <ParamButtons
           filter={filter}
@@ -118,7 +98,7 @@ const TableViewSection = <T extends BaseProp>({ data, setData, socketString, dis
             {Object.keys(show[0].data[0]).map((e) => (
               <div key={e}>
                 <div className="d-table-header-label">
-                  {textUpperFirst(Translate(e, language))}
+                  {textUpperFirst(translate(e))}
                   <span
                     className="material-symbols-outlined d-table-header-asc"
                     onClick={() => {
@@ -190,18 +170,7 @@ const TableViewSection = <T extends BaseProp>({ data, setData, socketString, dis
         ))}
       </div>
       <div className="d-buttons">
-        <Button onClick={() => setDialog('add')}>
-          <span className="material-symbols-outlined">add</span>
-          Add
-        </Button>
-        <Button>
-          <span className="material-symbols-outlined">edit</span>
-          Edit
-        </Button>
-        <Button>
-          <span className="material-symbols-outlined">delete</span>
-          Delete
-        </Button>
+        <BaseButtons />
       </div>
     </div>
   );

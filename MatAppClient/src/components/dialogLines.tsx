@@ -1,6 +1,5 @@
 import React, { useContext, useRef, useState } from 'react';
 import { context } from '../App';
-import { Translate } from '../misc/transcripter';
 import { textUpperFirst } from '../misc/utils';
 
 interface TextAttributeDialogProp {
@@ -9,7 +8,7 @@ interface TextAttributeDialogProp {
   isNumber?: boolean;
 }
 export const TextAttributeDialog = ({ name, required = false, isNumber }: TextAttributeDialogProp) => {
-  const { language } = useContext(context);
+  const { translate } = useContext(context);
   const ref = useRef<HTMLInputElement | null>(null);
   return (
     <div className="dialog-line">
@@ -17,7 +16,7 @@ export const TextAttributeDialog = ({ name, required = false, isNumber }: TextAt
         htmlFor={name}
         className={required ? 'required' : ''}
       >
-        {textUpperFirst(Translate(name, language))}
+        {textUpperFirst(translate(name))}
       </label>
       <div>
         <input
@@ -36,7 +35,7 @@ interface TextAttributeDialogWithComboProp extends TextAttributeDialogProp {
 }
 
 export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo }: TextAttributeDialogWithComboProp) => {
-  const { language } = useContext(context);
+  const { translate } = useContext(context);
   const ref = useRef<HTMLInputElement | null>(null);
   return (
     <div className="dialog-line text-with-combo">
@@ -44,7 +43,7 @@ export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo
         htmlFor={name + '-text'}
         className={required ? 'required' : ''}
       >
-        {textUpperFirst(Translate(name, language))}
+        {textUpperFirst(translate(name))}
       </label>
       <div>
         <input
@@ -73,7 +72,7 @@ export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo
 };
 
 export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextAttributeDialogWithComboProp) => {
-  const { language } = useContext(context);
+  const { translate } = useContext(context);
   const [values, setValues] = useState(combo);
   return (
     <div className="combo-input dialog-line">
@@ -81,7 +80,7 @@ export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextA
         htmlFor={name + '-text'}
         className={required ? 'required' : ''}
       >
-        {textUpperFirst(Translate(name, language))}
+        {textUpperFirst(translate(name))}
       </label>
       <div>
         <input
@@ -113,10 +112,10 @@ interface CheckboxGroupDialogProp {
 }
 
 export const CheckboxGroupDialog = ({ name, radios }: CheckboxGroupDialogProp) => {
-  const { language } = useContext(context);
+  const { translate } = useContext(context);
   return (
     <div className="dialog-line line-noflex">
-      <label>{textUpperFirst(Translate(name, language))}</label>
+      <label>{textUpperFirst(translate(name))}</label>
       <div className="dialog-radios">
         {radios &&
           radios.map((x, ind) => (

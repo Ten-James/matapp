@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 
 import { context } from '../../../App';
 import { Panel } from '../../../components/panel';
-import { Translate } from '../../../misc/transcripter';
 import { Information } from '../../../types';
 import './information.css';
 
@@ -16,7 +15,7 @@ const InformationView = () => {
     database: [''],
   });
 
-  const { socket, language } = useContext(context);
+  const { socket, translate } = useContext(context);
   socket.on('info', (data) => {
     setInfo(data);
   });
@@ -31,27 +30,27 @@ const InformationView = () => {
 
   return (
     <div className="s-grid">
-      <h1 className="s-name">{Translate('information', language)}</h1>
+      <h1 className="s-name">{translate('information')}</h1>
       <Panel class="s-status">
-        <h2>{Translate('Current Server info', language)}:</h2>
+        <h2>{translate('Current Server info')}:</h2>
         {Info.uptime && (
           <div>
-            {Translate('Update', language)}: {Info.uptime}
+            {translate('Update')}: {Info.uptime}
           </div>
         )}
         {Info.memory && (
           <div>
-            {Translate('Memory Usage', language)}: {Info.memory}
+            {translate('Memory Usage')}: {Info.memory}
           </div>
         )}
         {Info.clients && (
           <div>
-            {Translate('Current Clients', language)}: {Info.clients}
+            {translate('Current Clients')}: {Info.clients}
           </div>
         )}
         {Info.time && (
           <div>
-            {Translate('Updated time', language)}: {Info.time}
+            {translate('Updated time')}: {Info.time}
           </div>
         )}
       </Panel>
@@ -66,10 +65,10 @@ const InformationView = () => {
           {Info.database && (
             <>
               <div>
-                {Translate('Database Size', language)}: {Info.database[0]} MB
+                {translate('Database Size')}: {Info.database[0]} MB
               </div>
               <div>
-                {Translate('Database Rows', language)}: {Info.database[1]}
+                {translate('Database Rows')}: {Info.database[1]}
               </div>
             </>
           )}

@@ -1,24 +1,23 @@
 import { useContext, useRef } from 'react';
-import { context } from '../../../App';
-import { Translate } from '../../../misc/transcripter';
-import { BaseProp, FilterData } from '../../../types';
+import { context } from '../../../../App';
+import { IBaseModel, FilterData } from '../../../../types';
 
-interface Props<T extends BaseProp> {
+interface Props<T extends IBaseModel> {
   filter: FilterData<T>;
   setFilter: (filter: FilterData<T>) => void;
   showCategory: boolean;
   categories: string[];
 }
 
-const ParamButtons = <T extends BaseProp>({ filter, setFilter, showCategory, categories }: Props<T>) => {
-  const { language } = useContext(context);
+const ParamButtons = <T extends IBaseModel>({ filter, setFilter, showCategory, categories }: Props<T>) => {
+  const { translate } = useContext(context);
   const searchRef = useRef<HTMLInputElement | null>(null);
   const filterSelect = useRef<HTMLSelectElement | null>(null);
   return (
     <>
       <span className="material-symbols-outlined">search</span>
       <input
-        placeholder={Translate('search', language)}
+        placeholder={translate('search')}
         id="search"
         type="text"
         ref={searchRef}
@@ -50,7 +49,7 @@ const ParamButtons = <T extends BaseProp>({ filter, setFilter, showCategory, cat
       />
       {showCategory && (
         <>
-          <label htmlFor="filter">{Translate('Filter Category', language)}</label>
+          <label htmlFor="filter">{translate('Filter Category')}</label>
           <select
             id="filter"
             ref={filterSelect}
@@ -69,7 +68,7 @@ const ParamButtons = <T extends BaseProp>({ filter, setFilter, showCategory, cat
               key={-1}
               value=""
             >
-              {Translate('all', language)}
+              {translate('all')}
             </option>
             {categories.map((e, index) => (
               <option

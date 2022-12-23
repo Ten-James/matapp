@@ -4,7 +4,6 @@ import { BetterLink, SubBetterLink } from './betterLinks';
 
 import { context } from '../../../App';
 import LogoSVG from '../../../components/logo';
-import { Translate } from '../../../misc/transcripter';
 import { AdminContext } from '../admin';
 import './navigation.css';
 
@@ -26,7 +25,7 @@ export const navigationContext = createContext<NavigationContext>({
 
 const Navigation = ({ userAccess }: NavigationProps) => {
   const { refresh } = useContext(AdminContext);
-  const { language } = useContext(context);
+  const { translate } = useContext(context);
   const [Expanded, setExpanded] = useState(false);
   const location = useLocation();
 
@@ -48,50 +47,50 @@ const Navigation = ({ userAccess }: NavigationProps) => {
             >
               <SubBetterLink
                 to="branches"
-                expandedText={Translate('Branches', language)}
+                expandedText={translate('Branches')}
                 icon="store"
                 count={3}
               >
                 <BetterLink
                   to="branches/reports"
-                  expandedText={Translate('Reports', language)}
+                  expandedText={translate('Reports')}
                   icon="receipt_long"
                   onClick={() => setExpanded(false)}
                 />
                 <BetterLink
                   to="branches/storage"
-                  expandedText={Translate('Storage', language)}
+                  expandedText={translate('Storage')}
                   icon="warehouse"
                   onClick={() => setExpanded(false)}
                 />
                 <BetterLink
                   to="branches/orders"
-                  expandedText={Translate('Orders', language)}
+                  expandedText={translate('Orders')}
                   icon="list_alt"
                   onClick={() => setExpanded(false)}
                 />
               </SubBetterLink>
               <SubBetterLink
                 to="table"
-                expandedText={Translate('Tables', language)}
+                expandedText={translate('Tables')}
                 icon="storage"
                 count={3}
               >
                 <BetterLink
                   to="table/users"
-                  expandedText={Translate('Users', language)}
+                  expandedText={translate('Users')}
                   icon="group"
                   onClick={() => setExpanded(false)}
                 />
                 <BetterLink
                   to="table/ingredients"
-                  expandedText={Translate('Ingredients', language)}
+                  expandedText={translate('Ingredients')}
                   icon="kitchen"
                   onClick={() => setExpanded(false)}
                 />
                 <BetterLink
                   to="table/dishes"
-                  expandedText={Translate('Dishes', language)}
+                  expandedText={translate('Dishes')}
                   icon="restaurant"
                   onClick={() => setExpanded(false)}
                 />
@@ -99,13 +98,13 @@ const Navigation = ({ userAccess }: NavigationProps) => {
               <BetterLink
                 to="information"
                 requiredAdmin
-                expandedText={Translate('Information', language)}
+                expandedText={translate('Information')}
                 icon="info"
                 onClick={() => setExpanded(false)}
               />
               <BetterLink
                 to={location.pathname}
-                expandedText={Translate('Refresh', language)}
+                expandedText={translate('Refresh')}
                 icon="sync"
                 onClick={refresh}
               />

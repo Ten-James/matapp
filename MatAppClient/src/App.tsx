@@ -3,7 +3,8 @@ import { Route, Routes } from 'react-router';
 import socketIOClient from 'socket.io-client';
 
 import { Button } from './components/panel';
-import { AppContext, Branch, LanguageType } from './types';
+import { Translate } from './misc/transcripter';
+import { AppContext, IBranch, LanguageType } from './types';
 import Admin from './views/admin/admin';
 import BranchSelector from './views/branchSelector';
 import ErrorPage from './views/errorPage';
@@ -17,25 +18,25 @@ export const context: React.Context<AppContext> = createContext<AppContext>({
   language: 'english',
   setLanguage: () => {},
   branches: [],
+  translate: (text) => text,
   setLoading: () => {},
   setBranches: () => {},
 });
 
 // TODO: use styled components?
 
-// TODO: dont send language, send function to translate
-
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [language, setLanguage] = useState<LanguageType>('english');
   //TODO- move to branchSelector
-  const [branches, setBranches] = useState<Branch[]>([]);
+  const [branches, setBranches] = useState<IBranch[]>([]);
 
   const contextValue: AppContext = {
     loading,
     socket,
     branches,
     language,
+    translate: (text) => Translate(text, language),
     setLanguage,
     setLoading: setLoading,
     setBranches: setBranches,

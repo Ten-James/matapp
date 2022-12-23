@@ -1,7 +1,6 @@
 import { useContext, useEffect, useRef, useState } from 'react';
 import { context } from '../../../App';
 import { Button, Panel } from '../../../components/panel';
-import { Translate } from '../../../misc/transcripter';
 import { AdminContext } from '../admin';
 import IngredientDialogBase from '../../../forms/ingredientDialogBase';
 import * as Handlers from './handlers';
@@ -13,7 +12,7 @@ interface BaseDialogProp {
 }
 
 const BaseDialog = ({ header, children }: BaseDialogProp) => {
-  const { language } = useContext(context);
+  const { translate } = useContext(context);
   const form = useRef<HTMLFormElement | null>(null);
   const [translateY, setTranslateY] = useState('-100vh');
   const { setDialog } = useContext(AdminContext);
@@ -36,11 +35,11 @@ const BaseDialog = ({ header, children }: BaseDialogProp) => {
         class="dialog"
         style={{ transform: `translateY(${translateY})` }}
       >
-        <h1 className="dialog-header">{Translate(header, language)}</h1>
+        <h1 className="dialog-header">{translate(header)}</h1>
         <div className="dialog-content">{children}</div>
         <div className="dialog-buttons">
-          <Button onClick={handleHide}>{Translate('cancel', language)}</Button>
-          <Button onClick={handleSubmit}>{Translate('confirm', language)}</Button>
+          <Button onClick={handleHide}>{translate('cancel')}</Button>
+          <Button onClick={handleSubmit}>{translate('confirm')}</Button>
         </div>
       </Panel>
     </form>

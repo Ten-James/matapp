@@ -8,6 +8,7 @@ export interface AppContext {
   socket: Socket;
   language: LanguageType;
   setLanguage: (language: LanguageType) => void;
+  translate: (text: string) => string;
   branches: IBranch[];
   setLoading: (loading: boolean) => void;
   setBranches: (branches: IBranch[]) => void;
