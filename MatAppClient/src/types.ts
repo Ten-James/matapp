@@ -16,14 +16,14 @@ export interface AppContext {
 
 export type LanguageType = 'english' | 'czech';
 
-export type DialogType = 'hidden' | 'add' | 'edit' | 'edit_multiple' | 'delete';
+export type IDialogOption = 'hidden' | 'add' | 'edit' | 'edit_multiple' | 'delete';
 
 export interface AdminContextType {
   selectedIDs: number[];
   setSelectedIDs: (selectedIDs: number[]) => void;
   refresh: () => void;
-  dialog: DialogType;
-  setDialog: (dialog: DialogType) => void;
+  dialog: IDialogOption;
+  setDialog: (dialog: IDialogOption) => void;
   branches: IBranch[];
   setBranches: (branches: IBranch[]) => void;
 }

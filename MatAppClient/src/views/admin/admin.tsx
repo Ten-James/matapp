@@ -3,8 +3,8 @@ import { Route, Routes } from 'react-router-dom';
 import { context } from '../../App';
 
 import { GenerateFries } from '../../misc/fries';
-import type { AdminContextType, DialogType, IBranch, IBranchData, IDish, IIngredient, IUser } from '../../types';
-import { AddDialog } from './dialog';
+import type { AdminContextType, IDialogOption, IBranch, IBranchData, IDish, IIngredient, IUser } from '../../types';
+import Dialog from './dialog';
 import InformationView from './information/information';
 import Navigation from './navigation';
 import TableView from './tableView/';
@@ -33,7 +33,7 @@ const Admin = () => {
   const [branches, setBranches] = useState<IBranch[]>([]);
   const [branchesStorages, setBranchesStorages] = useState<IBranchData<IIngredient>[]>([]);
   const [branchesOrders, setBranchesOrders] = useState<IBranchData<any>[]>([]);
-  const [dialog, setDialog] = useState<DialogType>('hidden');
+  const [dialog, setDialog] = useState<IDialogOption>('hidden');
 
   const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
   const [user, setUser] = useState<IUser>({
@@ -106,7 +106,7 @@ const Admin = () => {
         setBranches,
       }}
     >
-      {dialog === 'add' && <AddDialog />}
+      {dialog !== 'hidden' && <Dialog />}
       <div className="App App-grid">
         <Navigation userAccess={user.access} />
         <Routes>

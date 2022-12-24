@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 
 import { context } from '../../../App';
-import { Panel } from '../../../components/panel';
+import { Panel } from '../../../components/common/panel';
 import { Information } from '../../../types';
 import './information.css';
 

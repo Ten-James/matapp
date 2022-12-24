@@ -1,11 +1,11 @@
 import { useContext, useEffect } from 'react';
 import { context } from '../App';
-import LogoSVG from '../components/logo';
-import { Button, Panel } from '../components/panel';
+import LogoSVG from '../components/common/logo';
+import { Button, Panel } from '../components/common/panel';
 import { GenerateFries } from '../misc/fries';
-import { Branch } from '../types';
+import { IBranch } from '../types';
 interface Props {
-  branches: Branch[];
+  branches: IBranch[];
 }
 
 const BranchSelector = ({ branches }: Props) => {
@@ -15,7 +15,7 @@ const BranchSelector = ({ branches }: Props) => {
   useEffect(() => {
     GenerateFries();
     setTimeout(() => socket.emit('get_branches'), 3000);
-    socket.on('branches', (data: Branch[]) => {
+    socket.on('branches', (data: IBranch[]) => {
       setLoading(false);
       //duplicate data for testing
       setBranches(data.concat(data));

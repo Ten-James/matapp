@@ -1,6 +1,6 @@
 import { useContext, useRef } from 'react';
-import { context } from '../../../../App';
-import { IBaseModel, FilterData } from '../../../../types';
+import { context } from '../../App';
+import { IBaseModel, FilterData } from '../../types';
 
 interface Props<T extends IBaseModel> {
   filter: FilterData<T>;

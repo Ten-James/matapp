@@ -2,13 +2,14 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import { context } from '../../../App';
 import { textUpperFirst } from '../../../misc/utils';
 import { AdminContext } from '../admin';
-import ParamButtons from './components/paramButtons';
+import ParamButtons from '../../../components/tableview/paramButtons';
+import { defaultFilter, MakeSort } from '../../../handlers/tableview/handlers';
 
 import './tableView.css';
 
-import { Button, Panel } from '../../../components/panel';
+import { Button, Panel } from '../../../components/common/panel';
 import { IBranchData, IBaseModel, FilterData, Sort } from '../../../types';
-import { BaseButtons } from './components/baseButtons';
+import { BaseButtons } from '../../../components/tableview/baseButtons';
 
 interface Props<T extends IBaseModel> {
   data: IBranchData<T>[];
@@ -16,26 +17,6 @@ interface Props<T extends IBaseModel> {
   socketString: string;
   displayName: string;
 }
-
-const MakeSort = <T extends IBaseModel>(e: string, t: string, ord: boolean) => {
-  if (ord) {
-    if (t === 'string') {
-      // @ts-ignore
-      return (a: T, b: T): number => a[e].localeCompare(b[e]);
-    }
-    // @ts-ignore
-    return (a: T, b: T): number => a[e] - b[e];
-  } else {
-    if (t === 'string') {
-      // @ts-ignore
-      return (a: T, b: T): number => b[e].localeCompare(a[e]);
-    }
-    // @ts-ignore
-    return (a: T, b: T): number => b[e] - a[e];
-  }
-};
-
-const defaultFilter = { filterMatch: (x) => true, sort: (a, b) => 1 };
 
 const TableViewSection = <T extends IBaseModel>({ data, setData, socketString, displayName }: Props<T>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);

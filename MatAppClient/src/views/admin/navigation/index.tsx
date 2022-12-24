@@ -1,9 +1,9 @@
 import { createContext, useContext, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { BetterLink, SubBetterLink } from './betterLinks';
+import { BetterLink, SubBetterLink } from '../../../components/navigation/betterLinks';
 
 import { context } from '../../../App';
-import LogoSVG from '../../../components/logo';
+import LogoSVG from '../../../components/common/logo';
 import { AdminContext } from '../admin';
 import './navigation.css';
 

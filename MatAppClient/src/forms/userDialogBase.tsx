@@ -1,4 +1,4 @@
-import { TextAttributeDialog, ComboBoxAttributeDialog, TextAttributeWithCombo, RadioGroupDialog } from '../components/dialogLines';
+import { TextAttributeDialog, ComboBoxAttributeDialog } from '../components/dialog/dialogLines';
 
 const IngredientDialogBase = () => {
   return (

@@ -1,6 +1,6 @@
 import React, { useContext, useRef, useState } from 'react';
-import { context } from '../App';
-import { textUpperFirst } from '../misc/utils';
+import { context } from '../../App';
+import { textUpperFirst } from '../../misc/utils';
 
 interface TextAttributeDialogProp {
   name: string;

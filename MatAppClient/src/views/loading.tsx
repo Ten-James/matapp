@@ -2,7 +2,7 @@ import { useContext, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import { context } from '../App';
-import LogoSVG from '../components/logo';
+import LogoSVG from '../components/common/logo';
 
 interface Props {
   children: React.ReactNode;

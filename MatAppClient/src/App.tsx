@@ -2,7 +2,7 @@ import React, { createContext, useState } from 'react';
 import { Route, Routes } from 'react-router';
 import socketIOClient from 'socket.io-client';
 
-import { Button } from './components/panel';
+import { Button } from './components/common/panel';
 import { Translate } from './misc/transcripter';
 import { AppContext, IBranch, LanguageType } from './types';
 import Admin from './views/admin/admin';
@@ -36,7 +36,7 @@ const App = () => {
     socket,
     branches,
     language,
-    translate: (text) => Translate(text, language),
+    translate: language === 'czech' ? (text) => Translate(text, 'czech') : (text) => Translate(text, 'english'),
     setLanguage,
     setLoading: setLoading,
     setBranches: setBranches,

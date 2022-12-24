@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
-import { navigationContext } from './index';
+import { navigationContext } from '../../views/admin/navigation/index';
 interface BetterLinkProps {
   to: string;
   requiredAdmin?: boolean;
