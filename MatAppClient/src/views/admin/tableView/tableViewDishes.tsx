@@ -10,15 +10,9 @@ import './tableView.css';
 import { Panel } from '../../../components/common/panel';
 import { IBaseModel, IDish, FilterData, Sort } from '../../../types';
 import { BaseButtons } from '../../../components/tableview/baseButtons';
+import { TableViewProps } from '.';
 
-interface Props<T> {
-  data: T[];
-  setData: (data: T[]) => void;
-  socketString: string;
-  displayName: string;
-}
-
-const TableViewDishes = ({ data, setData, socketString, displayName }: Props<IDish>) => {
+const TableViewDishes = ({ data, setData, socketString, displayName, ...args }: TableViewProps<IDish>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
   const { socket, translate } = useContext(context);
 
@@ -139,9 +133,7 @@ const TableViewDishes = ({ data, setData, socketString, displayName }: Props<IDi
           </Panel>
         ))}
       </div>
-      <div className="d-buttons">
-        <BaseButtons />
-      </div>
+      <div className="d-buttons">{args.showButtons ? <BaseButtons /> : <></>}</div>
     </div>
   );
 };

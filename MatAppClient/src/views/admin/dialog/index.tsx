@@ -1,28 +1,30 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { context } from '../../../App';
+import { useContext } from 'react';
 import { AdminContext } from '../admin';
-import IngredientDialogBase from '../../../forms/ingredientDialogBase';
 import './style.css';
-import BaseDialog from '../../../components/dialog/baseDialog';
-
-export const AddDialog = () => {
-  const [error, setError] = useState('');
-
-  return (
-    <BaseDialog header="Add Ingredient">
-      <IngredientDialogBase />
-      {error && <p className="error">{error}</p>}
-    </BaseDialog>
-  );
-};
+import { AddIngredient } from '../../../forms/ingredient';
+import { AddUser } from '../../../forms/user';
+import { AddDish } from '../../../forms/dish';
+import { AddBranch } from '../../../forms/branch';
 
 const Dialog = () => {
-  const { dialog } = useContext(AdminContext);
-  console.log(window.location.pathname);
-  if (dialog === 'add') {
-    return <AddDialog />;
+  const { dialog, setDialog } = useContext(AdminContext);
+  if (window.location.pathname.includes('ingredients')) {
+    if (dialog === 'add') return <AddIngredient />;
   }
 
+  if (window.location.pathname.includes('users')) {
+    if (dialog === 'add') return <AddUser />;
+  }
+
+  if (window.location.pathname.includes('dishes')) {
+    if (dialog === 'add') return <AddDish />;
+  }
+
+  if (window.location.pathname.includes('branches')) {
+    if (dialog === 'add') return <AddBranch />;
+  }
+
+  setDialog('hidden');
   return null;
 };
 

@@ -10,15 +10,9 @@ import './tableView.css';
 import { Button, Panel } from '../../../components/common/panel';
 import { IBranchData, IBaseModel, FilterData, Sort } from '../../../types';
 import { BaseButtons } from '../../../components/tableview/baseButtons';
+import { TableViewProps } from '.';
 
-interface Props<T extends IBaseModel> {
-  data: IBranchData<T>[];
-  setData: (data: IBranchData<T>[]) => void;
-  socketString: string;
-  displayName: string;
-}
-
-const TableViewSection = <T extends IBaseModel>({ data, setData, socketString, displayName }: Props<T>) => {
+const TableViewSection = <T extends IBaseModel>({ data, setData, socketString, displayName, ...args }: TableViewProps<IBranchData<T>>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
   const { socket, translate } = useContext(context);
 
@@ -143,16 +137,14 @@ const TableViewSection = <T extends IBaseModel>({ data, setData, socketString, d
               >
                 {Object.keys(e).map((f) => (
                   // @ts-ignore
-                  <div key={f}>{Translate(e[f])}</div>
+                  <div key={f}>{translate(e[f])}</div>
                 ))}
               </Panel>
             ))}
           </div>
         ))}
       </div>
-      <div className="d-buttons">
-        <BaseButtons />
-      </div>
+      <div className="d-buttons">{args.showButtons ? <BaseButtons /> : <></>}</div>
     </div>
   );
 };

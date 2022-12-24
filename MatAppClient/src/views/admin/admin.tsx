@@ -118,6 +118,7 @@ const Admin = () => {
                 setData={setBranches}
                 displayName="Branches"
                 socketString="branches"
+                showButtons
               />
             }
           />
@@ -152,6 +153,7 @@ const Admin = () => {
                 setData={setDishes}
                 displayName="Dishes"
                 socketString="dishes"
+                showButtons
               />
             }
           />
@@ -163,6 +165,7 @@ const Admin = () => {
                 setData={setIngredients}
                 displayName="Ingredients"
                 socketString="ingredients"
+                showButtons
               />
             }
           />
@@ -174,6 +177,7 @@ const Admin = () => {
                 setData={setUsers}
                 displayName="Users"
                 socketString="users"
+                showButtons
               />
             }
           />

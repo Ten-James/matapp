@@ -11,14 +11,15 @@ import { Button, Panel } from '../../../components/common/panel';
 import { IBaseModel, FilterData, Sort } from '../../../types';
 import { BaseButtons } from '../../../components/tableview/baseButtons';
 
-interface Props<T> {
+export interface TableViewProps<T> {
   data: T[];
   setData: (data: T[]) => void;
   socketString: string;
   displayName: string;
+  showButtons?: boolean;
 }
 
-const TableView = <T extends IBaseModel>({ data, setData, socketString, displayName }: Props<T>) => {
+const TableView = <T extends IBaseModel>({ data, setData, socketString, displayName, ...args }: TableViewProps<T>) => {
   const { selectedIDs, setSelectedIDs } = useContext(AdminContext);
   const { socket, translate } = useContext(context);
 
@@ -121,9 +122,7 @@ const TableView = <T extends IBaseModel>({ data, setData, socketString, displayN
           </Panel>
         ))}
       </div>
-      <div className="d-buttons">
-        <BaseButtons />
-      </div>
+      <div className="d-buttons">{args.showButtons ? <BaseButtons /> : <></>}</div>
     </div>
   );
 };

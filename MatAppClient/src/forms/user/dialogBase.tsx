@@ -1,6 +1,6 @@
-import { TextAttributeDialog, ComboBoxAttributeDialog } from '../components/dialog/dialogLines';
+import { TextAttributeDialog, ComboBoxAttributeDialog } from '../../components/dialog/dialogLines';
 
-const IngredientDialogBase = () => {
+const UserDialogBase = () => {
   return (
     <>
       <TextAttributeDialog
@@ -20,4 +20,4 @@ const IngredientDialogBase = () => {
   );
 };
 
-export default IngredientDialogBase;
+export default UserDialogBase;

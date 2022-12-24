@@ -1,4 +1,4 @@
-import { TextAttributeDialog, ComboBoxAttributeDialog, TextAttributeWithCombo, CheckboxGroupDialog } from '../components/dialog/dialogLines';
+import { TextAttributeDialog, ComboBoxAttributeDialog, TextAttributeWithCombo, CheckboxGroupDialog } from '../../components/dialog/dialogLines';
 
 const IngredientDialogBase = () => {
   return (
