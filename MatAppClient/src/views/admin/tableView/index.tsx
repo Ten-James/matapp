@@ -8,7 +8,7 @@ import { defaultFilter, MakeSort } from '../../../handlers/tableview/handlers';
 import './tableView.css';
 
 import { Button, Panel } from '../../../components/common/panel';
-import { IBaseModel, FilterData, Sort } from '../../../types';
+import { IBaseModel, FilterData, ICategoryBaseModel } from '../../../types';
 import { BaseButtons } from '../../../components/tableview/baseButtons';
 
 export interface TableViewProps<T> {
@@ -39,7 +39,16 @@ const TableView = <T extends IBaseModel>({ data, setData, socketString, displayN
 
   const show = useMemo(() => (data.length === 0 ? [] : data.filter(filter.filterMatch).sort(filter.sort)), [filter, data]);
 
-  const categories = useMemo(() => (data.length === 0 ? [] : Object.keys(data[0]).filter((e) => typeof data[0][e] === 'string')), [data]);
+  const categories = useMemo(() => {
+    if (data.length === 0) {
+      return [];
+    }
+    if ('category' in data[0] === false) {
+      return [];
+    }
+    const categories: string[] = data.map((e) => (e as any as ICategoryBaseModel).category);
+    return [...new Set(categories)];
+  }, [data]);
 
   return (
     <div className="d-grid">

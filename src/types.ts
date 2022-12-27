@@ -7,6 +7,10 @@ export interface INamedBaseModel extends IBaseModel {
   name: string;
 }
 
+export interface ICategoryBaseModel extends INamedBaseModel {
+  category: string;
+}
+
 export interface IBranch extends INamedBaseModel {
   location: string;
 }
@@ -15,16 +19,14 @@ export interface IBranchData<T extends INamedBaseModel> extends IBranch {
   data: T[];
 }
 
-export interface IIngredient extends INamedBaseModel {
+export interface IIngredient extends ICategoryBaseModel {
   cost: number;
-  category: string;
   allergens: string;
   count?: number;
 }
 
-export interface IDish extends INamedBaseModel {
+export interface IDish extends ICategoryBaseModel {
   cost: number;
-  category: string;
   ingredients: string[];
 }
 

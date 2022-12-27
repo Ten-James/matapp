@@ -50,6 +50,7 @@ select {
 }
 
 .d-buttons {
+  margin: 1em 5em;
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -58,7 +59,7 @@ select {
 .d-buttons button {
   margin: 0 1em;
   padding: 0.5em 4em;
-  border-radius: 41px;
+  border-radius: 1rem;
 }
 
 .d-table-container {

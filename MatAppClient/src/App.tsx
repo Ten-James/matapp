@@ -62,6 +62,7 @@ const App = () => {
         {language === 'english' ? (
           <Button
             class="lang-button"
+            color="gray"
             onClick={() => setLanguage('czech')}
           >
             EN
@@ -69,6 +70,7 @@ const App = () => {
         ) : (
           <Button
             class="lang-button"
+            color="gray"
             onClick={() => setLanguage('english')}
           >
             CZ

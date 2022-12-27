@@ -4,6 +4,7 @@ import './panel.css';
 interface PanelProps {
   class?: string;
   style?: React.CSSProperties;
+  color?: 'red' | 'blue' | 'white' | 'gray';
   children: React.ReactNode;
   onClick?: (event) => void;
 }
@@ -20,10 +21,11 @@ export const Panel = (props: PanelProps) => {
 };
 
 export const Button = (props: PanelProps) => {
+  const color = props.color || 'gray';
   return (
     <button
       style={props.style}
-      className={'button ' + (props.class || '')}
+      className={'button ' + (props.class || '') + ' color-' + color}
       onClick={props.onClick}
     >
       {props.children}

@@ -28,19 +28,25 @@ const BaseDialog = ({ header, children }: BaseDialogProp) => {
   return (
     <form
       ref={form}
+      autoComplete="off"
       className="dialog-background"
     >
-      <Panel
-        class="dialog"
+      <div
+        className="dialog"
         style={{ transform: `translateY(${translateY})` }}
       >
         <h1 className="dialog-header">{translate(header)}</h1>
         <div className="dialog-content">{children}</div>
         <div className="dialog-buttons">
           <Button onClick={handleHide}>{translate('cancel')}</Button>
-          <Button onClick={handleSubmit}>{translate('confirm')}</Button>
+          <Button
+            color="blue"
+            onClick={handleSubmit}
+          >
+            {translate('confirm')}
+          </Button>
         </div>
-      </Panel>
+      </div>
     </form>
   );
 };

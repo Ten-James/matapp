@@ -16,7 +16,10 @@ export const BaseButtons = () => {
         <span className="material-symbols-outlined">edit</span>
         {translate('edit')}
       </Button>
-      <Button onClick={() => setDialog('delete')}>
+      <Button
+        color="red"
+        onClick={() => setDialog('delete')}
+      >
         <span className="material-symbols-outlined">delete</span>
         {translate('delete')}
       </Button>

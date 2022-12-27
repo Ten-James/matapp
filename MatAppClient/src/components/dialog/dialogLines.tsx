@@ -94,9 +94,13 @@ export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextA
         <div className="combo-select">
           {values &&
             values.map((x) => (
-              <button
+              <input
+                type="button"
                 key={x}
-                onClick={() => (document.querySelector<HTMLInputElement>(`#${name}-text`).value = x)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  document.querySelector<HTMLInputElement>(`#${name}-text`).value = x;
+                }}
                 value={x}
               />
             ))}

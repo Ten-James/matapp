@@ -8,8 +8,15 @@
   z-index: 100;
   place-items: center;
 }
+.dialog {
+  padding: 2.5em;
+  margin: 1em;
+  border-radius: 1rem;
+  background: #efe6dd;
+}
 .dialog-background + div {
-  filter: blur(10px);
+  filter: blur(10px) brightness(0.749);
+  background-color: rgba(0, 0, 0, 0.251);
 }
 .dialog-header {
   margin: 0;
@@ -22,7 +29,7 @@
 .dialog-buttons > * {
   height: 4rem;
   width: 8rem;
-  border-radius: 2rem;
+  border-radius: 1rem;
   font-size: 1.3em;
 }
 .dialog-content {
@@ -39,15 +46,17 @@
   right: 0;
   z-index: 100;
   width: 100%;
-  max-height: 5em;
+  max-height: 15vh;
   overflow-y: scroll;
 }
 
 .combo-select > input[type='button'] {
+  text-align: center;
+  border-radius: 0;
   display: block;
 }
 .combo-input:focus-within input[type='text'] {
-  border-radius: 0.2rem 0.2rem 0 0 !important;
+  border-radius: 1rem 0.2rem 0 0 !important;
 }
 
 .combo-input:focus-within .combo-select {
@@ -95,7 +104,7 @@
 }
 
 .text-with-combo > div > input {
-  border-radius: 0.2rem 0 0 0.2rem;
+  border-radius: 1rem 0 0 0.2rem;
 }
 
 .text-with-combo > div > select {
@@ -108,14 +117,14 @@
   width: 100%;
   font-size: 1.2em;
   padding: 0 0.5rem;
-  border-radius: 0.2rem;
+  border-radius: 1rem;
   text-align: right;
   border: unset;
 }
 .dialog select {
   padding: 0;
   margin: 0;
-  border-radius: 0.2rem;
+  border-radius: 1rem;
   font-size: 1.2em;
   border: unset;
 }

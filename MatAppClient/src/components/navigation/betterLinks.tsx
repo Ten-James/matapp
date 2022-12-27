@@ -31,7 +31,7 @@ const ExpandedText = ({ isExpanded, text }: { isExpanded: boolean; text: string 
 
 const ExpandedChild = ({ isExpanded, children, count }: { isExpanded: boolean; children: JSX.Element | JSX.Element[]; count: number }) => {
   const style = {
-    paddingBottom: isExpanded ? `${5 * count}em` : '0',
+    paddingBottom: isExpanded ? `${5 * count + 0.5}em` : '0',
   };
   return (
     <div

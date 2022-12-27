@@ -67,7 +67,9 @@ Its also part of mine final project High school exam.
 * MatAppClient\src\App.tsx: : move to env file
 * MatAppClient\src\App.tsx: : use styled components?
 * MatAppClient\src\App.tsx: - move to branchselector
-* MatAppClient\src\components\logo.tsx: : class should be choose value not string
-* MatAppClient\src\components\panel.tsx: : class should be choose value not string
+* MatAppClient\src\components\common\logo.tsx: : class should be choose value not string
+* MatAppClient\src\components\common\panel.tsx: : class should be choose value not string
+* MatAppClient\src\components\dialog\baseDialog.tsx: : make available for custom button color.
+* MatAppClient\src\forms\deleteDialog.tsx:  better display casting*/
 * MatAppClient\src\misc\fries.ts: : rewrite this so its more readable
 * MatAppClient\src\misc\utils.ts:  why is there only one function in this file?

@@ -29,7 +29,10 @@ current server info,Current server info,Aktuálni Info serveru
 updated time,Updated time,Čas aktualizace
 memory usage,Memory usage,Využití paměti
 current clients,Current clients, Aktuální Uživatelé
-update,Update,Čas provozu
+update,Uptime,Čas provozu
 database size,Database Size,Velikost Databáze
 database rows,Database Rows,Počet řádků v Databázi
 add ingredient,Add ingredient,Přidání Ingrediencí
+confirm,Confirm,Potvrdit
+cancel,Cancel,Zrušit
+delete?,Delete?,Opravdu Odstranit?

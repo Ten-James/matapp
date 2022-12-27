@@ -8,7 +8,13 @@ import { AddBranch } from '../../../forms/branch';
 import DeleteDialog from '../../../forms/deleteDialog';
 
 const Dialog = () => {
-  const { dialog, setDialog } = useContext(AdminContext);
+  const { dialog, setDialog, selectedIDs } = useContext(AdminContext);
+
+  if ((dialog === 'delete' || dialog === 'edit' || dialog === 'edit_multiple') && selectedIDs.length === 0) {
+    setDialog('hidden');
+    return null;
+  }
+
   if (window.location.pathname.includes('ingredients')) {
     if (dialog === 'add') return <AddIngredient />;
     if (dialog === 'delete') return <DeleteDialog />;
