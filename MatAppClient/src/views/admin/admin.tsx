@@ -1,4 +1,4 @@
-import { createContext, FormEvent, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, FormEvent, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { context } from '../../App';
 
@@ -12,6 +12,7 @@ import TableViewDishes from './tableView/tableViewDishes';
 import TableViewSection from './tableView/tableViewSection';
 
 const defaultData: AdminContextType = {
+  selectedItems: [],
   selectedIDs: [],
   setSelectedIDs: () => {},
   refresh: () => {},
@@ -48,6 +49,15 @@ const Admin = () => {
     setSelectedIDs([]);
     setIngredients([]);
   };
+
+  const selectedItems = useMemo(() => {
+    const location = window.location.pathname;
+    if (location.includes('ingredients')) return ingredients.filter((ingredient) => selectedIDs.includes(ingredient.id));
+    if (location.includes('dishes')) return dishes.filter((dish) => selectedIDs.includes(dish.id));
+    if (location.includes('users')) return users.filter((user) => selectedIDs.includes(user.id));
+    if (location.includes('branches')) return branches.filter((branch) => selectedIDs.includes(branch.id));
+    return [];
+  }, [selectedIDs, ingredients, dishes, users, branches, branchesStorages, branchesOrders]);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
@@ -97,6 +107,7 @@ const Admin = () => {
   return (
     <AdminContext.Provider
       value={{
+        selectedItems,
         selectedIDs,
         setSelectedIDs,
         refresh,

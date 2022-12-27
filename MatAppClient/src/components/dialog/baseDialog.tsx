@@ -9,6 +9,7 @@ interface BaseDialogProp {
   children: JSX.Element | JSX.Element[];
 }
 
+// TODO: make available for custom button color.
 const BaseDialog = ({ header, children }: BaseDialogProp) => {
   const { translate } = useContext(context);
   const form = useRef<HTMLFormElement | null>(null);

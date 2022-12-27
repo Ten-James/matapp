@@ -1,5 +1,5 @@
 import { Socket } from 'socket.io-client';
-import type { IBaseModel, IBranch } from '../../src/types';
+import type { IBaseModel, IBranch, INamedBaseModel } from '../../src/types';
 
 export * from '../../src/types';
 
@@ -19,6 +19,7 @@ export type LanguageType = 'english' | 'czech';
 export type IDialogOption = 'hidden' | 'add' | 'edit' | 'edit_multiple' | 'delete';
 
 export interface AdminContextType {
+  selectedItems: INamedBaseModel[];
   selectedIDs: number[];
   setSelectedIDs: (selectedIDs: number[]) => void;
   refresh: () => void;

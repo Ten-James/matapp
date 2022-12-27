@@ -12,11 +12,11 @@ export const BaseButtons = () => {
         <span className="material-symbols-outlined">add</span>
         {translate('add')}
       </Button>
-      <Button>
+      <Button onClick={() => setDialog('edit')}>
         <span className="material-symbols-outlined">edit</span>
         {translate('edit')}
       </Button>
-      <Button>
+      <Button onClick={() => setDialog('delete')}>
         <span className="material-symbols-outlined">delete</span>
         {translate('delete')}
       </Button>
