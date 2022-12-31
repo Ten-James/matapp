@@ -6,18 +6,22 @@ import { AdminContext } from '../../views/admin/admin';
 
 interface BaseDialogProp {
   header: string;
+  sendRoute: string;
   children: JSX.Element | JSX.Element[];
 }
 
 // TODO: make available for custom button color.
-const BaseDialog = ({ header, children }: BaseDialogProp) => {
-  const { translate } = useContext(context);
+const BaseDialog = ({ header, sendRoute, children }: BaseDialogProp) => {
+  const { translate, socket } = useContext(context);
   const form = useRef<HTMLFormElement | null>(null);
   const [translateY, setTranslateY] = useState('-100vh');
   const { setDialog } = useContext(AdminContext);
 
   const handleHide = (e: Event) => Handlers.hide(e, setTranslateY, setDialog);
-  const handleSubmit = (e: Event) => Handlers.submit(e, form.current, setTranslateY, setDialog);
+  const handleSubmit = (e: Event) =>
+    Handlers.submit(e, form.current, setTranslateY, setDialog, (data) => {
+      socket.emit(sendRoute, data);
+    });
 
   useEffect(() => {
     setTimeout(() => {

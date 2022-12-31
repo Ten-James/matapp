@@ -3,14 +3,25 @@ export const hide = (e: Event, setTranslateY: (string) => void, setDialog: (stri
   setTranslateY('-100vh');
   setTimeout(() => setDialog('hidden'), 500);
 };
-export const submit = (e: Event, form: HTMLFormElement | null, setTranslateY: (string) => void, setDialog: (string) => void) => {
+
+//TODO add base data for ids.
+
+export const submit = (e: Event, form: HTMLFormElement | null, setTranslateY: (string) => void, setDialog: (string) => void, sendData: (data: any) => void) => {
   e.preventDefault();
   if (!form) return;
-  let data = {};
-  let arr = [...form.querySelectorAll('input:not([type="checkbox"]), select')];
+  const data = {};
+  const arr = [...form.querySelectorAll('input:not([type="checkbox"]), select')];
+  const checkboxes = [...form.querySelectorAll('input[type="checkbox"]')] as HTMLInputElement[];
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      if (!Object.keys(data).includes(checkbox.name)) data[checkbox.name] = [];
+      data[checkbox.name].push(checkbox.id.split('-')[1]);
+    }
+  });
   // @ts-ignore
   arr.forEach((e) => (data[e.id] = e.value));
   console.log(data);
   setTranslateY('-100vh');
+  sendData(data);
   setTimeout(() => setDialog('hidden'), 500);
 };

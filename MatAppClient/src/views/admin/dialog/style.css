@@ -56,7 +56,7 @@
   display: block;
 }
 .combo-input:focus-within input[type='text'] {
-  border-radius: 1rem 0.2rem 0 0 !important;
+  border-radius: 0.2rem 0.2rem 0 0 !important;
 }
 
 .combo-input:focus-within .combo-select {
@@ -104,7 +104,7 @@
 }
 
 .text-with-combo > div > input {
-  border-radius: 1rem 0 0 0.2rem;
+  border-radius: 0.2rem 0 0 0.2rem;
 }
 
 .text-with-combo > div > select {
@@ -117,7 +117,7 @@
   width: 100%;
   font-size: 1.2em;
   padding: 0 0.5rem;
-  border-radius: 1rem;
+  border-radius: 0.2rem;
   text-align: right;
   border: unset;
 }

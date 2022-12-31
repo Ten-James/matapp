@@ -1,6 +1,6 @@
 import type { MysqlError } from 'mysql';
 import type { Socket } from 'socket.io';
-import type { IIngredient } from '../types';
+import type { IDialogBranch, IIngredient } from '../types';
 import connection from '../database';
 import { writeLog } from '../logger';
 
@@ -22,6 +22,10 @@ const processIngredients = (socket: Socket) => {
         socket.emit('ingredients', result);
       },
     );
+  });
+  const preset = 'ingredients';
+  socket.on(`add_${preset}`, (data: IDialogBranch) => {
+    writeLog(socket.handshake.address, `add_${preset} \n ${JSON.stringify(data)}`);
   });
 };
 

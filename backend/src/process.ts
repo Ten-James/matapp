@@ -41,7 +41,6 @@ const sendInfo = (socket: Socket) => {
 const processConnection = (socket: Socket) => {
   ProcessTables(socket);
   socket.on('get_info', () => {
-    writeLog(socket.handshake.address, 'get_info');
     sendInfo(socket);
   });
 };

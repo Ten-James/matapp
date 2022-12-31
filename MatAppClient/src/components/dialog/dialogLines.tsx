@@ -40,14 +40,14 @@ export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo
   return (
     <div className="dialog-line text-with-combo">
       <label
-        htmlFor={name + '-text'}
+        htmlFor={name}
         className={required ? 'required' : ''}
       >
         {textUpperFirst(translate(name))}
       </label>
       <div>
         <input
-          id={name + '-text'}
+          id={name}
           name={name + '-text'}
           type={isNumber ? 'number' : 'text'}
           ref={ref}
@@ -126,7 +126,7 @@ export const CheckboxGroupDialog = ({ name, radios }: CheckboxGroupDialogProp) =
             <React.Fragment key={ind}>
               <input
                 type="checkbox"
-                id={name + ind}
+                id={name + '-' + ind}
                 name={name}
                 value={x}
               />

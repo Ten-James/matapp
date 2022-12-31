@@ -6,7 +6,10 @@ const DeleteDialog = () => {
   const [error, setError] = useState('');
 
   return (
-    <BaseDialog header="Delete?">
+    <BaseDialog
+      header="Delete?"
+      sendRoute="delete"
+    >
       <>
         {selectedItems.map((item) => (
           /*TODO better display casting*/

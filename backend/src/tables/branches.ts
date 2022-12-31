@@ -35,6 +35,11 @@ const processBranches = (socket) => {
       });
     });
   });
+
+  const preset = 'branches';
+  socket.on(`add_${preset}`, (data: any) => {
+    writeLog(socket.handshake.address, `add_${preset} \n ${JSON.stringify(data)}`);
+  });
 };
 
 export default processBranches;

@@ -22,3 +22,11 @@ export interface ILogType {
   ip: string;
   message: string;
 }
+
+export interface IDialogBranch {
+  id?: number[];
+  name: string;
+  location: string;
+}
+
+//TODO dialog types.

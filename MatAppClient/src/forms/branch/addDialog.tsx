@@ -6,7 +6,10 @@ export const AddDialog = () => {
   const [error, setError] = useState('');
 
   return (
-    <BaseDialog header="Add Branch">
+    <BaseDialog
+      header="Add Branch"
+      sendRoute="add_branches"
+    >
       <BranchDialogBase />
       {error && <p className="error">{error}</p>}
     </BaseDialog>
