@@ -10,6 +10,19 @@
   box-shadow: 5px 5px 9px #00000010, inset 19px 19px 38px #00000006;
 }
 
+.inline {
+  display: inline-flex !important;
+}
+
+.small {
+  width: 3em !important;
+  height: 3em !important;
+}
+
+.small > span {
+  font-size: 1.2em;
+}
+
 .center {
   position: absolute;
   top: 50%;
@@ -64,10 +77,10 @@
   border-radius: 1rem;
 }
 
-.button:hover {
+.button:hover:not(:disabled) {
   scale: 1.1;
 }
-.button:hover span {
+.button:hover:not(:disabled) span {
   scale: 1.05;
 }
 

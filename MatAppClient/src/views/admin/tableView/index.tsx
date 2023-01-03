@@ -20,7 +20,7 @@ export interface TableViewProps<T> {
 }
 
 const TableView = <T extends IBaseModel>({ data, setData, socketString, displayName, ...args }: TableViewProps<T>) => {
-  const { selectedIDs, setSelectedIDs } = useContext(AdminContext);
+  const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
   const { socket, translate } = useContext(context);
 
   const [filter, setFilter] = useState<FilterData<T>>(defaultFilter);
@@ -65,10 +65,7 @@ const TableView = <T extends IBaseModel>({ data, setData, socketString, displayN
         {show.length > 0 && (
           <div
             style={{
-              display: 'grid',
-              width: '85%',
-              margin: '0.3em auto',
-              gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr)',
+              gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr) 6em',
             }}
           >
             {Object.keys(show[0]).map((e) => (
@@ -103,23 +100,13 @@ const TableView = <T extends IBaseModel>({ data, setData, socketString, displayN
           </div>
         )}
       </div>
-      <div
-        className="d-table-content"
-        style={{
-          overflowY: 'scroll',
-          height: '100%',
-        }}
-      >
+      <div className="d-table-content">
         {show.map((e) => (
           <Panel
             onClick={() => setSelectedIDs(selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id])}
             style={{
-              display: 'grid',
-              width: '85%',
-              gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr)',
+              gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr) auto',
               outline: selectedIDs.includes(e.id) ? '1px solid #6bb0b3' : 'unset',
-              padding: '0.5em 2em',
-              margin: '0.4em auto',
             }}
             key={e.id}
             class="inset"
@@ -128,6 +115,28 @@ const TableView = <T extends IBaseModel>({ data, setData, socketString, displayN
               // @ts-ignore
               <div key={f}>{translate(e[f])}</div>
             ))}
+            <div>
+              <Button
+                class="inline small"
+                style={{ marginRight: '0.5rem' }}
+                onClick={() => {
+                  setSelectedIDs([e.id]);
+                  setDialog('edit');
+                }}
+              >
+                <span className="material-symbols-outlined">edit</span>
+              </Button>
+              <Button
+                class="inline small"
+                color="red"
+                onClick={() => {
+                  setSelectedIDs([e.id]);
+                  setDialog('delete');
+                }}
+              >
+                <span className="material-symbols-outlined">delete</span>
+              </Button>
+            </div>
           </Panel>
         ))}
       </div>

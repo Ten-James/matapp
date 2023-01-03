@@ -8,11 +8,11 @@ import { defaultFilter, MakeSort } from '../../../handlers/tableview/handlers';
 import './tableView.css';
 
 import { Button, Panel } from '../../../components/common/panel';
-import { IBranchData, IBaseModel, FilterData, Sort } from '../../../types';
+import { IBranchData, INamedBaseModel, FilterData, Sort } from '../../../types';
 import { BaseButtons } from '../../../components/tableview/baseButtons';
 import { TableViewProps } from '.';
 
-const TableViewSection = <T extends IBaseModel>({ data, setData, socketString, displayName, ...args }: TableViewProps<IBranchData<T>>) => {
+const TableViewSection = <T extends INamedBaseModel>({ data, setData, socketString, displayName, ...args }: TableViewProps<IBranchData<T>>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
   const { socket, translate } = useContext(context);
 
@@ -64,10 +64,7 @@ const TableViewSection = <T extends IBaseModel>({ data, setData, socketString, d
         {show.length > 0 && (
           <div
             style={{
-              display: 'grid',
-              width: '85%',
-              margin: '0.3em auto',
-              gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr)',
+              gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr) 6em',
             }}
           >
             {Object.keys(show[0].data[0]).map((e) => (
@@ -102,13 +99,7 @@ const TableViewSection = <T extends IBaseModel>({ data, setData, socketString, d
           </div>
         )}
       </div>
-      <div
-        className="d-table-content"
-        style={{
-          overflowY: 'scroll',
-          height: '100%',
-        }}
-      >
+      <div className="d-table-content">
         {show.map((x) => (
           <div key={x.id}>
             <h2
@@ -125,12 +116,8 @@ const TableViewSection = <T extends IBaseModel>({ data, setData, socketString, d
               <Panel
                 onClick={() => setSelectedIDs(selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id])}
                 style={{
-                  display: 'grid',
-                  width: '85%',
-                  gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr)',
                   outline: selectedIDs.includes(e.id) ? '1px solid #6bb0b3' : 'unset',
-                  padding: '0.5em 1em',
-                  margin: '0.4em auto',
+                  gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr) auto',
                 }}
                 key={e.id}
                 class="inset"

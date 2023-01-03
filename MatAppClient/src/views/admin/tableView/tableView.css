@@ -30,23 +30,32 @@ select {
 }
 
 .d-table-header > div {
+
+  display: grid;
+  width: 85%;
+  margin: 0.3em auto;
   font-weight: 600;
   font-size: 1.3em;
   padding: 0 1em;
-  display: grid;
   grid-template-columns: auto 1fr;
 }
 .d-table-content {
   grid-area: table;
+  overflow-y: scroll;
+  height: 100%;
 }
 .d-table-content .panel {
+  display: grid;
+  align-items: center;
+  width: 85%;
+  padding: 0.5em 1em;
+  margin: 0.4em auto;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
 
 .d-table-content .panel:hover {
-  cursor: pointer;
-  scale: 1.05;
+  box-shadow: 5px 5px 9px #00000030;
 }
 
 .d-buttons {

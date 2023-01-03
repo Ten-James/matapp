@@ -4,11 +4,14 @@ import { Button } from '../common/panel';
 import { AdminContext } from '../../views/admin/admin';
 
 export const BaseButtons = () => {
-  const { setDialog } = useContext(AdminContext);
+  const { setDialog, selectedIDs, setSelectedIDs } = useContext(AdminContext);
   const { translate } = useContext(context);
   return (
     <>
-      <Button onClick={() => setDialog('add')}>
+      <Button
+        color="blue"
+        onClick={() => setDialog('add')}
+      >
         <span className="material-symbols-outlined">add</span>
         {translate('add')}
       </Button>
@@ -22,6 +25,16 @@ export const BaseButtons = () => {
       >
         <span className="material-symbols-outlined">delete</span>
         {translate('delete')}
+      </Button>
+      <Button
+        color="red"
+        disabled={selectedIDs.length === 0}
+        onClick={() => {
+          setSelectedIDs([]);
+        }}
+      >
+        <span className="material-symbols-outlined">clear</span>
+        {translate('clear')}
       </Button>
     </>
   );
