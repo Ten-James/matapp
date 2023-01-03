@@ -5,6 +5,7 @@
     'status data' 1fr
     'login data' 1fr
     / 1fr 1fr;
+  margin-inline: 2em;
   height: 100vh;
 }
 

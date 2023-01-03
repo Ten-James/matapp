@@ -43,6 +43,13 @@ const processBranches = (socket) => {
       if (err) throw err;
     });
   });
+
+  socket.on(`delete_${preset}`, (data: IDialogBranch) => {
+    writeLog(socket.handshake.address, `delete_${preset} \n ${JSON.stringify(data.id)}`);
+    connection.query(`DELETE FROM branches WHERE id IN (${data.id.join(',')})`, (err: MysqlError, result: any) => {
+      if (err) throw err;
+    });
+  });
 };
 
 export default processBranches;

@@ -17,22 +17,22 @@ const Dialog = () => {
 
   if (window.location.pathname.includes('ingredients')) {
     if (dialog === 'add') return <AddIngredient />;
-    if (dialog === 'delete') return <DeleteDialog />;
+    if (dialog === 'delete') return <DeleteDialog sendRoute="ingredients" />;
   }
 
   if (window.location.pathname.includes('users')) {
     if (dialog === 'add') return <AddUser />;
-    if (dialog === 'delete') return <DeleteDialog />;
+    if (dialog === 'delete') return <DeleteDialog sendRoute="users" />;
   }
 
   if (window.location.pathname.includes('dishes')) {
     if (dialog === 'add') return <AddDish />;
-    if (dialog === 'delete') return <DeleteDialog />;
+    if (dialog === 'delete') return <DeleteDialog sendRoute="dishes" />;
   }
 
   if (window.location.pathname.includes('branches')) {
     if (dialog === 'add') return <AddBranch />;
-    if (dialog === 'delete') return <DeleteDialog />;
+    if (dialog === 'delete') return <DeleteDialog sendRoute="branches" />;
   }
 
   setDialog('hidden');
