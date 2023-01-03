@@ -29,4 +29,10 @@ export interface IDialogBranch {
   location: string;
 }
 
-//TODO dialog types.
+export interface IDialogUser {
+  id?: number[];
+  name: string;
+  password: string;
+  access: number;
+  branchId: number;
+}

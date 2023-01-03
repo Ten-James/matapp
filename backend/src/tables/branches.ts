@@ -1,7 +1,7 @@
 import type { MysqlError } from 'mysql';
 import connection from '../database';
 import { writeLog } from '../logger';
-import type { IBranchStorageItem, IBranch, IBranchData, IIngredient } from '../types';
+import type { IBranchStorageItem, IBranch, IBranchData, IIngredient, IDialogBranch } from '../types';
 
 const processBranches = (socket) => {
   socket.on('get_branches', () => {
@@ -37,8 +37,11 @@ const processBranches = (socket) => {
   });
 
   const preset = 'branches';
-  socket.on(`add_${preset}`, (data: any) => {
+  socket.on(`add_${preset}`, (data: IDialogBranch) => {
     writeLog(socket.handshake.address, `add_${preset} \n ${JSON.stringify(data)}`);
+    connection.query(`INSERT INTO branches (name, location) VALUES ('${data.name}', '${data.location}')`, (err: MysqlError, result: any) => {
+      if (err) throw err;
+    });
   });
 };
 

@@ -15,12 +15,14 @@ const BaseDialog = ({ header, sendRoute, children }: BaseDialogProp) => {
   const { translate, socket } = useContext(context);
   const form = useRef<HTMLFormElement | null>(null);
   const [translateY, setTranslateY] = useState('-100vh');
-  const { setDialog } = useContext(AdminContext);
+  const { setDialog, selectedIDs, refresh } = useContext(AdminContext);
 
   const handleHide = (e: Event) => Handlers.hide(e, setTranslateY, setDialog);
   const handleSubmit = (e: Event) =>
-    Handlers.submit(e, form.current, setTranslateY, setDialog, (data) => {
+    Handlers.submit(e, form.current, setTranslateY, setDialog, selectedIDs, (data) => {
+      console.log(sendRoute);
       socket.emit(sendRoute, data);
+      refresh();
     });
 
   useEffect(() => {

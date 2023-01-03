@@ -12,6 +12,11 @@ const UserDialogBase = () => {
         required
       />
       <ComboBoxAttributeDialog
+        name="access"
+        required
+        combo={['user', 'admin']}
+      />
+      <ComboBoxAttributeDialog
         name="branch"
         required
         combo={['ahoj', 'veta', 'beta', 'gamma', 'delta', 'test']}

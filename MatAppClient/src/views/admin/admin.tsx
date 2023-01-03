@@ -48,6 +48,11 @@ const Admin = () => {
   const refresh = () => {
     setSelectedIDs([]);
     setIngredients([]);
+    setDishes([]);
+    setUsers([]);
+    setBranches([]);
+    setBranchesStorages([]);
+    setBranchesOrders([]);
   };
 
   const selectedItems = useMemo(() => {
