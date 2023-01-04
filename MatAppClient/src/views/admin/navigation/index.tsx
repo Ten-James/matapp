@@ -1,5 +1,5 @@
 import { createContext, useContext, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BetterLink, SubBetterLink } from '../../../components/navigation/betterLinks';
 
 import { context } from '../../../App';
@@ -26,6 +26,7 @@ export const navigationContext = createContext<NavigationContext>({
 const Navigation = ({ userAccess }: NavigationProps) => {
   const { refresh } = useContext(AdminContext);
   const { translate } = useContext(context);
+  const navigate = useNavigate();
   const [Expanded, setExpanded] = useState(false);
   const location = useLocation();
 
@@ -36,7 +37,7 @@ const Navigation = ({ userAccess }: NavigationProps) => {
           <div className="nav-container">
             <div
               className="logo"
-              onClick={() => setExpanded(!Expanded)}
+              onClick={() => navigate('/')}
             >
               <LogoSVG class="small" />
             </div>

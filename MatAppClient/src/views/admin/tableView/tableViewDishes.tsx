@@ -7,7 +7,7 @@ import { defaultFilter, MakeSort } from '../../../handlers/tableview/handlers';
 
 import './tableView.css';
 
-import { Panel } from '../../../components/common/panel';
+import { Button, Panel } from '../../../components/common/panel';
 import { IBaseModel, IDish, FilterData, Sort } from '../../../types';
 import { BaseButtons } from '../../../components/tableview/baseButtons';
 import { TableViewProps } from '.';
@@ -107,6 +107,28 @@ const TableViewDishes = ({ data, setData, socketString, displayName, ...args }: 
               <div>{e.name}</div>
               <div>{e.cost}</div>
               <div>{e.category}</div>
+              <div>
+                <Button
+                  class="inline small"
+                  style={{ marginRight: '0.5rem' }}
+                  onClick={() => {
+                    setSelectedIDs([e.id]);
+                    setDialog('edit');
+                  }}
+                >
+                  <span className="material-symbols-outlined">edit</span>
+                </Button>
+                <Button
+                  class="inline small"
+                  color="red"
+                  onClick={() => {
+                    setSelectedIDs([e.id]);
+                    setDialog('delete');
+                  }}
+                >
+                  <span className="material-symbols-outlined">delete</span>
+                </Button>
+              </div>
             </div>
             <div
               style={{

@@ -1,5 +1,6 @@
-import { Socket } from 'socket.io-client';
+import type { Socket } from 'socket.io-client';
 import type { IBaseModel, IBranch, INamedBaseModel } from '../../src/types';
+import type { Dispatch, SetStateAction } from 'react';
 
 export * from '../../src/types';
 
@@ -7,26 +8,30 @@ export interface AppContext {
   loading: boolean;
   socket: Socket;
   language: LanguageType;
-  setLanguage: (language: LanguageType) => void;
+  setLanguage: Dispatch<SetStateAction<LanguageType>>;
+  theme: ThemeType;
+  setTheme: Dispatch<SetStateAction<ThemeType>>;
   translate: (text: string) => string;
   branches: IBranch[];
-  setLoading: (loading: boolean) => void;
-  setBranches: (branches: IBranch[]) => void;
+  setLoading: Dispatch<SetStateAction<boolean>>;
+  setBranches: Dispatch<SetStateAction<IBranch[]>>;
 }
 
 export type LanguageType = 'english' | 'czech';
+
+export type ThemeType = 'light' | 'dark';
 
 export type IDialogOption = 'hidden' | 'add' | 'edit' | 'edit_multiple' | 'delete';
 
 export interface AdminContextType {
   selectedItems: INamedBaseModel[];
   selectedIDs: number[];
-  setSelectedIDs: (selectedIDs: number[]) => void;
+  setSelectedIDs: Dispatch<SetStateAction<number[]>>;
   refresh: () => void;
   dialog: IDialogOption;
-  setDialog: (dialog: IDialogOption) => void;
+  setDialog: Dispatch<SetStateAction<IDialogOption>>;
   branches: IBranch[];
-  setBranches: (branches: IBranch[]) => void;
+  setBranches: Dispatch<SetStateAction<IBranch[]>>;
 }
 
 export interface Information {

@@ -14,9 +14,39 @@
   display: inline-flex !important;
 }
 
+.selector {
+  cursor: pointer;
+  width: 20vw;
+  padding: 0.75em !important;
+  margin: 0 !important;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.selector *{
+  text-decoration: unset !important;
+}
+
+.selector > span {
+  font-size: 1.5em;
+}
+
 .small {
   width: 3em !important;
   height: 3em !important;
+}
+
+.small-text{
+
+  height: 3em !important;
+
+}
+
+.small-text > span{
+  font-size: 1.2em;
+
 }
 
 .small > span {

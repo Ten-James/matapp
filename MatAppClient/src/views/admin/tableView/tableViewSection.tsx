@@ -105,12 +105,23 @@ const TableViewSection = <T extends INamedBaseModel>({ data, setData, socketStri
             <h2
               style={{
                 display: 'grid',
+                gridTemplateColumns: '1fr auto',
                 width: '85%',
                 padding: '0.5em 1em',
                 margin: '0.4em auto',
               }}
             >
               {x.name} {x.location}
+              <Button
+                class="inline small-text"
+                color="blue"
+                onClick={() => {
+                  setDialog('add');
+                }}
+              >
+                <span className="material-symbols-outlined">add</span>
+                {translate('add')}
+              </Button>
             </h2>
             {x.data.map((e) => (
               <Panel
@@ -126,6 +137,28 @@ const TableViewSection = <T extends INamedBaseModel>({ data, setData, socketStri
                   // @ts-ignore
                   <div key={f}>{translate(e[f])}</div>
                 ))}
+                <div>
+                  <Button
+                    class="inline small"
+                    style={{ marginRight: '0.5rem' }}
+                    onClick={() => {
+                      setSelectedIDs([e.id]);
+                      setDialog('edit');
+                    }}
+                  >
+                    <span className="material-symbols-outlined">edit</span>
+                  </Button>
+                  <Button
+                    class="inline small"
+                    color="red"
+                    onClick={() => {
+                      setSelectedIDs([e.id]);
+                      setDialog('delete');
+                    }}
+                  >
+                    <span className="material-symbols-outlined">delete</span>
+                  </Button>
+                </div>
               </Panel>
             ))}
           </div>

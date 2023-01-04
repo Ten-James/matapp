@@ -9,11 +9,10 @@ interface Props {
 }
 
 const BranchSelector = ({ branches }: Props) => {
-  const socket = useContext(context).socket;
-  const setBranches = useContext(context).setBranches;
-  const setLoading = useContext(context).setLoading;
+  const { setBranches, setLoading, socket } = useContext(context);
   useEffect(() => {
-    GenerateFries();
+    setLoading(true);
+    setTimeout(GenerateFries, 20);
     setTimeout(() => socket.emit('get_branches'), 3000);
     socket.on('branches', (data: IBranch[]) => {
       setLoading(false);

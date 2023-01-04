@@ -71,7 +71,7 @@
   background: #efe6dd;
   color: #231f20;
   text-decoration: none;
-  box-shadow: 5px 5px 9px #00000020;
+  box-shadow: 5px 5px 9px #00000015;
 }
 
 .nav-link:hover {
@@ -105,7 +105,7 @@
   background: #efe6dd;
   color: #231f20;
   text-decoration: none;
-  box-shadow: 5px 5px 9px #00000020;
+  box-shadow: 5px 5px 9px #00000015;
 }
 
 
@@ -113,7 +113,7 @@
   margin: 1em;
   border-radius: 1rem;
   background: #efe6dd;
-  box-shadow: 5px 5px 9px #00000020;
+  box-shadow: 5px 5px 9px #00000015;
 }
 
 .App-grid {

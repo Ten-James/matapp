@@ -10,6 +10,7 @@ import Navigation from './navigation';
 import TableView from './tableView/';
 import TableViewDishes from './tableView/tableViewDishes';
 import TableViewSection from './tableView/tableViewSection';
+import AdminDefaultView from './default';
 
 const defaultData: AdminContextType = {
   selectedItems: [],
@@ -25,8 +26,7 @@ const defaultData: AdminContextType = {
 export const AdminContext = createContext(defaultData);
 
 const Admin = () => {
-  const setLoading = useContext(context).setLoading;
-  const socket = useContext(context).socket;
+  const { socket, setLoading } = useContext(context);
 
   const [ingredients, setIngredients] = useState<IIngredient[]>([]);
   const [dishes, setDishes] = useState<IDish[]>([]);
@@ -200,6 +200,10 @@ const Admin = () => {
           <Route
             path="/information"
             element={<InformationView />}
+          />
+          <Route
+            path="/"
+            element={<AdminDefaultView />}
           />
         </Routes>
       </div>

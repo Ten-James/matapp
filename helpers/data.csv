@@ -36,3 +36,14 @@ add ingredient,Add ingredient,Přidání Ingrediencí
 confirm,Confirm,Potvrdit
 cancel,Cancel,Zrušit
 delete?,Delete?,Opravdu Odstranit?
+application,Application,Aplikace
+management,Management,Management
+settings,Settings,Nastavení
+tws,This will be saved, Tohle bude uloženo
+ils,in your local storage, lokálně na zařízení
+language,Language, Jazyk
+theme,Theme,Režim
+light,Light,Světlý
+dark,Dark,Tmavý
+close,Close,Zavřít
+switch,Switch,Přepnout
