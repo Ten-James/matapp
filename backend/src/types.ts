@@ -36,3 +36,13 @@ export interface IDialogUser {
   access: number;
   branchId: number;
 }
+
+export interface IDialogIngredient {
+  id?: number[];
+  name: string;
+  category: string;
+  cost: number;
+  text: string;
+  text_combo: string;
+  allergens: number[];
+}

@@ -3,7 +3,7 @@ import type { MysqlError } from 'mysql';
 import type { Socket } from 'socket.io';
 import connection from '../database';
 import { writeLog } from '../logger';
-import type { ILoginProps, IUser } from '../types';
+import type { IDialogUser, ILoginProps, IUser } from '../types';
 
 const processUsers = (socket: Socket) => {
   socket.on('get_users', () => {
@@ -36,8 +36,15 @@ const processUsers = (socket: Socket) => {
   });
 
   const preset = 'users';
-  socket.on(`add_${preset}`, (data: any) => {
+  socket.on(`add_${preset}`, (data: IDialogUser) => {
     writeLog(socket.handshake.address, `add_${preset} \n ${JSON.stringify(data)}`);
+  });
+
+  socket.on(`delete_${preset}`, (data: IDialogUser) => {
+    writeLog(socket.handshake.address, `delete_${preset} \n ${JSON.stringify(data)}`);
+    connection.query(`DELETE FROM users WHERE id IN (${data.id.join(',')})`, (err: MysqlError, result: any) => {
+      if (err) throw err;
+    });
   });
 };
 

@@ -23,6 +23,7 @@ export const TextAttributeDialog = ({ name, required = false, isNumber }: TextAt
           id={name}
           name={name}
           type={isNumber ? 'number' : name === 'password' ? 'password' : 'text'}
+          required={required}
           ref={ref}
         />
       </div>
@@ -48,13 +49,15 @@ export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo
       <div>
         <input
           id={name}
-          name={name + '-text'}
+          name={name}
           type={isNumber ? 'number' : 'text'}
+          required={required}
           ref={ref}
         />
         <select
-          id={name + '-combo'}
-          name={name + '-combo'}
+          id={name + '_combo'}
+          name={name + '_combo'}
+          required={required}
         >
           {combo &&
             combo.map((x, ind) => (
@@ -77,7 +80,7 @@ export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextA
   return (
     <div className="combo-input dialog-line">
       <label
-        htmlFor={name + '-text'}
+        htmlFor={name}
         className={required ? 'required' : ''}
       >
         {textUpperFirst(translate(name))}
@@ -86,7 +89,9 @@ export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextA
         <input
           type="text"
           className="combo-input"
-          id={name + '-text'}
+          required={required}
+          id={name}
+          name={name}
           onKeyUp={(e) => {
             setValues(combo.filter((x) => x.startsWith(e.currentTarget.value)));
           }}
@@ -99,7 +104,7 @@ export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextA
                 key={x}
                 onClick={(e) => {
                   e.preventDefault();
-                  document.querySelector<HTMLInputElement>(`#${name}-text`).value = x;
+                  document.querySelector<HTMLInputElement>(`#${name}`).value = x;
                 }}
                 value={x}
               />
