@@ -2,14 +2,14 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import { context } from '../../../App';
 import { textUpperFirst } from '../../../misc/utils';
 import { AdminContext } from '../admin';
-import ParamButtons from '../../../components/tableview/paramButtons';
-import { defaultFilter, MakeSort } from '../../../handlers/tableview/handlers';
+import ParamButtons from '../../../components/tableView/paramButtons';
+import { defaultFilter, MakeSort } from '../../../handlers/tableView/handlers';
 
 import './tableView.css';
 
 import { Button, Panel } from '../../../components/common/panel';
 import { IBranchData, INamedBaseModel, FilterData, Sort } from '../../../types';
-import { BaseButtons } from '../../../components/tableview/baseButtons';
+import { BaseButtons } from '../../../components/tableView/baseButtons';
 import { TableViewProps } from '.';
 
 const TableViewSection = <T extends INamedBaseModel>({ data, setData, socketString, displayName, ...args }: TableViewProps<IBranchData<T>>) => {
@@ -127,7 +127,7 @@ const TableViewSection = <T extends INamedBaseModel>({ data, setData, socketStri
               <Panel
                 onClick={() => setSelectedIDs(selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id])}
                 style={{
-                  outline: selectedIDs.includes(e.id) ? '1px solid #6bb0b3' : 'unset',
+                  outline: selectedIDs.includes(e.id) ? '1px solidvar(--blue-color)' : 'unset',
                   gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr) auto',
                 }}
                 key={e.id}

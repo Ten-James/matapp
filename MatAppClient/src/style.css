@@ -1,4 +1,4 @@
-/* #231f20, #db2955, #6bb0b3, #d782ba, #efe6dd */
+/* var(--black-color),var(--red-color),var(--blue-color), #d782ba,var(--white-color) */
 
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200;300;400;500;600;700;800;900;1000&display=swap');
 
@@ -6,6 +6,7 @@
   margin: 0;
   transition: all 500ms ease-in-out;
   user-select: none;
+  color: var(--black-color);
 }
 
 body {
@@ -14,7 +15,7 @@ body {
   margin: 0;
   overflow-y: hidden;
   font-family: 'Cairo';
-  background-color: #efe6dd;
+  background-color:var(--white-color);
 }
 
 #root,
@@ -23,17 +24,56 @@ body {
   overflow: hidden;
 }
 
+
+
 .App {
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  background-color: var(--white-color);
 }
+
+:root:has(* .light-color) {
+  --black-color: #231f20;
+  --white-color: #efe6dd;
+  --blue-color: #6bb0b3;
+  --gray-color: #d3d3d3;
+  --shadow-0: #00000010;
+  --shadow-1: #00000015;
+  --shadow-2: #00000020;
+  --shadow-3: #00000030;
+}
+
+:root:has(* .dark-color) {
+  --black-color: #f9f5f0;
+  --red-color: hsl(345, 71%, 41%);
+  --white-color: hsl(345, 6%, 18%);
+  --blue-color: hsl(183, 32%, 46%);
+  --gray-color: #505050;
+  --shadow-0: #00000010;
+  --shadow-1: #00000055;
+  --shadow-2: #00000080;
+  --shadow-3: #00000090;
+}
+:root, :root:has(* .white-color){
+  --red-color: #db2955;
+  --black-color: #231f20;
+  --white-color: #ffffff;
+  --blue-color: #6bb0b3;
+  --gray-color: #d3d3d3;
+  --shadow-0: #00000010;
+  --shadow-1: #00000015;
+  --shadow-2: #00000020;
+  --shadow-3: #00000030;
+}
+
+
 .waiting {
-  position: relative;
+  position: absolute;
   z-index: 101;
   width: 100vw;
   height: 100vh;
-  background-color: #db2955;
+  background-color:var(--red-color);
   
   overflow: hidden;
 }
@@ -41,7 +81,7 @@ h1 {
   font-size: 3em;
   font-weight: 600;
   text-transform: uppercase;
-  color: #231f20;
+  color: var(--black-color);
   margin: 0.5em;
   padding: 0;
 }
@@ -54,7 +94,7 @@ h1 {
 }
 .fries > * {
   position: absolute;
-  background-color: #efe6dd;
+  background-color:var(--white-color);
   background-size: cover;
   background-position: center;
   width: 88px;

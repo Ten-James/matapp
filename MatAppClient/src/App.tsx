@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { Route, Routes, useLocation } from 'react-router';
 import socketIOClient from 'socket.io-client';
 
@@ -55,37 +55,38 @@ const App = () => {
   return (
     <context.Provider value={contextValue}>
       <Loader>
-        <>
-          {settingsVisible ? <SettingsDialog hide={() => setSettingsVisible(false)} /> : null}
-          <Routes>
-            <Route
-              path="/branches"
-              element={<BranchSelector branches={branches} />}
-            />
-            <Route
-              path="/admin/*"
-              element={<Admin />}
-            />
-            <Route
-              path="/"
-              element={<BaseView showSettings={() => setSettingsVisible(true)} />}
-            />
-            <Route
-              path="*"
-              element={<ErrorPage />}
-            />
-          </Routes>
-          {console.log(location)}
-          {location.pathname !== '/' ? (
-            <Button
-              class="lang-button"
-              color="gray"
-              onClick={() => setSettingsVisible((x) => !x)}
-            >
-              <span className="material-symbols-outlined">settings</span>
-            </Button>
-          ) : null}
-        </>
+        <div className={`${theme}-color`}>
+          <>
+            {settingsVisible ? <SettingsDialog hide={() => setSettingsVisible(false)} /> : null}
+            <Routes>
+              <Route
+                path="/branches"
+                element={<BranchSelector branches={branches} />}
+              />
+              <Route
+                path="/admin/*"
+                element={<Admin />}
+              />
+              <Route
+                path="/"
+                element={<BaseView showSettings={() => setSettingsVisible(true)} />}
+              />
+              <Route
+                path="*"
+                element={<ErrorPage />}
+              />
+            </Routes>
+            {location.pathname !== '/' ? (
+              <Button
+                class="lang-button"
+                color="gray"
+                onClick={() => setSettingsVisible((x) => !x)}
+              >
+                <span className="material-symbols-outlined">settings</span>
+              </Button>
+            ) : null}
+          </>
+        </div>
       </Loader>
     </context.Provider>
   );

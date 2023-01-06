@@ -2,7 +2,7 @@
   width: 400px;
 }
 .logo * {
-  fill: #231f20;
+  fill: var(--black-color);
 }
 .logo-cont {
   position: absolute;

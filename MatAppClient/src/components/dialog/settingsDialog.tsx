@@ -2,10 +2,13 @@ import { useContext, useEffect, useRef, useState } from 'react';
 import { context } from '../../App';
 import '../../views/admin/dialog/style.css';
 import { Button } from '../common/panel';
+import { ThemeType } from '../../types';
 
 interface Props {
   hide: VoidFunction;
 }
+
+const THEMES: ThemeType[] = ['light', 'white', 'dark'];
 
 const SettingsDialog = ({ hide }: Props) => {
   const { translate, language, setLanguage, theme, setTheme } = useContext(context);
@@ -52,7 +55,7 @@ const SettingsDialog = ({ hide }: Props) => {
             <Button
               onClick={(e) => {
                 e.preventDefault();
-                setTheme((theme) => (theme === 'light' ? 'dark' : 'light'));
+                setTheme((theme) => [...THEMES, THEMES[0]][THEMES.indexOf(theme) + 1]);
               }}
             >
               {translate('switch')}

@@ -2,14 +2,14 @@ import { useContext, useEffect, useMemo, useState } from 'react';
 import { context } from '../../../App';
 import { textUpperFirst } from '../../../misc/utils';
 import { AdminContext } from '../admin';
-import ParamButtons from '../../../components/tableview/paramButtons';
-import { defaultFilter, MakeSort } from '../../../handlers/tableview/handlers';
+import ParamButtons from '../../../components/tableView/paramButtons';
+import { defaultFilter, MakeSort } from '../../../handlers/tableView/handlers';
 
 import './tableView.css';
 
 import { Button, Panel } from '../../../components/common/panel';
-import { IBaseModel, IDish, FilterData, Sort } from '../../../types';
-import { BaseButtons } from '../../../components/tableview/baseButtons';
+import { IDish, FilterData } from '../../../types';
+import { BaseButtons } from '../../../components/tableView/baseButtons';
 import { TableViewProps } from '.';
 
 const TableViewDishes = ({ data, setData, socketString, displayName, ...args }: TableViewProps<IDish>) => {
@@ -32,7 +32,16 @@ const TableViewDishes = ({ data, setData, socketString, displayName, ...args }: 
 
   const show = useMemo(() => (data.length === 0 ? [] : data.filter(filter.filterMatch).sort(filter.sort)), [filter, data]);
 
-  const categories = useMemo(() => (data.length === 0 ? [] : Object.keys(data[0]).filter((e) => typeof data[0][e] === 'string')), [data]);
+  const categories = useMemo(() => {
+    if (data.length === 0) {
+      return [];
+    }
+    if ('category' in data[0] === false) {
+      return [];
+    }
+    const categories: string[] = data.map((e) => e.category);
+    return [...new Set(categories)];
+  }, [data]);
 
   return (
     <div className="d-grid">
@@ -92,7 +101,7 @@ const TableViewDishes = ({ data, setData, socketString, displayName, ...args }: 
           <Panel
             onClick={() => setSelectedIDs(selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id])}
             style={{
-              outline: selectedIDs.includes(e.id) ? '1px solid #6bb0b3' : 'unset',
+              outline: selectedIDs.includes(e.id) ? '1px solid var(--blue-color)' : 'unset',
             }}
             key={e.id}
             class="inset"

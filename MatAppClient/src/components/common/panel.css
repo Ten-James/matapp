@@ -2,12 +2,12 @@
   padding: 2.5em;
   margin: 1em;
   border-radius: 1rem;
-  background: #efe6dd;
-  box-shadow: 5px 5px 9px #00000020;
+  background:var(--white-color);
+  box-shadow: 5px 5px 9px var(--shadow-2);
 }
 
 .inset {
-  box-shadow: 5px 5px 9px #00000010, inset 19px 19px 38px #00000006;
+  box-shadow: 5px 5px 9px var(--shadow-1), inset 19px 19px 38px var(--shadow-0);
 }
 
 .inline {
@@ -115,26 +115,21 @@
 }
 
 .color-red {
-  background: #db2955;
-  box-shadow: 5px 5px 9px #00000020;
-  /* box-shadow: 5px 5px 9px #d2275285, -5px -5px 9px #e42b5885; */
-  /* box-shadow: 5px 5px 9px #e5ddd4, -5px -5px 9px #f9efe6; */
+  background:var(--red-color);
+  box-shadow: 5px 5px 9px var(--shadow-2);
 
 }
 
 .color-blue {
-  background: #6bb0b3;
-  box-shadow: 5px 5px 9px #00000020;
-  /* box-shadow: 5px 5px 9px #67a9ac85, -5px -5px 9px #6fb7ba85; */
-  /* box-shadow: 5px 5px 9px #e5ddd4, -5px -5px 9px #f9efe6; */
+  background:var(--blue-color);
+  box-shadow: 5px 5px 9px var(--shadow-2);
 
 }
 
 .color-white {
-  background: #efe6dc;
-  box-shadow: 5px 5px 9px #00000020;
+  background: var(--white-color);
 }
 .color-gray {
-  background: #d3d3d3;
-  box-shadow: 5px 5px 9px #00000020;
+  background: var(--gray-color);
+  box-shadow: 5px 5px 9px var(--shadow-2);
 }

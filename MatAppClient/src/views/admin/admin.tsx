@@ -69,7 +69,7 @@ const Admin = () => {
   useEffect(() => {
     GenerateFries();
     setTimeout(() => setLoading(false), 1000);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [setLoading]);
 
   socket.on('login', (data) => {
     if (data.status) {

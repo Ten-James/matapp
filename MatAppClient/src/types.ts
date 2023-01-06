@@ -19,7 +19,7 @@ export interface AppContext {
 
 export type LanguageType = 'english' | 'czech';
 
-export type ThemeType = 'light' | 'dark';
+export type ThemeType = 'light' | 'dark' | 'white';
 
 export type IDialogOption = 'hidden' | 'add' | 'edit' | 'edit_multiple' | 'delete';
 

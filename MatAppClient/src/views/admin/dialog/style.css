@@ -12,7 +12,7 @@
   padding: 2.5em;
   margin: 1em;
   border-radius: 1rem;
-  background: #efe6dd;
+  background:var(--white-color);
 }
 .dialog-background + div {
   filter: blur(10px) brightness(0.749);

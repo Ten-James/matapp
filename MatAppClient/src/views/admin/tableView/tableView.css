@@ -55,7 +55,7 @@ select {
 }
 
 .d-table-content .panel:hover {
-  box-shadow: 5px 5px 9px #00000030;
+  box-shadow: 5px 5px 9px var(--shadow-3);
 }
 
 .d-buttons {
