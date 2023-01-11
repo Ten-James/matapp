@@ -26,23 +26,25 @@ const defaultData: AdminContextType = {
 export const AdminContext = createContext(defaultData);
 
 const Admin = () => {
-  const { socket, setLoading } = useContext(context);
+  const { socket, setLoading, branches, setBranches } = useContext(context);
 
   const [ingredients, setIngredients] = useState<IIngredient[]>([]);
   const [dishes, setDishes] = useState<IDish[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
-  const [branches, setBranches] = useState<IBranch[]>([]);
   const [branchesStorages, setBranchesStorages] = useState<IBranchData<IIngredient>[]>([]);
   const [branchesOrders, setBranchesOrders] = useState<IBranchData<any>[]>([]);
   const [dialog, setDialog] = useState<IDialogOption>('hidden');
 
   const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
-  const [user, setUser] = useState<IUser>({
+  const [user, setUser] = useState<IUser | null>(
+    null,
+    /*{
     id: 1,
     name: 'admin',
     access: 2,
     branchId: 0,
-  });
+  }*/
+  );
   const [Status, setStatus] = useState('');
 
   const refresh = () => {

@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { context } from '../../App';
 import { textUpperFirst } from '../../misc/utils';
 
@@ -6,8 +6,9 @@ interface TextAttributeDialogProp {
   name: string;
   required?: boolean;
   isNumber?: boolean;
+  value?: string;
 }
-export const TextAttributeDialog = ({ name, required = false, isNumber }: TextAttributeDialogProp) => {
+export const TextAttributeDialog = ({ name, required = false, isNumber, value }: TextAttributeDialogProp) => {
   const { translate } = useContext(context);
   const ref = useRef<HTMLInputElement | null>(null);
   return (
@@ -24,6 +25,7 @@ export const TextAttributeDialog = ({ name, required = false, isNumber }: TextAt
           name={name}
           type={isNumber ? 'number' : name === 'password' ? 'password' : 'text'}
           required={required}
+          defaultValue={value}
           ref={ref}
         />
       </div>
@@ -32,10 +34,11 @@ export const TextAttributeDialog = ({ name, required = false, isNumber }: TextAt
 };
 
 interface TextAttributeDialogWithComboProp extends TextAttributeDialogProp {
-  combo: string[];
+  combo?: string[];
+  comboValue?: { name: string; value: string }[];
 }
 
-export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo }: TextAttributeDialogWithComboProp) => {
+export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo, value }: TextAttributeDialogWithComboProp) => {
   const { translate } = useContext(context);
   const ref = useRef<HTMLInputElement | null>(null);
   return (
@@ -52,6 +55,7 @@ export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo
           name={name}
           type={isNumber ? 'number' : 'text'}
           required={required}
+          defaultValue={value.split(' ')[0]}
           ref={ref}
         />
         <select
@@ -63,6 +67,7 @@ export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo
             combo.map((x, ind) => (
               <option
                 key={ind}
+                selected={x === value.split(' ')[1]}
                 value={x}
               >
                 {x}
@@ -74,9 +79,48 @@ export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo
   );
 };
 
-export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextAttributeDialogWithComboProp) => {
+export const ComboBoxDialog = ({ name, required = false, comboValue, value }: TextAttributeDialogWithComboProp) => {
   const { translate } = useContext(context);
-  const [values, setValues] = useState(combo);
+  const [values, setValues] = useState([...comboValue]);
+  useEffect(() => {
+    setValues([...comboValue]);
+  }, [comboValue]);
+  return (
+    <div className="combo-input dialog-line">
+      <label
+        htmlFor={name}
+        className={required ? 'required' : ''}
+      >
+        {textUpperFirst(translate(name))}
+      </label>
+      <div>
+        <select
+          name={name}
+          id={name}
+          defaultValue={value}
+        >
+          {values.map((x) => (
+            <option
+              key={x.value}
+              value={x.value}
+            >
+              {x.name}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+};
+
+export const TextAttributeWithAutoCompleteDialog = ({ name, required = false, combo, value }: TextAttributeDialogWithComboProp) => {
+  const { translate } = useContext(context);
+  const [values, setValues] = useState([...combo]);
+  useEffect(() => {
+    setValues([...combo]);
+  }, [combo]);
+
+  const [show, setShow] = useState(true);
   return (
     <div className="combo-input dialog-line">
       <label
@@ -92,19 +136,23 @@ export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextA
           required={required}
           id={name}
           name={name}
+          defaultValue={value}
           onKeyUp={(e) => {
             setValues(combo.filter((x) => x.startsWith(e.currentTarget.value)));
+            setShow(true);
           }}
         />
         <div className="combo-select">
-          {values &&
-            values.map((x) => (
+          {show &&
+            values?.map((x) => (
               <input
                 type="button"
                 key={x}
                 onClick={(e) => {
                   e.preventDefault();
-                  document.querySelector<HTMLInputElement>(`#${name}`).value = x;
+                  const input = document.querySelector<HTMLInputElement>(`#${name}`);
+                  input.value = x;
+                  setShow((old) => !old);
                 }}
                 value={x}
               />
@@ -118,9 +166,10 @@ export const ComboBoxAttributeDialog = ({ name, required = false, combo }: TextA
 interface CheckboxGroupDialogProp {
   name: string;
   radios: string[];
+  checked?: string;
 }
 
-export const CheckboxGroupDialog = ({ name, radios }: CheckboxGroupDialogProp) => {
+export const CheckboxGroupDialog = ({ name, radios, checked }: CheckboxGroupDialogProp) => {
   const { translate } = useContext(context);
   return (
     <div className="dialog-line line-noflex">
@@ -133,6 +182,7 @@ export const CheckboxGroupDialog = ({ name, radios }: CheckboxGroupDialogProp) =
                 type="checkbox"
                 id={name + '-' + ind}
                 name={name}
+                defaultChecked={checked.includes(x)}
                 value={x}
               />
               <label htmlFor={name + ind}>{x}</label>

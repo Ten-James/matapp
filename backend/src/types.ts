@@ -34,7 +34,7 @@ export interface IDialogUser {
   name: string;
   password: string;
   access: number;
-  branchId: number;
+  branch: number;
 }
 
 export interface IDialogIngredient {

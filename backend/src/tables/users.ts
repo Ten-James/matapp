@@ -1,9 +1,9 @@
-import md5 from 'md5';
 import type { MysqlError } from 'mysql';
 import type { Socket } from 'socket.io';
 import connection from '../database';
 import { writeLog } from '../logger';
 import type { IDialogUser, ILoginProps, IUser } from '../types';
+import { noResponseQueryCallback } from '../misc';
 
 const processUsers = (socket: Socket) => {
   socket.on('get_users', () => {
@@ -25,7 +25,7 @@ const processUsers = (socket: Socket) => {
 
   socket.on('login', ({ name, pass }: ILoginProps): void => {
     writeLog(socket.handshake.address, 'login attempt');
-    connection.query(`SELECT name, id, branchId, access FROM users WHERE name = '${name}' AND password = '${md5(pass)}'`, (err: MysqlError, result: IUser[]): void => {
+    connection.query(`SELECT name, id, branch_id, access FROM users WHERE name = '${name}' AND password = md5('${pass}')`, (err: MysqlError, result: IUser[]): void => {
       if (err) throw err;
       if (result.length === 0) {
         socket.emit('login', { status: false });
@@ -38,13 +38,19 @@ const processUsers = (socket: Socket) => {
   const preset = 'users';
   socket.on(`add_${preset}`, (data: IDialogUser) => {
     writeLog(socket.handshake.address, `add_${preset} \n ${JSON.stringify(data)}`);
+    connection.query(`INSERT INTO users (name, password, access, branch_id) VALUES ('${data.name}', md5('${data.password}'), ${data.access}, ${data.branch})`, noResponseQueryCallback);
   });
 
   socket.on(`delete_${preset}`, (data: IDialogUser) => {
     writeLog(socket.handshake.address, `delete_${preset} \n ${JSON.stringify(data)}`);
-    connection.query(`DELETE FROM users WHERE id IN (${data.id.join(',')})`, (err: MysqlError, result: any) => {
-      if (err) throw err;
-    });
+    connection.query(`DELETE FROM users WHERE id IN (${data.id.join(',')})`, noResponseQueryCallback);
+  });
+
+  socket.on(`edit_${preset}`, (data: IDialogUser) => {
+    writeLog(socket.handshake.address, `edit_${preset} \n ${JSON.stringify(data)}`);
+    console.log(JSON.stringify(data));
+    if (data.password !== '') connection.query(`UPDATE users SET name = '${data.name}', password = md5('${data.password}'), branch_id = '${data.branch}' where id = ${data.id}`, noResponseQueryCallback);
+    else connection.query(`UPDATE users SET name = '${data.name}', branch_id = '${data.branch}' where id = ${data.id}`, noResponseQueryCallback);
   });
 };
 

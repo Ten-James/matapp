@@ -1,4 +1,4 @@
-const fs = require('fs');
+import * as fs from 'fs';
 import { ILogType } from './types';
 let stack: ILogType[] = [];
 
@@ -10,6 +10,7 @@ const writeLog = (ip: string, message: string): void => {
   } as const;
   stack.push(log);
   // append to file
+
   fs.appendFile(`logs/${new Date().toLocaleDateString()}.log`, `[${log.time}][${log.ip}] ${log.message}\r`, (err) => {
     if (err) throw err;
   });

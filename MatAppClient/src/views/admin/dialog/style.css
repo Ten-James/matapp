@@ -111,16 +111,24 @@
   border-radius: 0 0.2rem 0.2rem 0;
 }
 
-.dialog-line input {
+.dialog-line input,
+.dialog-line select{
   font-weight: normal;
   font-family: 'Cairo';
   width: 100%;
   font-size: 1.2em;
-  padding: 0 0.5rem;
-  border-radius: 0.2rem;
+  padding: 0 1.3rem;
+  border-radius: 0.2rem !important;
   text-align: right;
+  background-color: var(--gray-color);
   border: unset;
 }
+
+.light-color .dialog-line input, 
+.light-color .dialog-line select {
+  background-color: white;
+}
+
 .dialog select {
   padding: 0;
   margin: 0;

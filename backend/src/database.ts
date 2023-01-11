@@ -1,6 +1,7 @@
 import * as mysql from 'mysql';
 import { MysqlError } from 'mysql';
 require('dotenv').config();
+const util = require('util');
 
 // if (!mysql) throw "mysql module not found";
 var connection = mysql.createConnection({
@@ -14,4 +15,7 @@ var connection = mysql.createConnection({
 connection.connect((err: MysqlError) => {
   if (err) throw err;
 });
+
+export const query = util.promisify(connection.query).bind(connection);
+
 export default connection;

@@ -22,6 +22,7 @@ export interface IBranchData<T extends INamedBaseModel> extends IBranch {
 export interface IIngredient extends ICategoryBaseModel {
   cost: number;
   allergens: string;
+  text: string;
   count?: number;
 }
 

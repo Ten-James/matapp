@@ -1,4 +1,4 @@
-import { ComboBoxAttributeDialog, TextAttributeDialog } from '../../components/dialog/dialogLines';
+import { TextAttributeWithAutoCompleteDialog, TextAttributeDialog } from '../../components/dialog/dialogLines';
 
 const BranchDialogBase = () => {
   return (

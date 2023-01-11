@@ -1,8 +1,9 @@
 import type { MysqlError } from 'mysql';
 import type { Socket } from 'socket.io';
 import type { IDialogIngredient, IIngredient } from '../types';
-import connection from '../database';
+import connection, { query } from '../database';
 import { writeLog } from '../logger';
+import { noResponseQueryCallback } from '../misc';
 
 const processIngredients = (socket: Socket) => {
   socket.on('get_ingredients', () => {
@@ -24,41 +25,44 @@ const processIngredients = (socket: Socket) => {
     );
   });
   const preset = 'ingredients';
-  socket.on(`add_${preset}`, (data: IDialogIngredient) => {
+  socket.on(`add_${preset}`, async (data: IDialogIngredient) => {
     writeLog(socket.handshake.address, `add_${preset} \n ${JSON.stringify(data)}`);
 
-    // create ingredient type if not exists and get id
-    connection.query(`INSERT IGNORE INTO ingredient_types (name) VALUES ('${data.category}')`, (err: MysqlError, result: any) => {
-      if (err) throw err;
-      connection.query(`SELECT id FROM ingredient_types WHERE name = '${data.category}'`, (err: MysqlError, result: any) => {
-        if (err) throw err;
-        const ingredientTypeId = result[0].id;
-        connection.query(`SELECT id FROM ingredient_text_extensions WHERE text = '${data.text_combo}'`, (err: MysqlError, result: any) => {
-          if (err) throw err;
-          const ingredientTextExtensionId = result[0].id;
-          connection.query(`INSERT INTO ingredients (name, cost, ingredient_type_id, text, ingredient_text_extension_id) VALUES ('${data.name}', '${data.cost}', '${ingredientTypeId}','${data.text}' , '${ingredientTextExtensionId}')`, (err: MysqlError, result: any) => {
-            if (err) throw err;
-            connection.query(`SELECT id FROM ingredients WHERE name = '${data.name}'`, (err: MysqlError, result: any) => {
-              if (err) throw err;
-              const ingredientId = result[0].id;
-              (data.allergens || []).forEach((allergen: number) => {
-                connection.query(`INSERT INTO ingredient_allergens (ingredient_id, num) VALUES ('${ingredientId}', '${allergen}')`, (err: MysqlError, result: any) => {
-                  if (err) throw err;
-                });
-              });
-            });
-          });
-        });
-      });
-    });
+    try {
+      await query(`INSERT IGNORE INTO ingredient_types (name) VALUES ('${data.category}')`);
+      const categoryId = (await query(`SELECT id FROM ingredient_types WHERE name = '${data.category}'`))[0].id;
+      const extensionId = (await query(`SELECT id FROM ingredient_text_extensions WHERE text = '${data.text_combo}'`))[0].id;
+      await query(`INSERT INTO ingredients (name, cost, ingredient_type_id, text, ingredient_text_extension_id) VALUES ('${data.name}', '${data.cost}', '${categoryId}','${data.text}' , '${extensionId}')`);
+      const id = (await query(`SELECT id FROM ingredients WHERE name = '${data.name}'`))[0].id;
+      (data.allergens || []).forEach((allergen: number) => query(`INSERT INTO ingredient_allergens (ingredient_id, num) VALUES ('${id}', '${allergen + 1}')`));
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   socket.on(`delete_${preset}`, (data: any) => {
     writeLog(socket.handshake.address, `delete_${preset} \n ${JSON.stringify(data)}`);
 
-    connection.query(`DELETE FROM ingredients WHERE id IN (${data.id.join(',')})`, (err: MysqlError, result: any) => {
-      if (err) throw err;
-    });
+    connection.query(`DELETE FROM ingredients WHERE id IN (${data.id.join(',')})`, noResponseQueryCallback);
+  });
+
+  socket.on(`edit_${preset}`, async (data: IDialogIngredient) => {
+    writeLog(socket.handshake.address, `edit_${preset} \n ${JSON.stringify(data)}`);
+
+    try {
+      await query(`INSERT IGNORE INTO ingredient_types (name) VALUES ('${data.category}')`);
+      const id = data.id[0];
+      const categoryId = (await query(`SELECT id FROM ingredient_types WHERE name = '${data.category}'`))[0].id;
+      const extensionId = (await query(`SELECT id FROM ingredient_text_extensions WHERE text = '${data.text_combo}'`))[0].id;
+
+      //update
+      await query(`UPDATE ingredients SET name = '${data.name}', cost = '${data.cost}', ingredient_type_id = '${categoryId}', text = '${data.text}', ingredient_text_extension_id = '${extensionId}' WHERE id = '${id}'`);
+      await query(`DELETE FROM ingredient_allergens WHERE ingredient_id = '${id}'`);
+
+      (data.allergens || []).forEach((allergen: number) => query(`INSERT INTO ingredient_allergens (ingredient_id, num) VALUES ('${id}', '${allergen + 1}')`));
+    } catch (error) {
+      console.log(error);
+    }
   });
 
   socket.on('get_ingredient_types', () => {

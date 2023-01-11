@@ -15,7 +15,10 @@ export const BaseButtons = () => {
         <span className="material-symbols-outlined">add</span>
         {translate('add')}
       </Button>
-      <Button onClick={() => setDialog('edit')}>
+      <Button
+        onClick={() => setDialog('edit')}
+        disabled={selectedIDs.length === 0}
+      >
         <span className="material-symbols-outlined">edit</span>
         {translate('edit')}
       </Button>

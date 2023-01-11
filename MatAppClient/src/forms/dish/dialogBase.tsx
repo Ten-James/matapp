@@ -1,4 +1,4 @@
-import { ComboBoxAttributeDialog, TextAttributeDialog } from '../../components/dialog/dialogLines';
+import { TextAttributeWithAutoCompleteDialog, TextAttributeDialog } from '../../components/dialog/dialogLines';
 
 const DishDialogBase = () => {
   return (
@@ -11,7 +11,7 @@ const DishDialogBase = () => {
         name="cost"
         isNumber
       />
-      <ComboBoxAttributeDialog
+      <TextAttributeWithAutoCompleteDialog
         name="category"
         combo={['test', 'test2', 'test3']}
       />
