@@ -21,6 +21,7 @@ const ParamButtons = <T extends IBaseModel>({ filter, setFilter, showCategory, c
         id="search"
         type="text"
         ref={searchRef}
+        autoComplete="off"
         onKeyUp={() => {
           if (!filterSelect.current) return;
           if (!searchRef.current) return;

@@ -45,51 +45,11 @@ const Admin = () => {
     return [];
   }, [selectedIDs, ingredients, dishes, users, branches, branchesStorages, branchesOrders]);
 
-  const nameRef = useRef<HTMLInputElement>(null);
-  const passRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     GenerateFries();
     setTimeout(() => setLoading(false), 1000);
   }, [setLoading]);
-  /*
-  socket.on('login', (data) => {
-    if (data.status) {
-      setUser(data.user);
-    } else {
-      setStatus('Wrong password or username');
-    }
-  });
 
-  if (!user) {
-    const Login = (e: FormEvent) => {
-      e.preventDefault();
-      if (!nameRef.current || !passRef.current) return;
-      socket.emit('login', {
-        name: nameRef.current.value,
-        pass: passRef.current.value,
-      });
-    };
-    return (
-      <div className="App App-grid">
-        <Navigation userAccess={0} />
-        <form onSubmit={Login}>
-          <h1>Log in:</h1>
-          <input
-            ref={nameRef}
-            type="text"
-            placeholder="Branch Username"
-          />
-          <input
-            ref={passRef}
-            type="password"
-            placeholder="Password"
-          />
-          <div>{Status}</div>
-          <button>Log in</button>
-        </form>
-      </div>
-    );
-  }*/
   return (
     <AdminContext.Provider
       value={{

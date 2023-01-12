@@ -13,6 +13,7 @@ import BaseView from './views';
 import SettingsDialog from './components/dialog/settingsDialog';
 import useLocalStorage from './hooks/useLocalStorage';
 import { AppContext } from './context/appContext';
+import LoginPage from './views/login';
 // TODO: move to env file
 const socket = socketIOClient('http://localhost:2238');
 
@@ -56,7 +57,7 @@ const App = () => {
     <AppContext.Provider value={contextValue}>
       <Loader>
         <div className={`${theme}-color`}>
-          <>
+          <LoginPage>
             {settingsVisible ? <SettingsDialog hide={() => setSettingsVisible(false)} /> : null}
             <Routes>
               <Route
@@ -80,12 +81,20 @@ const App = () => {
               <Button
                 class="lang-button"
                 color="gray"
+                style={{ right: '5em' }}
                 onClick={() => setSettingsVisible((x) => !x)}
               >
                 <span className="material-symbols-outlined">settings</span>
               </Button>
             ) : null}
-          </>
+            <Button
+              class="lang-button"
+              color="gray"
+              onClick={() => setUser(null)}
+            >
+              <span className="material-symbols-outlined">logout</span>
+            </Button>
+          </LoginPage>
         </div>
       </Loader>
     </AppContext.Provider>

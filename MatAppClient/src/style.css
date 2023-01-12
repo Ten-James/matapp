@@ -112,3 +112,24 @@ a {
   text-decoration: none;
   color: unset !important
 }
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+.login-container > * {
+  width: 100%;
+}
+
+input[type="text"], input[type="password"], select {
+  border: none;
+  outline: none;
+  border-radius: 0.2rem;
+  padding: 0.5em;
+  font-size: 1.2em;
+  background-color: var(--gray-color);
+  color: var(--black-color);
+  box-shadow: var(--shadow-0);
+}
