@@ -1,8 +1,7 @@
-import { useContext } from 'react';
-import { context } from '../../App';
 import { Link } from 'react-router-dom';
 import './style.css';
 import { Panel } from '../common/panel';
+import { useAppContext } from '../../context/appContext';
 
 const ROUTES = [
   { path: '/branches', name: 'application', icon: 'home' },
@@ -13,7 +12,7 @@ interface Props {
   showSettings: () => void;
 }
 export const SelectorContainer = ({ showSettings }: Props) => {
-  const { translate } = useContext(context);
+  const { translate } = useAppContext();
 
   return (
     <div className="selector-container">

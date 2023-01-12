@@ -1,13 +1,13 @@
 import { useContext, useState } from 'react';
 import BaseDialog from '../components/dialog/baseDialog';
-import { AdminContext } from '../views/admin/admin';
+import { useAdminContext } from '../context/adminContext';
 
 interface Props {
   sendRoute: string;
 }
 
 const DeleteDialog = ({ sendRoute }: Props) => {
-  const { selectedItems } = useContext(AdminContext);
+  const { selectedItems } = useAdminContext();
   const [error, setError] = useState('');
 
   return (

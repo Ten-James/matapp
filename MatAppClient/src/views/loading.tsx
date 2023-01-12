@@ -1,15 +1,14 @@
-import { useContext, useRef } from 'react';
+import { useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
-
-import { context } from '../App';
 import LogoSVG from '../components/common/logo';
+import { useAppContext } from '../context/appContext';
 
 interface Props {
   children: React.ReactNode;
 }
 
 const Loader = (props: Props) => {
-  const loading = useContext(context).loading;
+  const { loading } = useAppContext();
   const waiting = useRef(null);
   return (
     <>

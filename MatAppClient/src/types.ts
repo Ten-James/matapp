@@ -1,10 +1,10 @@
 import type { Socket } from 'socket.io-client';
-import type { IBaseModel, IBranch, INamedBaseModel } from '../../src/types';
+import type { IBaseModel, IBranch, INamedBaseModel, IUser } from '../../src/types';
 import type { Dispatch, SetStateAction } from 'react';
 
 export * from '../../src/types';
 
-export interface AppContext {
+export interface AppContextType {
   loading: boolean;
   socket: Socket;
   language: LanguageType;
@@ -15,6 +15,8 @@ export interface AppContext {
   branches: IBranch[];
   setLoading: Dispatch<SetStateAction<boolean>>;
   setBranches: Dispatch<SetStateAction<IBranch[]>>;
+  user: IUser;
+  setUser: Dispatch<SetStateAction<IUser>>;
 }
 
 export type LanguageType = 'english' | 'czech';

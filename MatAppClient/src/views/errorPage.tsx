@@ -1,10 +1,10 @@
 import { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { context } from '../App';
 import LogoSVG from '../components/common/logo';
 import { Panel } from '../components/common/panel';
+import { useAppContext } from '../context/appContext';
 const ErrorPage = () => {
-  const { setLoading } = useContext(context);
+  const { setLoading } = useAppContext();
   useEffect(() => {
     setLoading(false);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps

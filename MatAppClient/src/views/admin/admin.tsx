@@ -1,6 +1,5 @@
 import { createContext, FormEvent, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { context } from '../../App';
 
 import { GenerateFries } from '../../misc/fries';
 import type { AdminContextType, IDialogOption, IBranch, IBranchData, IDish, IIngredient, IUser } from '../../types';
@@ -11,22 +10,11 @@ import TableView from './tableView/';
 import TableViewDishes from './tableView/tableViewDishes';
 import TableViewSection from './tableView/tableViewSection';
 import AdminDefaultView from './default';
-
-const defaultData: AdminContextType = {
-  selectedItems: [],
-  selectedIDs: [],
-  setSelectedIDs: () => {},
-  refresh: () => {},
-  dialog: 'hidden',
-  setDialog: () => {},
-  branches: [],
-  setBranches: () => {},
-};
-
-export const AdminContext = createContext(defaultData);
+import { useAppContext } from '../../context/appContext';
+import { AdminContext } from '../../context/adminContext';
 
 const Admin = () => {
-  const { socket, setLoading, branches, setBranches } = useContext(context);
+  const { socket, setLoading, branches, setBranches, user, setUser } = useAppContext();
 
   const [ingredients, setIngredients] = useState<IIngredient[]>([]);
   const [dishes, setDishes] = useState<IDish[]>([]);
@@ -36,15 +24,6 @@ const Admin = () => {
   const [dialog, setDialog] = useState<IDialogOption>('hidden');
 
   const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
-  const [user, setUser] = useState<IUser | null>(
-    null,
-    /*{
-    id: 1,
-    name: 'admin',
-    access: 2,
-    branchId: 0,
-  }*/
-  );
   const [Status, setStatus] = useState('');
 
   const refresh = () => {
@@ -72,7 +51,7 @@ const Admin = () => {
     GenerateFries();
     setTimeout(() => setLoading(false), 1000);
   }, [setLoading]);
-
+  /*
   socket.on('login', (data) => {
     if (data.status) {
       setUser(data.user);
@@ -110,7 +89,7 @@ const Admin = () => {
         </form>
       </div>
     );
-  }
+  }*/
   return (
     <AdminContext.Provider
       value={{
@@ -140,28 +119,43 @@ const Admin = () => {
               />
             }
           />
-          <Route
-            path="/branches/storage"
-            element={
-              <TableViewSection
-                data={branchesStorages}
-                setData={setBranchesStorages}
-                displayName="Branches Storage"
-                socketString="branches_storage"
+          {user.access === 2 ? (
+            <>
+              <Route
+                path="/branches/storage"
+                element={
+                  <TableViewSection
+                    data={branchesStorages}
+                    setData={setBranchesStorages}
+                    displayName="Branches Storage"
+                    socketString="branches_storage"
+                  />
+                }
               />
-            }
-          />
-          <Route
-            path="/branches/orders"
-            element={
-              <TableViewSection
-                data={branchesOrders}
-                setData={setBranchesOrders}
-                displayName="Branches Orders"
-                socketString="branches_orders"
+              <Route
+                path="/branches/orders"
+                element={
+                  <TableViewSection
+                    data={branchesOrders}
+                    setData={setBranchesOrders}
+                    displayName="Branches Orders"
+                    socketString="branches_orders"
+                  />
+                }
               />
-            }
-          />
+            </>
+          ) : (
+            <>
+              <Route
+                path="/branches/storage"
+                element={<>test storage</>}
+              />
+              <Route
+                path="/branches/orders"
+                element={<>test</>}
+              />
+            </>
+          )}
 
           <Route
             path="table/dishes"

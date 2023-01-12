@@ -1,11 +1,11 @@
 import { useContext } from 'react';
-import { context } from '../../App';
 import { Button } from '../common/panel';
-import { AdminContext } from '../../views/admin/admin';
+import { useAdminContext } from '../../context/adminContext';
+import { useAppContext } from '../../context/appContext';
 
 export const BaseButtons = () => {
-  const { setDialog, selectedIDs, setSelectedIDs } = useContext(AdminContext);
-  const { translate } = useContext(context);
+  const { setDialog, selectedIDs, setSelectedIDs } = useAdminContext();
+  const { translate } = useAppContext();
   return (
     <>
       <Button

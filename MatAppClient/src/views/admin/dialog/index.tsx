@@ -1,14 +1,13 @@
-import { useContext } from 'react';
-import { AdminContext } from '../admin';
 import './style.css';
 import { AddIngredient, EditIngredient } from '../../../forms/ingredient';
 import { AddUser, EditUser } from '../../../forms/user';
 import { AddDish } from '../../../forms/dish';
 import { AddBranch } from '../../../forms/branch';
 import DeleteDialog from '../../../forms/deleteDialog';
+import { useAdminContext } from '../../../context/adminContext';
 
 const Dialog = () => {
-  const { dialog, setDialog, selectedIDs } = useContext(AdminContext);
+  const { dialog, setDialog, selectedIDs } = useAdminContext();
 
   if ((dialog === 'delete' || dialog === 'edit' || dialog === 'edit_multiple') && selectedIDs.length === 0) {
     setDialog('hidden');

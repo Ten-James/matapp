@@ -1,15 +1,15 @@
-import { useContext, useEffect } from 'react';
-import { context } from '../App';
+import { useEffect } from 'react';
 import { Button, Panel } from '../components/common/panel';
 import LogoSVG from '../components/common/logo';
 import { SelectorContainer } from '../components/default';
 import { GenerateFries } from '../misc/fries';
+import { useAppContext } from '../context/appContext';
 
 interface Props {
   showSettings: () => void;
 }
 const BaseView = ({ showSettings }: Props) => {
-  const { setLoading } = useContext(context);
+  const { setLoading } = useAppContext();
   useEffect(() => {
     GenerateFries();
     setTimeout(() => setLoading(false), 1000);

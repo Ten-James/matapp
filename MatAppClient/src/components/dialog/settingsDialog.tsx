@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { context } from '../../App';
 import '../../views/admin/dialog/style.css';
 import { Button } from '../common/panel';
 import { ThemeType } from '../../types';
+import { useAppContext } from '../../context/appContext';
 
 interface Props {
   hide: VoidFunction;
@@ -11,7 +11,7 @@ interface Props {
 const THEMES: ThemeType[] = ['light', 'white', 'dark'];
 
 const SettingsDialog = ({ hide }: Props) => {
-  const { translate, language, setLanguage, theme, setTheme } = useContext(context);
+  const { translate, language, setLanguage, theme, setTheme } = useAppContext();
   const form = useRef<HTMLFormElement | null>(null);
   const [translateY, setTranslateY] = useState('-100vh');
   useEffect(() => {

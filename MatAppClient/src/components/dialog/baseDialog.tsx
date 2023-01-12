@@ -1,8 +1,8 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { context } from '../../App';
 import { Button, Panel } from '../common/panel';
 import * as Handlers from '../../handlers/dialog/handlers';
-import { AdminContext } from '../../views/admin/admin';
+import { useAppContext } from '../../context/appContext';
+import { useAdminContext } from '../../context/adminContext';
 
 interface BaseDialogProp {
   header: string;
@@ -12,12 +12,12 @@ interface BaseDialogProp {
 
 // TODO: make available for custom button color.
 const BaseDialog = ({ header, sendRoute, children }: BaseDialogProp) => {
-  const { translate, socket } = useContext(context);
+  const { translate, socket } = useAppContext();
   const [error, setError] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const form = useRef<HTMLFormElement | null>(null);
   const [translateY, setTranslateY] = useState('-100vh');
-  const { setDialog, selectedIDs, refresh } = useContext(AdminContext);
+  const { setDialog, selectedIDs, refresh } = useAdminContext();
 
   const handleHide = (e: Event) => Handlers.hide(e, setTranslateY, setDialog);
   const handleSubmit = (e: Event) =>

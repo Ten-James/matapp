@@ -1,9 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-
-import { context } from '../../../App';
+import { useEffect, useState } from 'react';
 import { Panel } from '../../../components/common/panel';
 import { Information } from '../../../types';
 import './information.css';
+import { useAppContext } from '../../../context/appContext';
 
 const InformationView = () => {
   const [Info, setInfo] = useState<Information>({
@@ -15,7 +14,7 @@ const InformationView = () => {
     database: [''],
   });
 
-  const { socket, translate } = useContext(context);
+  const { socket, translate } = useAppContext();
   socket.on('info', (data) => {
     setInfo(data);
   });

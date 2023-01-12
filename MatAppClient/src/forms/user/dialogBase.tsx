@@ -1,12 +1,12 @@
 import { useContext, useEffect, useMemo } from 'react';
 import { ComboBoxDialog, TextAttributeDialog, TextAttributeWithAutoCompleteDialog } from '../../components/dialog/dialogLines';
-import { AdminContext } from '../../views/admin/admin';
 import { IBranch, IUser } from '../../types';
-import { context } from '../../App';
+import { useAdminContext } from '../../context/adminContext';
+import { useAppContext } from '../../context/appContext';
 
 const UserDialogBase = () => {
-  const { socket } = useContext(context);
-  const { selectedItems, dialog, branches, setBranches } = useContext(AdminContext);
+  const { socket } = useAppContext();
+  const { selectedItems, dialog, branches, setBranches } = useAdminContext();
 
   useEffect(() => {
     if (branches.length === 0) socket.emit('get_branches');

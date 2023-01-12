@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { navigationContext } from '../../views/admin/navigation/index';
 interface BetterLinkProps {
   to: string;
-  requiredAdmin?: boolean;
   expandedText: string;
   icon: string;
   onClick?: () => void;
@@ -12,7 +11,6 @@ interface BetterLinkProps {
 interface SubBetterLinkProps {
   to: string;
   expandedText: string;
-  requiredAdmin?: boolean;
   icon: string;
   children: JSX.Element | JSX.Element[];
   count: number;
@@ -43,18 +41,9 @@ const ExpandedChild = ({ isExpanded, children, count }: { isExpanded: boolean; c
   );
 };
 
-export const BetterLink = ({ to, expandedText, icon, requiredAdmin, onClick }: BetterLinkProps) => {
-  requiredAdmin = requiredAdmin || false;
-  const { isExpanded, userAccess } = useContext(navigationContext);
-  return !(userAccess >= (requiredAdmin ? 2 : 1)) ? (
-    <div className="nav-link  single disabled">
-      <span className="material-symbols-outlined">{icon}</span>
-      <ExpandedText
-        isExpanded={isExpanded}
-        text={expandedText}
-      />
-    </div>
-  ) : (
+export const BetterLink = ({ to, expandedText, icon, onClick }: BetterLinkProps) => {
+  const { isExpanded } = useContext(navigationContext);
+  return (
     <Link
       className="nav-link single"
       to={to}
@@ -69,18 +58,9 @@ export const BetterLink = ({ to, expandedText, icon, requiredAdmin, onClick }: B
   );
 };
 
-export const SubBetterLink = ({ to, expandedText, icon, children, requiredAdmin, count }: SubBetterLinkProps) => {
-  requiredAdmin = requiredAdmin || false;
-  const { isExpanded, userAccess, location } = useContext(navigationContext);
-  return !(userAccess >= (requiredAdmin ? 2 : 1)) ? (
-    <div className="nav-link disabled">
-      <span className="material-symbols-outlined">{icon}</span>
-      <ExpandedText
-        isExpanded={isExpanded}
-        text={expandedText}
-      />
-    </div>
-  ) : (
+export const SubBetterLink = ({ to, expandedText, icon, children, count }: SubBetterLinkProps) => {
+  const { isExpanded, location } = useContext(navigationContext);
+  return (
     <Link
       className={'nav-link' + (location.includes(to) ? ' nav-link-selected' : '')}
       to={to}

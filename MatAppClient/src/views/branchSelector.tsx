@@ -1,15 +1,15 @@
 import { useContext, useEffect } from 'react';
-import { context } from '../App';
 import LogoSVG from '../components/common/logo';
 import { Button, Panel } from '../components/common/panel';
 import { GenerateFries } from '../misc/fries';
 import { IBranch } from '../types';
+import { useAppContext } from '../context/appContext';
 interface Props {
   branches: IBranch[];
 }
 
 const BranchSelector = ({ branches }: Props) => {
-  const { setBranches, setLoading, socket } = useContext(context);
+  const { setBranches, setLoading, socket } = useAppContext();
   useEffect(() => {
     setLoading(true);
     setTimeout(GenerateFries, 20);

@@ -1,12 +1,12 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { TextAttributeDialog, TextAttributeWithAutoCompleteDialog, TextAttributeWithCombo, CheckboxGroupDialog } from '../../components/dialog/dialogLines';
-import { context } from '../../App';
-import { AdminContext } from '../../views/admin/admin';
 import { IIngredient } from '../../types';
+import { useAdminContext } from '../../context/adminContext';
+import { useAppContext } from '../../context/appContext';
 
 const IngredientDialogBase = () => {
-  const { socket } = useContext(context);
-  const { selectedItems, dialog } = useContext(AdminContext);
+  const { socket } = useAppContext();
+  const { selectedItems, dialog } = useAdminContext();
   const [categoires, setCategoires] = useState(['']);
   const data = useMemo<IIngredient>(() => {
     if (dialog === 'edit') return selectedItems[0] as IIngredient;

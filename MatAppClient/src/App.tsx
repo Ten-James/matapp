@@ -4,7 +4,7 @@ import socketIOClient from 'socket.io-client';
 
 import { Button } from './components/common/panel';
 import { Translate } from './misc/transcripter';
-import { AppContext, IBranch, LanguageType, ThemeType } from './types';
+import { AppContextType, IBranch, IUser, LanguageType, ThemeType } from './types';
 import Admin from './views/admin/admin';
 import BranchSelector from './views/branchSelector';
 import ErrorPage from './views/errorPage';
@@ -12,21 +12,9 @@ import Loader from './views/loading';
 import BaseView from './views';
 import SettingsDialog from './components/dialog/settingsDialog';
 import useLocalStorage from './hooks/useLocalStorage';
+import { AppContext } from './context/appContext';
 // TODO: move to env file
 const socket = socketIOClient('http://localhost:2238');
-
-export const context: React.Context<AppContext> = createContext<AppContext>({
-  loading: true,
-  socket: socket,
-  language: 'english',
-  setLanguage: () => {},
-  theme: 'light',
-  setTheme: () => {},
-  branches: [],
-  translate: (text) => text,
-  setLoading: () => {},
-  setBranches: () => {},
-});
 
 // TODO: use styled components?
 
@@ -39,7 +27,17 @@ const App = () => {
   //TODO- move to branchSelector
   const [branches, setBranches] = useState<IBranch[]>([]);
 
-  const contextValue: AppContext = {
+  const [user, setUser] = useState<IUser | null>(
+    null,
+    /*{
+    id: 1,
+    name: 'admin',
+    access: 2,
+    branchId: 0,
+  }*/
+  );
+
+  const contextValue: AppContextType = {
     loading,
     socket,
     branches,
@@ -50,10 +48,12 @@ const App = () => {
     setTheme,
     setLoading,
     setBranches,
+    user,
+    setUser,
   };
 
   return (
-    <context.Provider value={contextValue}>
+    <AppContext.Provider value={contextValue}>
       <Loader>
         <div className={`${theme}-color`}>
           <>
@@ -88,7 +88,7 @@ const App = () => {
           </>
         </div>
       </Loader>
-    </context.Provider>
+    </AppContext.Provider>
   );
 };
 export default App;

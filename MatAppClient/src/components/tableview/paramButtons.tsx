@@ -1,6 +1,6 @@
 import { useContext, useRef } from 'react';
-import { context } from '../../App';
 import { IBaseModel, FilterData } from '../../types';
+import { useAppContext } from '../../context/appContext';
 
 interface Props<T extends IBaseModel> {
   filter: FilterData<T>;
@@ -10,7 +10,7 @@ interface Props<T extends IBaseModel> {
 }
 
 const ParamButtons = <T extends IBaseModel>({ filter, setFilter, showCategory, categories }: Props<T>) => {
-  const { translate } = useContext(context);
+  const { translate } = useAppContext();
   const searchRef = useRef<HTMLInputElement | null>(null);
   const filterSelect = useRef<HTMLSelectElement | null>(null);
   return (

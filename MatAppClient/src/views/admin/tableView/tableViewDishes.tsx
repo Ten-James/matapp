@@ -1,7 +1,5 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { context } from '../../../App';
+import { useEffect, useMemo, useState } from 'react';
 import { textUpperFirst } from '../../../misc/utils';
-import { AdminContext } from '../admin';
 import ParamButtons from '../../../components/tableView/paramButtons';
 import { defaultFilter, MakeSort } from '../../../handlers/tableView/handlers';
 
@@ -11,10 +9,12 @@ import { Button, Panel } from '../../../components/common/panel';
 import { IDish, FilterData } from '../../../types';
 import { BaseButtons } from '../../../components/tableView/baseButtons';
 import { TableViewProps } from '.';
+import { useAdminContext } from '../../../context/adminContext';
+import { useAppContext } from '../../../context/appContext';
 
 const TableViewDishes = ({ data, setData, socketString, displayName, ...args }: TableViewProps<IDish>) => {
-  const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
-  const { socket, translate } = useContext(context);
+  const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
+  const { socket, translate } = useAppContext();
 
   const [filter, setFilter] = useState<FilterData<IDish>>(defaultFilter);
 

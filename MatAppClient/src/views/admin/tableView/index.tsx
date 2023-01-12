@@ -1,7 +1,5 @@
-import { useContext, useEffect, useMemo, useState } from 'react';
-import { context } from '../../../App';
+import { useEffect, useMemo, useState } from 'react';
 import { textUpperFirst } from '../../../misc/utils';
-import { AdminContext } from '../admin';
 import ParamButtons from '../../../components/tableView/paramButtons';
 import { defaultFilter, MakeSort } from '../../../handlers/tableView/handlers';
 
@@ -10,6 +8,8 @@ import './tableView.css';
 import { Button, Panel } from '../../../components/common/panel';
 import { IBaseModel, FilterData, ICategoryBaseModel } from '../../../types';
 import { BaseButtons } from '../../../components/tableView/baseButtons';
+import { useAdminContext } from '../../../context/adminContext';
+import { useAppContext } from '../../../context/appContext';
 
 export interface TableViewProps<T> {
   data: T[];
@@ -20,8 +20,8 @@ export interface TableViewProps<T> {
 }
 
 const TableView = <T extends IBaseModel>({ data, setData, socketString, displayName, ...args }: TableViewProps<T>) => {
-  const { selectedIDs, setSelectedIDs, setDialog } = useContext(AdminContext);
-  const { socket, translate } = useContext(context);
+  const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
+  const { socket, translate } = useAppContext();
 
   const [filter, setFilter] = useState<FilterData<T>>(defaultFilter);
 

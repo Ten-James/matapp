@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { context } from '../../App';
+import { useAppContext } from '../../context/appContext';
 import { textUpperFirst } from '../../misc/utils';
 
 interface TextAttributeDialogProp {
@@ -9,7 +9,7 @@ interface TextAttributeDialogProp {
   value?: string;
 }
 export const TextAttributeDialog = ({ name, required = false, isNumber, value }: TextAttributeDialogProp) => {
-  const { translate } = useContext(context);
+  const { translate } = useAppContext();
   const ref = useRef<HTMLInputElement | null>(null);
   return (
     <div className="dialog-line">
@@ -39,7 +39,7 @@ interface TextAttributeDialogWithComboProp extends TextAttributeDialogProp {
 }
 
 export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo, value }: TextAttributeDialogWithComboProp) => {
-  const { translate } = useContext(context);
+  const { translate } = useAppContext();
   const ref = useRef<HTMLInputElement | null>(null);
   return (
     <div className="dialog-line text-with-combo">
@@ -80,7 +80,7 @@ export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo
 };
 
 export const ComboBoxDialog = ({ name, required = false, comboValue, value }: TextAttributeDialogWithComboProp) => {
-  const { translate } = useContext(context);
+  const { translate } = useAppContext();
   const [values, setValues] = useState([...comboValue]);
   useEffect(() => {
     setValues([...comboValue]);
@@ -114,7 +114,7 @@ export const ComboBoxDialog = ({ name, required = false, comboValue, value }: Te
 };
 
 export const TextAttributeWithAutoCompleteDialog = ({ name, required = false, combo, value }: TextAttributeDialogWithComboProp) => {
-  const { translate } = useContext(context);
+  const { translate } = useAppContext();
   const [values, setValues] = useState([...combo]);
   useEffect(() => {
     setValues([...combo]);
@@ -170,7 +170,7 @@ interface CheckboxGroupDialogProp {
 }
 
 export const CheckboxGroupDialog = ({ name, radios, checked }: CheckboxGroupDialogProp) => {
-  const { translate } = useContext(context);
+  const { translate } = useAppContext();
   return (
     <div className="dialog-line line-noflex">
       <label>{textUpperFirst(translate(name))}</label>
