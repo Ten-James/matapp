@@ -2,7 +2,7 @@ import type { MysqlError } from 'mysql';
 import connection from '../database';
 import { writeLog } from '../logger';
 import type { IBranchStorageItem, IBranch, IBranchData, IIngredient, IDialogBranch } from '../types';
-import { noResponseQueryCallback } from '../misc';
+import { noResponseQuery, noResponseQueryCallback } from '../misc';
 
 const processBranches = (socket) => {
   socket.on('get_branches', () => {
@@ -40,17 +40,32 @@ const processBranches = (socket) => {
   const preset = 'branches';
   socket.on(`add_${preset}`, (data: IDialogBranch) => {
     writeLog(socket.handshake.address, `add_${preset} \n ${JSON.stringify(data)}`);
-    connection.query(`INSERT INTO branches (name, location) VALUES ('${data.name}', '${data.location}')`, noResponseQueryCallback);
+    try {
+      connection.query(`INSERT INTO branches (name, location) VALUES ('${data.name}', '${data.location}')`, noResponseQuery);
+      socket.emit('admin_status', 'was_added');
+    } catch (err) {
+      socket.emit('admin_status', 'not_added');
+    }
   });
 
   socket.on(`edit_${preset}`, (data: IDialogBranch) => {
     writeLog(socket.handshake.address, `edit_${preset} \n ${JSON.stringify(data)}`);
-    connection.query(`UPDATE branches SET name = '${data.name}', location = '${data.location}' WHERE id = ${data.id}`, noResponseQueryCallback);
+    try {
+      connection.query(`UPDATE branches SET name = '${data.name}', location = '${data.location}' WHERE id = ${data.id}`, noResponseQuery);
+      socket.emit('admin_status', 'was_edited');
+    } catch (error) {
+      socket.emit('admin_status', 'not_edited');
+    }
   });
 
   socket.on(`delete_${preset}`, (data: IDialogBranch) => {
     writeLog(socket.handshake.address, `delete_${preset} \n ${JSON.stringify(data.id)}`);
-    connection.query(`DELETE FROM branches WHERE id IN (${data.id.join(',')})`, noResponseQueryCallback);
+    try {
+      connection.query(`DELETE FROM branches WHERE id IN (${data.id.join(',')})`, noResponseQuery);
+      socket.emit('admin_status', 'was_deleted');
+    } catch (error) {
+      socket.emit('admin_status', 'not_deleted');
+    }
   });
 };
 

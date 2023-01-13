@@ -35,15 +35,22 @@ const processIngredients = (socket: Socket) => {
       await query(`INSERT INTO ingredients (name, cost, ingredient_type_id, text, ingredient_text_extension_id) VALUES ('${data.name}', '${data.cost}', '${categoryId}','${data.text}' , '${extensionId}')`);
       const id = (await query(`SELECT id FROM ingredients WHERE name = '${data.name}'`))[0].id;
       (data.allergens || []).forEach((allergen: number) => query(`INSERT INTO ingredient_allergens (ingredient_id, num) VALUES ('${id}', '${allergen + 1}')`));
+      socket.emit('admin_status', 'was_added');
     } catch (error) {
       console.log(error);
+      socket.emit('admin_status', 'not_added');
     }
   });
 
   socket.on(`delete_${preset}`, (data: any) => {
     writeLog(socket.handshake.address, `delete_${preset} \n ${JSON.stringify(data)}`);
 
-    connection.query(`DELETE FROM ingredients WHERE id IN (${data.id.join(',')})`, noResponseQueryCallback);
+    try {
+      query(`DELETE FROM ingredients WHERE id IN (${data.id.join(',')})`, (err: MysqlError, result: any) => noResponseQueryCallback(() => socket.emit('admin_status', 'not_deleted'), err, result));
+      socket.emit('admin_status', 'was_deleted');
+    } catch (error) {
+      socket.emit('admin_status', 'not_deleted');
+    }
   });
 
   socket.on(`edit_${preset}`, async (data: IDialogIngredient) => {
@@ -60,8 +67,10 @@ const processIngredients = (socket: Socket) => {
       await query(`DELETE FROM ingredient_allergens WHERE ingredient_id = '${id}'`);
 
       (data.allergens || []).forEach((allergen: number) => query(`INSERT INTO ingredient_allergens (ingredient_id, num) VALUES ('${id}', '${allergen + 1}')`));
+      socket.emit('admin_status', 'was_eddited');
     } catch (error) {
       console.log(error);
+      socket.emit('admin_status', 'not_edited');
     }
   });
 

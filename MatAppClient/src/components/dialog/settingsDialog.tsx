@@ -61,10 +61,6 @@ const SettingsDialog = ({ hide }: Props) => {
               {translate('switch')}
             </Button>
           </div>
-          {/* <div className="dialog-line">
-            <label htmlFor="">todo</label>
-            <Button>todo</Button>
-          </div> */}
         </div>
         <div className="dialog-buttons">
           <Button

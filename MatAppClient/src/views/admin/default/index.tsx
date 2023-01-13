@@ -5,7 +5,7 @@ const AdminDefaultView = () => {
     <Panel class="center center-child">
       <h1>MatAPP Management</h1>
       <h2>Use navigation</h2>
-      <p>Version 0.34</p>
+      <p>Version 0.35</p>
     </Panel>
   );
 };

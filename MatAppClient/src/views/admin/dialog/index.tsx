@@ -2,12 +2,14 @@ import './style.css';
 import { AddIngredient, EditIngredient } from '../../../forms/ingredient';
 import { AddUser, EditUser } from '../../../forms/user';
 import { AddDish } from '../../../forms/dish';
-import { AddBranch } from '../../../forms/branch';
+import { AddBranch, EditBranch } from '../../../forms/branch';
 import DeleteDialog from '../../../forms/deleteDialog';
 import { useAdminContext } from '../../../context/adminContext';
 
 const Dialog = () => {
   const { dialog, setDialog, selectedIDs } = useAdminContext();
+
+  //TODO add edit-multiple
 
   if ((dialog === 'delete' || dialog === 'edit' || dialog === 'edit_multiple') && selectedIDs.length === 0) {
     setDialog('hidden');
@@ -34,6 +36,7 @@ const Dialog = () => {
   if (window.location.pathname.includes('branches')) {
     if (dialog === 'add') return <AddBranch />;
     if (dialog === 'delete') return <DeleteDialog sendRoute="branches" />;
+    if (dialog === 'edit') return <EditBranch />;
   }
 
   setDialog('hidden');

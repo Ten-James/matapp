@@ -3,7 +3,7 @@ import type { Socket } from 'socket.io';
 import connection from '../database';
 import { writeLog } from '../logger';
 import type { IDialogUser, ILoginProps, IUser } from '../types';
-import { noResponseQueryCallback } from '../misc';
+import { noResponseQuery, noResponseQueryCallback } from '../misc';
 
 const processUsers = (socket: Socket) => {
   socket.on('get_users', () => {
@@ -38,19 +38,35 @@ const processUsers = (socket: Socket) => {
   const preset = 'users';
   socket.on(`add_${preset}`, (data: IDialogUser) => {
     writeLog(socket.handshake.address, `add_${preset} \n ${JSON.stringify(data)}`);
-    connection.query(`INSERT INTO users (name, password, access, branch_id) VALUES ('${data.name}', md5('${data.password}'), ${data.access}, ${data.branch})`, noResponseQueryCallback);
+    try {
+      connection.query(`INSERT INTO users (name, password, access, branch_id) VALUES ('${data.name}', md5('${data.password}'), ${data.access}, ${data.branch})`, noResponseQuery);
+
+      socket.emit('admin_status', 'was_added');
+    } catch (error) {
+      socket.emit('admin_status', 'not_added');
+    }
   });
 
   socket.on(`delete_${preset}`, (data: IDialogUser) => {
     writeLog(socket.handshake.address, `delete_${preset} \n ${JSON.stringify(data)}`);
-    connection.query(`DELETE FROM users WHERE id IN (${data.id.join(',')})`, noResponseQueryCallback);
+    try {
+      connection.query(`DELETE FROM users WHERE id IN (${data.id.join(',')})`, noResponseQuery);
+      socket.emit('admin_status', 'was_deleted');
+    } catch (error) {
+      socket.emit('admin_status', 'not_deleted');
+    }
   });
 
   socket.on(`edit_${preset}`, (data: IDialogUser) => {
     writeLog(socket.handshake.address, `edit_${preset} \n ${JSON.stringify(data)}`);
     console.log(JSON.stringify(data));
-    if (data.password !== '') connection.query(`UPDATE users SET name = '${data.name}', password = md5('${data.password}'), branch_id = '${data.branch}' where id = ${data.id}`, noResponseQueryCallback);
-    else connection.query(`UPDATE users SET name = '${data.name}', branch_id = '${data.branch}' where id = ${data.id}`, noResponseQueryCallback);
+    try {
+      if (data.password !== '') connection.query(`UPDATE users SET name = '${data.name}', password = md5('${data.password}'), branch_id = '${data.branch}' where id = ${data.id}`);
+      else connection.query(`UPDATE users SET name = '${data.name}', branch_id = '${data.branch}' where id = ${data.id}`, noResponseQueryCallback);
+      socket.emit('admin_status', 'was_edited');
+    } catch (error) {
+      socket.emit('admin_status', 'not_edited');
+    }
   });
 };
 

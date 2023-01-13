@@ -73,4 +73,4 @@ Its also part of mine final project High school exam.
 * MatAppClient/src/components/dialog/baseDialog.tsx: : make available for custom button color.
 * MatAppClient/src/components/common/panel.tsx: : class should be choose value not string
 * MatAppClient/src/components/common/logo.tsx: : class should be choose value not string
-* MatAppClient/src/handlers/dialog/handlers.ts:  add base data for ids.
+* MatAppClient/src/views/admin/dialog/index.tsx:  add edit-multiple

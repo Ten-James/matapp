@@ -48,3 +48,9 @@ dark,Dark,Tmavý
 close,Close,Zavřít
 switch,Switch,Přepnout
 white,White,Bilá
+was_added,Item was Added.,Předmět byl přidán.
+was_edited,Item was Edited.,Předmět byl upraven.
+was_deleted,Item was Deleted.,Předmět byl odstraněn.
+not_added,Item was not Added.,Předmět nebyl přidán.
+not_edited,Item was not Edited.,Předmět nebyl upraven.
+not_deleted,Item was not Deleted.,Předmět nebyl odstraněn.

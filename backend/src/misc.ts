@@ -8,6 +8,17 @@ const PreprocessData = (data: any) => {
   return data;
 };
 
-export const noResponseQueryCallback = (err: MysqlError, result: any) => {
-  if (err) throw err;
+export const noResponseQuery = (err: MysqlError, result: any) => {
+  if (err) {
+    console.error(err);
+  }
+  console.log(result);
+};
+
+export const noResponseQueryCallback = (callback: () => void, err: MysqlError, result: any) => {
+  if (err) {
+    callback();
+    console.error(err);
+  }
+  console.log(result);
 };

@@ -4,8 +4,6 @@ export const hide = (e: Event, setTranslateY: (string) => void, setDialog: (stri
   setTimeout(() => setDialog('hidden'), 500);
 };
 
-//TODO add base data for ids.
-
 export const submit = (e: Event, form: HTMLFormElement | null, selectedIDs: number[], setButtonDisabled: (data: boolean) => void, sendData: (data: any) => void, setError: (Error: string) => void) => {
   e.preventDefault();
   if (!form) return;
