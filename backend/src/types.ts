@@ -46,3 +46,11 @@ export interface IDialogIngredient {
   text_combo: string;
   allergens: number[];
 }
+
+export interface IDialogDish {
+  id?: number[];
+  name: string;
+  category: string;
+  cost: number;
+  ingredients: string[][];
+}

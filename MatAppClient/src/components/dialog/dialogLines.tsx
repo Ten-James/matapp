@@ -113,6 +113,34 @@ export const ComboBoxDialog = ({ name, required = false, comboValue, value }: Te
   );
 };
 
+export const UnsetComboBoxDialog = ({ name, required = false, comboValue, value }: TextAttributeDialogWithComboProp) => {
+  const { translate } = useAppContext();
+  const [values, setValues] = useState([...comboValue]);
+  useEffect(() => {
+    setValues([...comboValue]);
+  }, [comboValue]);
+  return (
+    <div className="combo-input dialog-line dialog-unset">
+      <div>
+        <select
+          name={name}
+          id={name}
+          defaultValue={value}
+        >
+          {values.map((x) => (
+            <option
+              key={x.value}
+              value={x.value}
+            >
+              {x.name}
+            </option>
+          ))}
+        </select>
+      </div>
+    </div>
+  );
+};
+
 export const TextAttributeWithAutoCompleteDialog = ({ name, required = false, combo, value }: TextAttributeDialogWithComboProp) => {
   const { translate } = useAppContext();
   const [values, setValues] = useState([...combo]);

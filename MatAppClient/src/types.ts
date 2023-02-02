@@ -1,5 +1,5 @@
 import type { Socket } from 'socket.io-client';
-import type { IBaseModel, IBranch, INamedBaseModel, IUser } from '../../src/types';
+import type { IBaseModel, IBranch, IIngredient, INamedBaseModel, IUser } from '../../src/types';
 import type { Dispatch, SetStateAction } from 'react';
 
 export * from '../../src/types';
@@ -34,6 +34,7 @@ export interface AdminContextType {
   setDialog: Dispatch<SetStateAction<IDialogOption>>;
   branches: IBranch[];
   setBranches: Dispatch<SetStateAction<IBranch[]>>;
+  ingredients: IIngredient[];
 }
 
 export interface Information {

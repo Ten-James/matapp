@@ -1,5 +1,5 @@
-DATA = "./data.csv"
-OUTPUT = "../MatAppClient/src/misc/transcripter.ts"
+DATA = "./helpers/data.csv"
+OUTPUT = "./MatAppClient/src/misc/transcripter.ts"
 #get data as string
 data = open(DATA, "r").readlines()
 data.pop(0)

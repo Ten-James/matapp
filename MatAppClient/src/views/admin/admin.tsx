@@ -16,6 +16,7 @@ import { AdminContext } from '../../context/adminContext';
 const Admin = () => {
   const { socket, setLoading, branches, setBranches, user, setUser } = useAppContext();
 
+  // TODO - dont share seters make hook?
   const [ingredients, setIngredients] = useState<IIngredient[]>([]);
   const [dishes, setDishes] = useState<IDish[]>([]);
   const [users, setUsers] = useState<IUser[]>([]);
@@ -61,6 +62,7 @@ const Admin = () => {
         setDialog,
         branches,
         setBranches,
+        ingredients,
       }}
     >
       {dialog !== 'hidden' && <Dialog />}

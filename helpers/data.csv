@@ -9,6 +9,7 @@ access,Access,Práva
 branches,Branches,Pobočky
 tables,Tables,Tabulky
 ingredients,Ingredients,Ingredience
+ingredient,Ingredient,Ingredience
 dishes,Dishes,Pokrmy
 information,Information,Informace
 reports,Reports,Účtenky
@@ -16,7 +17,7 @@ storage,Storage,Sklad
 branches storage,Branches Storage,Sklad poboček
 location,Location,Lokace
 all,All,Všechny
-category,Category,Katergorie
+category,Category,Kategorie
 add,Add,Přidat
 edit,Edit,Upravit
 delete,Delete,Odstranit

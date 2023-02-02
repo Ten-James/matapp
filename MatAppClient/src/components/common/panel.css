@@ -11,7 +11,16 @@
 }
 
 .inline {
+  font-size: 0.5em !important;
+  margin-left: 1em;
   display: inline-flex !important;
+}
+
+.inline-right {
+  font-size: 0.5em !important;
+  margin-left: auto;
+  display: inline-flex !important;
+
 }
 
 .selector {

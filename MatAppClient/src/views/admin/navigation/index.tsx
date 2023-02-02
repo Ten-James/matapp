@@ -100,7 +100,7 @@ const Navigation = ({ userAccess }: NavigationProps) => {
                     />
                   </SubBetterLink>
                   <SubBetterLink
-                    to="information"
+                    to="table"
                     expandedText={translate('Tables')}
                     icon="storage"
                     count={3}
