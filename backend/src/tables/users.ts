@@ -3,7 +3,7 @@ import type { Socket } from 'socket.io';
 import connection from '../database';
 import { writeLog } from '../logger';
 import type { IDialogUser, ILoginProps, IUser } from '../types';
-import { noResponseQuery, noResponseQueryCallback } from '../misc';
+import { noResponseQuery } from '../misc';
 
 const processUsers = (socket: Socket) => {
   socket.on('get_users', () => {
@@ -62,7 +62,7 @@ const processUsers = (socket: Socket) => {
     console.log(JSON.stringify(data));
     try {
       if (data.password !== '') connection.query(`UPDATE users SET name = '${data.name}', password = md5('${data.password}'), branch_id = '${data.branch}' where id = ${data.id}`);
-      else connection.query(`UPDATE users SET name = '${data.name}', branch_id = '${data.branch}' where id = ${data.id}`, noResponseQueryCallback);
+      else connection.query(`UPDATE users SET name = '${data.name}', branch_id = '${data.branch}' where id = ${data.id}`, noResponseQuery);
       socket.emit('admin_status', 'was_edited');
     } catch (error) {
       socket.emit('admin_status', 'not_edited');

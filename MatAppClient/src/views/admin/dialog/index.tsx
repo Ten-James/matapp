@@ -33,6 +33,10 @@ const Dialog = () => {
     if (dialog === 'delete') return <DeleteDialog sendRoute="dishes" />;
   }
 
+  if (window.location.pathname.includes('storage')) {
+    return null;
+  }
+
   if (window.location.pathname.includes('branches')) {
     if (dialog === 'add') return <AddBranch />;
     if (dialog === 'delete') return <DeleteDialog sendRoute="branches" />;

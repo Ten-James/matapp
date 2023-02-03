@@ -28,6 +28,7 @@ const BranchSelector = ({ branches }: Props) => {
         style={{ width: 'max(40vw,400px)', height: '80vh' }}
       >
         <LogoSVG class="upper" />
+        <h2>this part is currently unavailable</h2>
         <div className="branches">
           {branches.map((branch) => (
             <Panel
