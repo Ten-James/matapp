@@ -6,7 +6,7 @@ import { Button, Panel } from './components/common/panel';
 import { Translate } from './misc/transcripter';
 import { AppContextType, IBranch, IUser, LanguageType, ThemeType } from './types';
 import Admin from './views/admin/admin';
-import BranchSelector from './views/branchSelector';
+import BranchSelector from './views/main/branchSelector';
 import ErrorPage from './views/errorPage';
 import Loader from './views/loading';
 import BaseView from './views';
@@ -15,6 +15,7 @@ import useLocalStorage from './hooks/useLocalStorage';
 import { AppContext } from './context/appContext';
 import LoginPage from './views/login';
 import useStatus from './hooks/useStatus';
+import Main from './views/main';
 // TODO: move to env file
 const socket = socketIOClient('http://localhost:2238');
 
@@ -66,8 +67,8 @@ const App = () => {
             {settingsVisible ? <SettingsDialog hide={() => setSettingsVisible(false)} /> : null}
             <Routes>
               <Route
-                path="/branches"
-                element={<BranchSelector branches={branches} />}
+                path="/main/*"
+                element={<Main />}
               />
               <Route
                 path="/admin/*"

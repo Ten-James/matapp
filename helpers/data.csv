@@ -39,6 +39,8 @@ cancel,Cancel,Zrušit
 delete?,Delete?,Opravdu Odstranit?
 application,Application,Aplikace
 management,Management,Management
+cashier,Cashier,Kasa
+kitchen,Kitchen,Kuchyně
 settings,Settings,Nastavení
 tws,This will be saved, Tohle bude uloženo
 ils,in your local storage, lokálně na zařízení

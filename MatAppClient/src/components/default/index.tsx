@@ -4,7 +4,8 @@ import { Panel } from '../common/panel';
 import { useAppContext } from '../../context/appContext';
 
 const ROUTES = [
-  { path: '/branches', name: 'application', icon: 'home' },
+  { path: '/main/cashier', name: 'cashier', icon: 'home' },
+  { path: '/main/kitchen', name: 'kitchen', icon: 'kitchen' },
   { path: '/admin', name: 'management', icon: 'admin_panel_settings' },
 ] as const;
 

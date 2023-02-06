@@ -14,7 +14,24 @@ const ErrorPage = () => {
         <h1>Error 404</h1>
         <h2>We are currently cooking this page</h2>
         <LogoSVG />
-        <Link to="/admin">Go to Admin</Link>
+        <Link
+          style={{ marginRight: '2em' }}
+          to="/admin"
+        >
+          Go to Admin{' '}
+        </Link>
+        <Link
+          style={{ marginRight: '2em' }}
+          to="/main/cashier"
+        >
+          Go to Cashier{' '}
+        </Link>
+        <Link
+          style={{ marginRight: '2em' }}
+          to="/main/kitchen"
+        >
+          Go to Kitchen{' '}
+        </Link>
       </Panel>
     </div>
   );

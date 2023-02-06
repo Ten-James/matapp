@@ -37,6 +37,11 @@ export interface AdminContextType {
   ingredients: IIngredient[];
 }
 
+export interface MainContextType {
+  branchID: number;
+  setBranchID: Dispatch<SetStateAction<number>>;
+}
+
 export interface Information {
   uptime: string;
   memory: string;
