@@ -7,17 +7,14 @@ import { useAppContext } from '../../context/appContext';
 import { useMainContext } from '../../context/mainContext';
 
 const BranchSelector = () => {
-  const { branches, setBranches, setLoading, socket } = useAppContext();
+  const { branches, getBranches, setLoading } = useAppContext();
   const { setBranchID } = useMainContext();
 
   useEffect(() => {
     setLoading(true);
     setTimeout(GenerateFries, 20);
-    setTimeout(() => socket.emit('get_branches'), 3000);
-    socket.on('branches', (data: IBranch[]) => {
-      setLoading(false);
-      setBranches(data);
-    });
+    getBranches();
+    setTimeout(() => setLoading(false), 3000);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

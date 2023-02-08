@@ -6,13 +6,10 @@ import { useAppContext } from '../../context/appContext';
 
 const UserDialogBase = () => {
   const { socket } = useAppContext();
-  const { selectedItems, dialog, branches, setBranches } = useAdminContext();
+  const { selectedItems, dialog, branches, getBranches } = useAdminContext();
 
   useEffect(() => {
-    if (branches.length === 0) socket.emit('get_branches');
-    socket.on('branches', (data: IBranch[]) => {
-      setBranches(data);
-    });
+    if (branches.length === 0) getBranches();
   });
 
   const data = useMemo<IUser>(() => {

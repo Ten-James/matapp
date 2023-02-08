@@ -1,5 +1,5 @@
 import type { Socket } from 'socket.io-client';
-import type { IBaseModel, IBranch, IIngredient, INamedBaseModel, IUser } from '../../src/types';
+import type { IBaseModel, IBranch, IIngredient, INamedBaseModel, ISession, IUser } from '../../src/types';
 import type { Dispatch, SetStateAction } from 'react';
 
 export * from '../../src/types';
@@ -14,7 +14,8 @@ export interface AppContextType {
   translate: (text: string) => string;
   branches: IBranch[];
   setLoading: Dispatch<SetStateAction<boolean>>;
-  setBranches: Dispatch<SetStateAction<IBranch[]>>;
+  getBranches: VoidFunction;
+  clearBranches: VoidFunction;
   user: IUser;
   setUser: Dispatch<SetStateAction<IUser>>;
 }
@@ -33,13 +34,16 @@ export interface AdminContextType {
   dialog: IDialogOption;
   setDialog: Dispatch<SetStateAction<IDialogOption>>;
   branches: IBranch[];
-  setBranches: Dispatch<SetStateAction<IBranch[]>>;
+  getBranches: VoidFunction;
   ingredients: IIngredient[];
 }
 
 export interface MainContextType {
   branchID: number;
   setBranchID: Dispatch<SetStateAction<number>>;
+  session: ISession;
+  getSession: VoidFunction;
+  setSession: (data: ISession) => void;
 }
 
 export interface Information {

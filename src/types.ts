@@ -44,3 +44,10 @@ export interface IOrder extends IBaseModel {
   cost: number;
   type: string;
 }
+
+export interface ISession {
+  id: number;
+  branchId: number;
+  startTime: Date;
+  currentOrders: any[];
+}

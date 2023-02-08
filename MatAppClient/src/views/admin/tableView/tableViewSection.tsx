@@ -12,20 +12,15 @@ import { TableViewProps } from '.';
 import { useAdminContext } from '../../../context/adminContext';
 import { useAppContext } from '../../../context/appContext';
 
-const TableViewSection = <T extends INamedBaseModel>({ data, setData, socketString, displayName, ...args }: TableViewProps<IBranchData<T>>) => {
+const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayName, ...args }: TableViewProps<IBranchData<T>>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
   const { socket, translate } = useAppContext();
 
   const [filter, setFilter] = useState<FilterData<T>>(defaultFilter);
 
-  socket.on(socketString, (data: IBranchData<T>[]) => {
-    if (data.length === 0) return;
-    setData(data);
-  });
-
   useEffect(() => {
     if (data.length === 0) {
-      socket.emit(`get_${socketString}`);
+      getData();
     }
     setSelectedIDs([]);
     setFilter(defaultFilter);
@@ -127,7 +122,7 @@ const TableViewSection = <T extends INamedBaseModel>({ data, setData, socketStri
               <Panel
                 onClick={() => setSelectedIDs(selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id])}
                 style={{
-                  outline: selectedIDs.includes(e.id) ? '1px solidvar(--blue-color)' : 'unset',
+                  outline: selectedIDs.includes(e.id) ? '1px solid var(--blue-color)' : 'unset',
                   gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr) auto',
                 }}
                 key={e.id}

@@ -12,19 +12,15 @@ import { TableViewProps } from '.';
 import { useAdminContext } from '../../../context/adminContext';
 import { useAppContext } from '../../../context/appContext';
 
-const TableViewDishes = ({ data, setData, socketString, displayName, ...args }: TableViewProps<IDish>) => {
+const TableViewDishes = ({ data, getData, displayName, ...args }: TableViewProps<IDish>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
   const { socket, translate } = useAppContext();
 
   const [filter, setFilter] = useState<FilterData<IDish>>(defaultFilter);
 
-  socket.on(socketString, (data: IDish[]) => {
-    setData(data);
-  });
-
   useEffect(() => {
     if (data.length === 0) {
-      socket.emit(`get_${socketString}`);
+      getData();
     }
     setSelectedIDs([]);
     setFilter(defaultFilter);

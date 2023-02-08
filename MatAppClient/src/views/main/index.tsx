@@ -5,12 +5,16 @@ import { Route, Routes } from 'react-router';
 import ErrorPage from '../errorPage';
 import Cashier from './cashier';
 import Kitchen from './kitchen';
+import useSession from '../../hooks/useSession';
+import { useAppContext } from '../../context/appContext';
 
 const Main = () => {
+  const { socket } = useAppContext();
   const [branchID, setBranchID] = useState(0);
+  const [session, getSession, setSession] = useSession(socket, branchID);
 
   return (
-    <MainContext.Provider value={{ branchID, setBranchID }}>
+    <MainContext.Provider value={{ branchID, setBranchID, session, getSession, setSession }}>
       {branchID === 0 ? (
         <BranchSelector />
       ) : (

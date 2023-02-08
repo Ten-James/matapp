@@ -125,12 +125,6 @@ const Navigation = ({ userAccess }: NavigationProps) => {
                     />
                   </SubBetterLink>
                   <BetterLink
-                    to="information"
-                    expandedText={translate('Information')}
-                    icon="info"
-                    onClick={() => setExpanded(false)}
-                  />
-                  <BetterLink
                     to={location.pathname}
                     expandedText={translate('Refresh')}
                     icon="sync"

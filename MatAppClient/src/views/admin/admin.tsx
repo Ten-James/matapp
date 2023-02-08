@@ -12,16 +12,17 @@ import TableViewSection from './tableView/tableViewSection';
 import AdminDefaultView from './default';
 import { useAppContext } from '../../context/appContext';
 import { AdminContext } from '../../context/adminContext';
+import useSocket from '../../hooks/useSocket';
 
 const Admin = () => {
-  const { socket, setLoading, branches, setBranches, user, setUser } = useAppContext();
+  const { socket, setLoading, branches, getBranches, user, clearBranches } = useAppContext();
 
   // TODO - dont share seters make hook?
-  const [ingredients, setIngredients] = useState<IIngredient[]>([]);
-  const [dishes, setDishes] = useState<IDish[]>([]);
-  const [users, setUsers] = useState<IUser[]>([]);
-  const [branchesStorages, setBranchesStorages] = useState<IBranchData<IIngredient>[]>([]);
-  const [branchesOrders, setBranchesOrders] = useState<IBranchData<any>[]>([]);
+  const [ingredients, getIngredients, clearIngredients] = useSocket<IIngredient[]>(socket, 'ingredients', []);
+  const [dishes, getDishes, clearDishes] = useSocket<IDish[]>(socket, 'dishes', []);
+  const [users, getUsers, clearUsers] = useSocket<IUser[]>(socket, 'users', []);
+  const [branchesStorages, getBranchesStorages, clearBranchesStorage] = useSocket<IBranchData<IIngredient>[]>(socket, 'branches_storage', []);
+  const [branchesOrders, getBranchesOrders, clearBranchesOrders] = useSocket<IBranchData<any>[]>(socket, 'branches_orders', []);
   const [dialog, setDialog] = useState<IDialogOption>('hidden');
 
   const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
@@ -29,12 +30,12 @@ const Admin = () => {
 
   const refresh = () => {
     setSelectedIDs([]);
-    setIngredients([]);
-    setDishes([]);
-    setUsers([]);
-    setBranches([]);
-    setBranchesStorages([]);
-    setBranchesOrders([]);
+    clearIngredients();
+    clearDishes();
+    clearUsers();
+    clearBranchesStorage();
+    clearBranchesOrders();
+    clearBranches();
   };
 
   const selectedItems = useMemo(() => {
@@ -61,7 +62,7 @@ const Admin = () => {
         dialog,
         setDialog,
         branches,
-        setBranches,
+        getBranches,
         ingredients,
       }}
     >
@@ -74,9 +75,8 @@ const Admin = () => {
             element={
               <TableView
                 data={branches}
-                setData={setBranches}
+                getData={getBranches}
                 displayName="Branches"
-                socketString="branches"
                 showButtons
               />
             }
@@ -88,9 +88,8 @@ const Admin = () => {
                 element={
                   <TableViewSection
                     data={branchesStorages}
-                    setData={setBranchesStorages}
+                    getData={getBranchesStorages}
                     displayName="Branches Storage"
-                    socketString="branches_storage"
                   />
                 }
               />
@@ -99,9 +98,8 @@ const Admin = () => {
                 element={
                   <TableViewSection
                     data={branchesOrders}
-                    setData={setBranchesOrders}
                     displayName="Branches Orders"
-                    socketString="branches_orders"
+                    getData={getBranchesOrders}
                   />
                 }
               />
@@ -124,9 +122,8 @@ const Admin = () => {
             element={
               <TableViewDishes
                 data={dishes}
-                setData={setDishes}
                 displayName="Dishes"
-                socketString="dishes"
+                getData={getDishes}
                 showButtons
               />
             }
@@ -136,9 +133,8 @@ const Admin = () => {
             element={
               <TableView
                 data={ingredients}
-                setData={setIngredients}
                 displayName="Ingredients"
-                socketString="ingredients"
+                getData={getIngredients}
                 showButtons
               />
             }
@@ -148,15 +144,14 @@ const Admin = () => {
             element={
               <TableView
                 data={users}
-                setData={setUsers}
                 displayName="Users"
-                socketString="users"
+                getData={getUsers}
                 showButtons
               />
             }
           />
           <Route
-            path="/information"
+            path="/table"
             element={<InformationView />}
           />
           <Route

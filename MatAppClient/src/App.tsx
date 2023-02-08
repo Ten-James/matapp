@@ -6,7 +6,6 @@ import { Button, Panel } from './components/common/panel';
 import { Translate } from './misc/transcripter';
 import { AppContextType, IBranch, IUser, LanguageType, ThemeType } from './types';
 import Admin from './views/admin/admin';
-import BranchSelector from './views/main/branchSelector';
 import ErrorPage from './views/errorPage';
 import Loader from './views/loading';
 import BaseView from './views';
@@ -16,6 +15,7 @@ import { AppContext } from './context/appContext';
 import LoginPage from './views/login';
 import useStatus from './hooks/useStatus';
 import Main from './views/main';
+import useSocket from './hooks/useSocket';
 // TODO: move to env file
 const socket = socketIOClient('http://localhost:2238');
 
@@ -30,19 +30,11 @@ const App = () => {
   const [theme, setTheme] = useLocalStorage<ThemeType>('mat_theme', 'light');
   const location = useLocation();
   //TODO- move to branchSelector
-  const [branches, setBranches] = useState<IBranch[]>([]);
+  const [branches, getBranches, clearBranches] = useSocket<IBranch[]>(socket, 'branches', []);
 
   socket.on('admin_status', setStatusHandler);
 
-  const [user, setUser] = useState<IUser | null>(
-    null,
-    /*{
-    id: 1,
-    name: 'admin',
-    access: 2,
-    branchId: 0,
-  }*/
-  );
+  const [user, setUser] = useState<IUser | null>(null);
 
   const contextValue: AppContextType = {
     loading,
@@ -54,9 +46,10 @@ const App = () => {
     theme,
     setTheme,
     setLoading,
-    setBranches,
+    getBranches,
     user,
     setUser,
+    clearBranches,
   };
 
   return (

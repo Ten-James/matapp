@@ -3,6 +3,7 @@ import { io } from '../index';
 import connection from './database';
 import { getLogsAsString, writeLog } from './logger';
 import ProcessTables from './tables';
+import Realtime from './realtime';
 
 const sendInfo = (socket: Socket) => {
   // send server uptime, io connected clients
@@ -39,6 +40,7 @@ const sendInfo = (socket: Socket) => {
 };
 
 const processConnection = (socket: Socket) => {
+  Realtime(socket);
   ProcessTables(socket);
   socket.on('get_info', () => {
     sendInfo(socket);

@@ -13,25 +13,20 @@ import { useAppContext } from '../../../context/appContext';
 
 export interface TableViewProps<T> {
   data: T[];
-  setData: (data: T[]) => void;
-  socketString: string;
+  getData: VoidFunction;
   displayName: string;
   showButtons?: boolean;
 }
 
-const TableView = <T extends IBaseModel>({ data, setData, socketString, displayName, ...args }: TableViewProps<T>) => {
+const TableView = <T extends IBaseModel>({ data, getData, displayName, ...args }: TableViewProps<T>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
   const { socket, translate } = useAppContext();
 
   const [filter, setFilter] = useState<FilterData<T>>(defaultFilter);
 
-  socket.on(socketString, (data: T[]) => {
-    setData(data);
-  });
-
   useEffect(() => {
     if (data.length === 0) {
-      socket.emit(`get_${socketString}`);
+      getData();
     }
     setSelectedIDs([]);
     setFilter(defaultFilter);
