@@ -11,7 +11,7 @@ const writeLog = (ip: string, message: string): void => {
   stack.push(log);
   // append to file
 
-  fs.appendFile(`logs/${new Date().toLocaleDateString()}.log`, `[${log.time}][${log.ip}] ${log.message}\r`, (err) => {
+  fs.appendFile(`logs/${new Date().toLocaleDateString('cs-CZ')}.log`, `[${log.time}][${log.ip}] ${log.message}\r`, (err) => {
     if (err) throw err;
   });
   if (stack.length > 1) {

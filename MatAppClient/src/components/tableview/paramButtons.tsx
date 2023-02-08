@@ -23,9 +23,9 @@ const ParamButtons = <T extends IBaseModel>({ filter, setFilter, showCategory, c
         ref={searchRef}
         autoComplete="off"
         onKeyUp={() => {
-          if (!filterSelect.current) return;
           if (!searchRef.current) return;
-          if (showCategory)
+          if (showCategory) {
+            if (!filterSelect.current) return;
             return setFilter({
               filterMatch: (x) => {
                 return (
@@ -37,6 +37,7 @@ const ParamButtons = <T extends IBaseModel>({ filter, setFilter, showCategory, c
               },
               sort: filter.sort,
             });
+          }
           setFilter({
             filterMatch: (x) => {
               return (
@@ -54,12 +55,11 @@ const ParamButtons = <T extends IBaseModel>({ filter, setFilter, showCategory, c
           <select
             id="filter"
             ref={filterSelect}
-            onChange={() => {
-              if (!filterSelect.current) return;
+            onChange={(e) => {
               setFilter({
                 filterMatch: (x) => {
                   // @ts-ignore
-                  return x['category'].includes(filterSelect.current.value);
+                  return x['category'].includes(e.target.value);
                 },
                 sort: filter.sort,
               });

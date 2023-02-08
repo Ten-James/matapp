@@ -33,9 +33,9 @@ const TableViewSection = <T extends INamedBaseModel>({ data, setData, socketStri
 
   const show = useMemo(
     () =>
-      data.length === 0
+      data?.length === 0
         ? []
-        : data.map((x) => {
+        : data?.map((x) => {
             return { ...x, data: x.data.filter(filter.filterMatch).sort(filter.sort) };
           }),
     [filter, data],

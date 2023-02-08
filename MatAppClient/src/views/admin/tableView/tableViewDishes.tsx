@@ -30,7 +30,7 @@ const TableViewDishes = ({ data, setData, socketString, displayName, ...args }: 
     setFilter(defaultFilter);
   }, [data]);
 
-  const show = useMemo(() => (data.length === 0 ? [] : data.filter(filter.filterMatch).sort(filter.sort)), [filter, data]);
+  const show = useMemo(() => (data?.length === 0 ? [] : data?.filter(filter.filterMatch).sort(filter.sort)), [filter, data]);
 
   const categories = useMemo(() => {
     if (data.length === 0) {

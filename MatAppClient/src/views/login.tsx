@@ -58,6 +58,7 @@ const LoginPage = (props: Props) => {
               >
                 Log In
               </Button>
+              <p>Ask manager if you lost your access</p>
             </div>
             <p>All rights reserved</p>
           </Panel>
