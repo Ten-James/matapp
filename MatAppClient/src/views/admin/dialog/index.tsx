@@ -1,6 +1,6 @@
 import './style.css';
 import { AddIngredient, EditIngredient } from '../../../forms/ingredient';
-import { AddUser, EditUser } from '../../../forms/user';
+import { AddUser, ChangePasswordDialog, EditUser } from '../../../forms/user';
 import { AddDish } from '../../../forms/dish';
 import { AddBranch, EditBranch } from '../../../forms/branch';
 import DeleteDialog from '../../../forms/deleteDialog';
@@ -24,6 +24,7 @@ const Dialog = () => {
 
   if (window.location.pathname.includes('users')) {
     if (dialog === 'add') return <AddUser />;
+    if (dialog === 'other') return <ChangePasswordDialog />;
     if (dialog === 'delete') return <DeleteDialog sendRoute="users" />;
     if (dialog === 'edit') return <EditUser />;
   }

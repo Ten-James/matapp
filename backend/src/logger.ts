@@ -46,7 +46,7 @@ const writeTimeLog = () => {
   } else {
     timeLog[time] = 1;
   }
-  if (timeLog.length > 10) {
+  if (timeLog.length > 50) {
     delete timeLog[Object.keys(timeLog)[0]];
   }
   fs.writeFileSync('logs/time.log', JSON.stringify(timeLog));

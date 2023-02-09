@@ -5,6 +5,7 @@ import { GenerateFries } from '../../misc/fries';
 import { IBranch } from '../../types';
 import { useAppContext } from '../../context/appContext';
 import { useMainContext } from '../../context/mainContext';
+import { Link } from 'react-router-dom';
 
 const BranchSelector = () => {
   const { branches, getBranches, setLoading } = useAppContext();
@@ -43,7 +44,15 @@ const BranchSelector = () => {
             </Panel>
           ))}
         </div>
-        <p>All rights reserved</p>
+        <div>
+          <Link
+            style={{ marginRight: '2em' }}
+            to="/"
+          >
+            Go main page
+          </Link>
+          <p>All rights reserved</p>
+        </div>
       </Panel>
     </div>
   );

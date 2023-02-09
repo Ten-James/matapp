@@ -68,6 +68,19 @@ const processUsers = (socket: Socket) => {
       socket.emit('admin_status', 'not_edited');
     }
   });
+
+  socket.on('get_new_password', (id: number) => {
+    writeLog(socket.handshake.address, `get_new_password ${id}`);
+    try {
+      //generate new password of 12 symbols
+      const newPass = Math.random().toString(36).slice(-12);
+
+      connection.query(`UPDATE users SET password = md5('${newPass}') where id = ${id}`, noResponseQuery);
+      socket.emit('new_password', newPass);
+    } catch (error) {
+      console.error(error);
+    }
+  });
 };
 
 export default processUsers;

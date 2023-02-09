@@ -3,7 +3,7 @@ import { Panel } from '../../../components/common/panel';
 import { Information } from '../../../types';
 import './information.css';
 import { useAppContext } from '../../../context/appContext';
-import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const InformationView = () => {
   const [Info, setInfo] = useState<Information>({
@@ -80,20 +80,21 @@ const InformationView = () => {
           height="100%"
           maxHeight={150}
         >
-          <BarChart
+          <LineChart
             width={500}
             height={500}
             data={Object.entries(Info.timeLog)}
           >
-            <CartesianGrid strokeDasharray="3 3" />
             <XAxis dataKey="0" />
             <YAxis />
-            <Bar
+            <Line
               dataKey="1"
-              maxBarSize={50}
-              fill="#8884d8"
+              dot={false}
+              type="monotone"
+              stroke="#8884d8"
+              strokeWidth={2}
             />
-          </BarChart>
+          </LineChart>
         </ResponsiveContainer>
       </Panel>
     </div>

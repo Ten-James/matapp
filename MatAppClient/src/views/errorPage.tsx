@@ -18,19 +18,19 @@ const ErrorPage = () => {
           style={{ marginRight: '2em' }}
           to="/admin"
         >
-          Go to Admin{' '}
+          Go to Admin
         </Link>
         <Link
           style={{ marginRight: '2em' }}
           to="/main/cashier"
         >
-          Go to Cashier{' '}
+          Go to Cashier
         </Link>
         <Link
           style={{ marginRight: '2em' }}
           to="/main/kitchen"
         >
-          Go to Kitchen{' '}
+          Go to Kitchen
         </Link>
       </Panel>
     </div>
