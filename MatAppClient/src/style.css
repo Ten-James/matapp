@@ -108,6 +108,8 @@ h1 {
   z-index: 100;
 }
 
+
+
 .status {
   position: absolute;
   top: 0;
@@ -117,6 +119,11 @@ h1 {
   transform: translate(-50%, 0.5rem);
   font-size: 1.5em;
   padding: 0.4em 2em;
+}
+
+.full-size {
+  width: 100vw;
+  height: 100vh;
 }
 
 a {

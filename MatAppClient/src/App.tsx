@@ -55,7 +55,7 @@ const App = () => {
   return (
     <AppContext.Provider value={contextValue}>
       <Loader>
-        <div className={`${theme}-color`}>
+        <div className={`full-size ${theme}-color`}>
           <LoginPage>
             {settingsVisible ? <SettingsDialog hide={() => setSettingsVisible(false)} /> : null}
             <Routes>

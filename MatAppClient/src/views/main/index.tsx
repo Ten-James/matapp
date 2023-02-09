@@ -7,6 +7,8 @@ import Cashier from './cashier';
 import Kitchen from './kitchen';
 import useSession from '../../hooks/useSession';
 import { useAppContext } from '../../context/appContext';
+import CashierNotStarted from './notstarted/cashier';
+import KitchenNotStarted from './notstarted/kitchen';
 
 const Main = () => {
   const { socket } = useAppContext();
@@ -17,6 +19,21 @@ const Main = () => {
     <MainContext.Provider value={{ branchID, setBranchID, session, getSession, setSession }}>
       {branchID === 0 ? (
         <BranchSelector />
+      ) : session === null ? (
+        <Routes>
+          <Route
+            path="cashier"
+            element={<CashierNotStarted />}
+          />
+          <Route
+            path="kitchen"
+            element={<KitchenNotStarted />}
+          />
+          <Route
+            path="*"
+            element={<ErrorPage />}
+          />
+        </Routes>
       ) : (
         <Routes>
           <Route

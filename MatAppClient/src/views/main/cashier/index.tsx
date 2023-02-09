@@ -13,18 +13,6 @@ const Cashier = () => {
     <div>
       <h1>Cashier</h1>
       <h2>Branch ID: {branchID}</h2>
-      <button
-        onClick={() => {
-          setSession({
-            id: 1,
-            branchId: branchID,
-            currentOrders: [],
-            startTime: new Date(),
-          } as ISession);
-        }}
-      >
-        test
-      </button>
       <code>{JSON.stringify(session)}</code>
     </div>
   );
