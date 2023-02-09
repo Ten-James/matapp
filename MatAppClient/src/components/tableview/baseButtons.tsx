@@ -1,9 +1,13 @@
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import { Button } from '../common/panel';
 import { useAdminContext } from '../../context/adminContext';
 import { useAppContext } from '../../context/appContext';
 
-export const BaseButtons = () => {
+interface IBaseButtonsProps {
+  children?: React.ReactNode;
+}
+
+export const BaseButtons = ({ children }: IBaseButtonsProps) => {
   const { setDialog, selectedIDs, setSelectedIDs } = useAdminContext();
   const { translate } = useAppContext();
   return (
@@ -39,6 +43,7 @@ export const BaseButtons = () => {
         <span className="material-symbols-outlined">clear</span>
         {translate('clear')}
       </Button>
+      {children}
     </>
   );
 };

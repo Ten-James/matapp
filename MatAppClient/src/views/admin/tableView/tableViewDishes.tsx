@@ -148,7 +148,7 @@ const TableViewDishes = ({ data, getData, displayName, ...args }: TableViewProps
           </Panel>
         ))}
       </div>
-      <div className="d-buttons">{args.showButtons ? <BaseButtons /> : <></>}</div>
+      <div className="d-buttons">{args.showButtons ? <BaseButtons children={args?.additionalButtons} /> : <></>}</div>
     </div>
   );
 };

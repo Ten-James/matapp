@@ -3,6 +3,7 @@ import { Panel } from '../../../components/common/panel';
 import { Information } from '../../../types';
 import './information.css';
 import { useAppContext } from '../../../context/appContext';
+import { Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 
 const InformationView = () => {
   const [Info, setInfo] = useState<Information>({
@@ -12,11 +13,13 @@ const InformationView = () => {
     time: '',
     data: [''],
     database: [''],
+    timeLog: {},
   });
 
   const { socket, translate } = useAppContext();
   socket.on('info', (data) => {
     setInfo(data);
+    console.log(Object.entries(data.timeLog));
   });
 
   useEffect(() => {
@@ -33,46 +36,66 @@ const InformationView = () => {
       <Panel class="s-status">
         <h2>{translate('Current Server info')}:</h2>
         {Info.uptime && (
-          <div>
+          <p>
             {translate('Update')}: {Info.uptime}
-          </div>
+          </p>
         )}
         {Info.memory && (
-          <div>
+          <p>
             {translate('Memory Usage')}: {Info.memory}
-          </div>
+          </p>
         )}
         {Info.clients && (
-          <div>
+          <p>
             {translate('Current Clients')}: {Info.clients}
-          </div>
+          </p>
         )}
         {Info.time && (
-          <div>
+          <p>
             {translate('Updated time')}: {Info.time}
-          </div>
+          </p>
+        )}
+
+        <h2>{translate('database info')}:</h2>
+
+        {Info.database && (
+          <>
+            <p>
+              {translate('Database Size')}: {Info.database[0]} MB
+            </p>
+            <p>
+              {translate('Database Rows')}: {Info.database[1]}
+            </p>
+          </>
         )}
       </Panel>
       <Panel class="s-data">
         <h2>Server data log:</h2>
-        <div>{Info.data && Info.data.map((e) => <div key={Info.data.indexOf(e)}>{e}</div>)}</div>
+        <div>{Info.data && Info.data.map((e) => <p key={Info.data.indexOf(e)}>{e}</p>)}</div>
       </Panel>
-      {
-        <Panel class="s-database-info">
-          <h2>Database Info:</h2>
-
-          {Info.database && (
-            <>
-              <div>
-                {translate('Database Size')}: {Info.database[0]} MB
-              </div>
-              <div>
-                {translate('Database Rows')}: {Info.database[1]}
-              </div>
-            </>
-          )}
-        </Panel>
-      }
+      <Panel class="s-database-info">
+        <h2>{translate('count of request')}:</h2>
+        <ResponsiveContainer
+          width="100%"
+          height="100%"
+          maxHeight={150}
+        >
+          <BarChart
+            width={500}
+            height={500}
+            data={Object.entries(Info.timeLog)}
+          >
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="0" />
+            <YAxis />
+            <Bar
+              dataKey="1"
+              maxBarSize={50}
+              fill="#8884d8"
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </Panel>
     </div>
   );
 };

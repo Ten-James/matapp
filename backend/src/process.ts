@@ -1,7 +1,7 @@
 import { Socket } from 'socket.io';
 import { io } from '../index';
 import connection from './database';
-import { getLogsAsString, writeLog } from './logger';
+import { getLogsAsString, getTimeLog, writeLog } from './logger';
 import ProcessTables from './tables';
 import Realtime from './realtime';
 
@@ -16,7 +16,7 @@ const sendInfo = (socket: Socket) => {
   sec -= hrs * 3600;
   const min = Math.floor(sec / 60);
   sec -= min * 60;
-  const uptime = `${days} days, ${hrs} hours, ${min} minutes, ${Math.floor(sec)} seconds`;
+  const uptime = `${days.toString().padStart(2, '0')}:${hrs.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}:${Math.floor(sec).toString().padStart(2, '0')}`;
 
   connection.query(
     `SELECT SUM(data_length + index_length) / 1024 / 1024 AS \"size\", SUM(TABLE_ROWS) AS \"rows\"
@@ -34,6 +34,7 @@ const sendInfo = (socket: Socket) => {
         time: new Date().toLocaleTimeString(),
         data: getLogsAsString(),
         database: [databaseData.size, databaseData.rows] as const,
+        timeLog: getTimeLog(),
       });
     },
   );

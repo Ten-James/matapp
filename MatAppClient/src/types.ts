@@ -24,7 +24,7 @@ export type LanguageType = 'english' | 'czech';
 
 export type ThemeType = 'light' | 'dark' | 'white';
 
-export type IDialogOption = 'hidden' | 'add' | 'edit' | 'edit_multiple' | 'delete';
+export type IDialogOption = 'hidden' | 'add' | 'edit' | 'edit_multiple' | 'other' | 'delete';
 
 export interface AdminContextType {
   selectedItems: INamedBaseModel[];
@@ -53,6 +53,7 @@ export interface Information {
   time: string;
   data: string[];
   database: string[];
+  timeLog: { [key: string]: number };
 }
 export interface FilterData<T extends IBaseModel> {
   filterMatch: (x: T, index?: number) => boolean;

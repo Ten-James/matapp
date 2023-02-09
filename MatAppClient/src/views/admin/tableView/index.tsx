@@ -16,6 +16,7 @@ export interface TableViewProps<T> {
   getData: VoidFunction;
   displayName: string;
   showButtons?: boolean;
+  additionalButtons?: React.ReactNode;
 }
 
 const TableView = <T extends IBaseModel>({ data, getData, displayName, ...args }: TableViewProps<T>) => {
@@ -135,7 +136,7 @@ const TableView = <T extends IBaseModel>({ data, getData, displayName, ...args }
           </Panel>
         ))}
       </div>
-      <div className="d-buttons">{args.showButtons ? <BaseButtons /> : <></>}</div>
+      <div className="d-buttons">{args.showButtons ? <BaseButtons children={args?.additionalButtons} /> : <></>}</div>
     </div>
   );
 };

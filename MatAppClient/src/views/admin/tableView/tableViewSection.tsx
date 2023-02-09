@@ -159,7 +159,7 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
           </div>
         ))}
       </div>
-      <div className="d-buttons">{args.showButtons ? <BaseButtons /> : <></>}</div>
+      <div className="d-buttons">{args.showButtons ? <BaseButtons children={args?.additionalButtons} /> : <></>}</div>
     </div>
   );
 };

@@ -13,9 +13,10 @@ import AdminDefaultView from './default';
 import { useAppContext } from '../../context/appContext';
 import { AdminContext } from '../../context/adminContext';
 import useSocket from '../../hooks/useSocket';
+import { Button } from '../../components/common/panel';
 
 const Admin = () => {
-  const { socket, setLoading, branches, getBranches, user, clearBranches } = useAppContext();
+  const { socket, setLoading, branches, getBranches, user, clearBranches, translate } = useAppContext();
 
   // TODO - dont share seters make hook?
   const [ingredients, getIngredients, clearIngredients] = useSocket<IIngredient[]>(socket, 'ingredients', []);
@@ -125,6 +126,12 @@ const Admin = () => {
                 displayName="Dishes"
                 getData={getDishes}
                 showButtons
+                additionalButtons={
+                  <Button onClick={() => setDialog('other')}>
+                    <span className="material-symbols-outlined">category</span>
+                    {translate('category')}
+                  </Button>
+                }
               />
             }
           />
@@ -147,6 +154,15 @@ const Admin = () => {
                 displayName="Users"
                 getData={getUsers}
                 showButtons
+                additionalButtons={
+                  <Button
+                    onClick={() => setDialog('other')}
+                    disabled={selectedIDs.length !== 1}
+                  >
+                    <span className="material-symbols-outlined">manage_accounts</span>
+                    {translate('change_password')}
+                  </Button>
+                }
               />
             }
           />

@@ -26,7 +26,9 @@ count,Count,Počet
 search,Search,Vyhledat
 cost,Cost,Cena
 allergens,Allergens,Alergeny
-current server info,Current server info,Aktuálni Info serveru
+current server info,Current server info,Aktuálni Informace o serveru
+database info,Database info,Informace o databázi
+count of request,Count of request,Počet požadavků
 updated time,Updated time,Čas aktualizace
 memory usage,Memory usage,Využití paměti
 current clients,Current clients, Aktuální Uživatelé
@@ -57,3 +59,4 @@ was_deleted,Item was Deleted.,Předmět byl odstraněn.
 not_added,Item was not Added.,Předmět nebyl přidán.
 not_edited,Item was not Edited.,Předmět nebyl upraven.
 not_deleted,Item was not Deleted.,Předmět nebyl odstraněn.
+change_password,Change Password,Změna Hesla
