@@ -1,7 +1,7 @@
 import './style.css';
 import { AddIngredient, EditIngredient } from '../../../forms/ingredient';
 import { AddUser, ChangePasswordDialog, EditUser } from '../../../forms/user';
-import { AddDish } from '../../../forms/dish';
+import { AddDish, EditDishCategoriesDialog } from '../../../forms/dish';
 import { AddBranch, EditBranch } from '../../../forms/branch';
 import DeleteDialog from '../../../forms/deleteDialog';
 import { useAdminContext } from '../../../context/adminContext';
@@ -32,6 +32,7 @@ const Dialog = () => {
   if (window.location.pathname.includes('dishes')) {
     if (dialog === 'add') return <AddDish />;
     if (dialog === 'delete') return <DeleteDialog sendRoute="dishes" />;
+    if (dialog === 'other') return <EditDishCategoriesDialog />;
   }
 
   if (window.location.pathname.includes('storage')) {

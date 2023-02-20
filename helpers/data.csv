@@ -60,3 +60,15 @@ not_added,Item was not Added.,Předmět nebyl přidán.
 not_edited,Item was not Edited.,Předmět nebyl upraven.
 not_deleted,Item was not Deleted.,Předmět nebyl odstraněn.
 change_password,Change Password,Změna Hesla
+production price, Production Price, Cena na výrobu
+menu_book, Menu Book, Menu
+restaurant, Restaurant, Restaurace
+restaurant_menu, Restaurant Menu, Menu restaurace
+lunch_dining, Lunch & Dining, Obědy a večeře
+cake, Cake, dorty
+local_cafe, Cafe, Kavárny
+local_bar, Bar, Bary
+liquor, Liquor, Alkohol
+local_pizza, Pizza, Pizzy
+icecream, Icecream, Zmrzliny
+egg, Egg, Vajíčka

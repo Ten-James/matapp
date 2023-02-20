@@ -34,6 +34,7 @@ export const TextAttributeDialog = ({ name, required = false, isNumber, value }:
 };
 
 interface TextAttributeDialogWithComboProp extends TextAttributeDialogProp {
+  onClick?: VoidFunction;
   combo?: string[];
   comboValue?: { name: string; value: string }[];
 }
@@ -113,7 +114,7 @@ export const ComboBoxDialog = ({ name, required = false, comboValue, value }: Te
   );
 };
 
-export const UnsetComboBoxDialog = ({ name, required = false, comboValue, value }: TextAttributeDialogWithComboProp) => {
+export const UnsetComboBoxDialog = ({ name, required = false, comboValue, value, onClick }: TextAttributeDialogWithComboProp) => {
   const { translate } = useAppContext();
   const [values, setValues] = useState([...comboValue]);
   useEffect(() => {
@@ -126,6 +127,7 @@ export const UnsetComboBoxDialog = ({ name, required = false, comboValue, value 
           name={name}
           id={name}
           defaultValue={value}
+          onChange={onClick}
         >
           {values.map((x) => (
             <option

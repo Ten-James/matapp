@@ -35,6 +35,7 @@
 }
 .dialog-content {
   padding: 2rem 1rem;
+  min-width: 450px;
   width: 30vw;
   max-height: 50vh;
   overflow-y: scroll;

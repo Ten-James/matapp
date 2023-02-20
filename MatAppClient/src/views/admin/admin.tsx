@@ -65,6 +65,7 @@ const Admin = () => {
         branches,
         getBranches,
         ingredients,
+        getIngredients,
       }}
     >
       {dialog !== 'hidden' && <Dialog />}

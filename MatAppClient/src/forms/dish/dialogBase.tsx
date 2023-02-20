@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useCallback, useState } from 'react';
 import { TextAttributeWithAutoCompleteDialog, TextAttributeDialog, UnsetComboBoxDialog } from '../../components/dialog/dialogLines';
 import { useAdminContext } from '../../context/adminContext';
 import { Button } from '../../components/common/panel';
@@ -7,15 +7,17 @@ import { useAppContext } from '../../context/appContext';
 const DishDialogBase = () => {
   const [lines, setLines] = useState<number[]>([]);
   const [dishCategories, setDishCategories] = useState<string[]>([]);
+  const [estCost, setEstCost] = useState<number>(0);
 
   const { translate, socket } = useAppContext();
-  const { ingredients } = useAdminContext();
+  const { ingredients, getIngredients } = useAdminContext();
   useEffect(() => {
+    if (ingredients.length === 0) getIngredients();
     socket.emit('get_dish_categories');
-    socket.on('dish_categories', (data: string[]) => {
-      setDishCategories(data);
+    socket.on('dish_categories', (data: { id: number; name: string }[]) => {
+      setDishCategories(data.map((category) => category.name));
     });
-  }, []);
+  }, [ingredients, getIngredients]);
 
   return (
     <>
@@ -78,13 +80,29 @@ const DishDialogBase = () => {
           {[...Array(line).keys()].map((id) => (
             <>
               <UnsetComboBoxDialog
-                name={`line_${line}_${id}`}
+                name={`line_${index}_${id}`}
                 comboValue={[
                   { name: '-- vyber ingredienci --', value: '0' },
                   ...ingredients.map((i) => {
                     return { name: i.name, value: `${i.id}` };
                   }),
                 ]}
+                onClick={() => {
+                  console.log('click');
+                  setEstCost(
+                    lines.reduce((acc, line, lineIndex) => {
+                      const lineCost = [...Array(line).keys()].reduce((lineAcc, row) => {
+                        const value = (document.getElementById(`line_${lineIndex}_${row}`) as HTMLSelectElement)?.value;
+                        console.log(`line_${lineIndex}_${row}`, value);
+                        if (ingredients.some((i) => i.id === parseInt(value))) {
+                          return lineAcc + ingredients.find((i) => i.id === parseInt(value))?.cost;
+                        }
+                        return lineAcc;
+                      }, 0);
+                      return acc + lineCost;
+                    }, 0),
+                  );
+                }}
               />
               {/* {id !== line - 1 ? <div className="dialog-unset">Nebo</div> : null} */}
             </>
@@ -92,6 +110,9 @@ const DishDialogBase = () => {
           <div className="dialog-split-line"></div>
         </>
       ))}
+      <div>
+        {translate('production price')}: {estCost}
+      </div>
       <TextAttributeDialog
         required
         name="cost"

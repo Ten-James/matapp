@@ -36,6 +36,7 @@ export interface AdminContextType {
   branches: IBranch[];
   getBranches: VoidFunction;
   ingredients: IIngredient[];
+  getIngredients: VoidFunction;
 }
 
 export interface MainContextType {

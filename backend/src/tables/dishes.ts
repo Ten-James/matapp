@@ -35,10 +35,7 @@ const processDishes = (socket) => {
     writeLog(socket.handshake.address, 'get_dish_categories');
     connection.query('SELECT id, name FROM dish_categories', (err: MysqlError, result: { id: number; name: string }[]) => {
       if (err) throw err;
-      socket.emit(
-        'dish_categories',
-        result.map<string>((x) => x.name),
-      );
+      socket.emit('dish_categories', result);
     });
   });
 
