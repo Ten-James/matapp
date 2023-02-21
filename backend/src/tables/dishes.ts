@@ -1,7 +1,7 @@
 import type { MysqlError } from 'mysql';
 import connection, { query } from '../database';
 import { writeLog } from '../logger';
-import type { IDishIngredient, IDish, IDialogDish } from '../types';
+import type { IDishIngredient, IDish, IDialogDish, IDialogDishCategory } from '../types';
 
 const processDishes = (socket) => {
   socket.on('get_dishes', () => {
@@ -33,10 +33,19 @@ const processDishes = (socket) => {
 
   socket.on('get_dish_categories', () => {
     writeLog(socket.handshake.address, 'get_dish_categories');
-    connection.query('SELECT id, name FROM dish_categories', (err: MysqlError, result: { id: number; name: string }[]) => {
+    connection.query('SELECT id, name, icon FROM dish_categories', (err: MysqlError, result: { id: number; name: string }[]) => {
       if (err) throw err;
       socket.emit('dish_categories', result);
     });
+  });
+
+  socket.on(`edit_dish_categories`, (data: IDialogDishCategory) => {
+    writeLog(socket.handshake.address, `edit_dish_categories \n ${JSON.stringify(data)}`);
+    for (const [id, name] of Object.entries(data.data)) {
+      connection.query(`UPDATE dish_categories SET icon = '${name}' WHERE id = ${id}`, (err: MysqlError) => {
+        if (err) throw err;
+      });
+    }
   });
 
   const preset = 'dishes';
@@ -44,7 +53,7 @@ const processDishes = (socket) => {
     writeLog(socket.handshake.address, `add_${preset} \n ${JSON.stringify(data)}`);
     try {
       //insert into categories if not exists
-      await query(`INSERT IGNORE INTO dish_categories (name) VALUES ('${data.category}')`);
+      await query(`INSERT IGNORE INTO dish_categories (name, icon) VALUES ('${data.category}', 'restaurant')`);
       //get category id
       const category_id = (await query(`SELECT id FROM dish_categories WHERE name = '${data.category}'`))[0].id;
       //insert dish

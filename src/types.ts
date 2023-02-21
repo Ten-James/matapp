@@ -31,6 +31,10 @@ export interface IDish extends ICategoryBaseModel {
   ingredients: string[];
 }
 
+export interface IDishCategory extends INamedBaseModel {
+  icon: string;
+}
+
 export interface IUser extends INamedBaseModel {
   password?: string;
   access: number;

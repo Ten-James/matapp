@@ -5,6 +5,7 @@
   top: 0;
   left: 0;
   display: grid;
+  grid-template-columns: auto 1fr;
   z-index: 100;
   place-items: center;
 }
@@ -153,4 +154,13 @@
   border-radius: 1rem;
   font-size: 1.2em;
   border: unset;
+}
+
+
+
+@media (min-width: 990px) {
+  .dialog-tooltip {
+    position: absolute;
+    left: 0;
+  }
 }

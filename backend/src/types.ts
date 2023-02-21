@@ -47,6 +47,10 @@ export interface IDialogIngredient {
   allergens: number[];
 }
 
+export interface IDialogDishCategory {
+  data: {};
+}
+
 export interface IDialogDish {
   id?: number[];
   name: string;

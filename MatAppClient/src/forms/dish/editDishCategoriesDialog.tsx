@@ -2,24 +2,20 @@ import { useEffect, useState } from 'react';
 import { useAppContext } from '../../context/appContext';
 import { useAdminContext } from '../../context/adminContext';
 import BaseDialog from '../../components/dialog/baseDialog';
-import { UnsetComboBoxDialog } from '../../components/dialog/dialogLines';
-
-interface IdishCategory {
-  id: number;
-  name: string;
-}
+import { ComboBoxDialog, UnsetComboBoxDialog } from '../../components/dialog/dialogLines';
+import { IDishCategory } from '../../types';
 
 const EnabledIcons = ['menu_book', 'restaurant', 'restaurant_menu', 'lunch_dining', 'cake', 'local_cafe', 'local_bar', 'liquor', 'local_pizza', 'icecream', 'egg'];
 
 export const EditDishCategoriesDialog = () => {
-  const [dishCategories, setDishCategories] = useState<IdishCategory[]>([]);
+  const [dishCategories, setDishCategories] = useState<IDishCategory[]>([]);
 
   const { translate, socket } = useAppContext();
   const { ingredients, getIngredients } = useAdminContext();
   useEffect(() => {
     if (ingredients.length === 0) getIngredients();
     socket.emit('get_dish_categories');
-    socket.on('dish_categories', (data: IdishCategory[]) => {
+    socket.on('dish_categories', (data: IDishCategory[]) => {
       setDishCategories(data);
     });
   }, [ingredients, getIngredients]);
@@ -28,19 +24,41 @@ export const EditDishCategoriesDialog = () => {
     <BaseDialog
       header={translate('edit_dish_categories')}
       sendRoute="edit_dish_categories"
+      afterProcess={(data) => {
+        // data contains keys that have name instead of id change that
+        let newData = {
+          data: {},
+        };
+        Object.keys(data).forEach((key) => {
+          if (dishCategories.findIndex((a) => a.name === key) === -1) {
+            newData[key] = data[key];
+          } else {
+            newData['data'][dishCategories.find((a) => a.name === key)?.id] = data[key];
+          }
+        });
+        return newData;
+      }}
+      tooltip={
+        <>
+          {EnabledIcons.map((icon) => (
+            <div>
+              {translate(icon)}:<span className="material-symbols-outlined">{icon}</span>
+            </div>
+          ))}
+        </>
+      }
     >
       <>
-        {EnabledIcons.map((icon) => (
-          <div>
-            {translate(icon)}:<span className="material-symbols-outlined">{icon}</span>
-          </div>
+        {dishCategories?.map((item) => (
+          <>
+            <ComboBoxDialog
+              name={item.name}
+              comboValue={EnabledIcons.map((i) => {
+                return { name: translate(i), value: i };
+              })}
+            />
+          </>
         ))}
-        <UnsetComboBoxDialog
-          name="test"
-          comboValue={EnabledIcons.map((i) => {
-            return { name: translate(i), value: i };
-          })}
-        />
       </>
     </BaseDialog>
   );

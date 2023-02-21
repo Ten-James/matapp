@@ -31,7 +31,7 @@ database info,Database info,Informace o databázi
 count of request,Count of request,Počet požadavků
 updated time,Updated time,Čas aktualizace
 memory usage,Memory usage,Využití paměti
-current clients,Current clients, Aktuální Uživatelé
+current clients,Current clients,Aktuální Uživatelé
 update,Uptime,Čas provozu
 database size,Database Size,Velikost Databáze
 database rows,Database Rows,Počet řádků v Databázi
@@ -44,9 +44,9 @@ management,Management,Management
 cashier,Cashier,Kasa
 kitchen,Kitchen,Kuchyně
 settings,Settings,Nastavení
-tws,This will be saved, Tohle bude uloženo
-ils,in your local storage, lokálně na zařízení
-language,Language, Jazyk
+tws,This will be saved,Tohle bude uloženo
+ils,in your local storage,lokálně na zařízení
+language,Language,Jazyk
 theme,Theme,Režim
 light,Light,Světlý
 dark,Dark,Tmavý
@@ -60,15 +60,15 @@ not_added,Item was not Added.,Předmět nebyl přidán.
 not_edited,Item was not Edited.,Předmět nebyl upraven.
 not_deleted,Item was not Deleted.,Předmět nebyl odstraněn.
 change_password,Change Password,Změna Hesla
-production price, Production Price, Cena na výrobu
-menu_book, Menu Book, Menu
-restaurant, Restaurant, Restaurace
-restaurant_menu, Restaurant Menu, Menu restaurace
-lunch_dining, Lunch & Dining, Obědy a večeře
-cake, Cake, dorty
-local_cafe, Cafe, Kavárny
-local_bar, Bar, Bary
-liquor, Liquor, Alkohol
-local_pizza, Pizza, Pizzy
-icecream, Icecream, Zmrzliny
-egg, Egg, Vajíčka
+production price,Production Price,Cena na výrobu
+menu_book,Menu Book,Menu
+restaurant,Restaurant,Restaurace
+restaurant_menu,Restaurant Menu,Menu restaurace
+lunch_dining,Lunch & Dining,Obědy a večeře
+cake,Cake,Dorty
+local_cafe,Cafe,Kavárny
+local_bar,Bar,Bary
+liquor,Liquor,Alkohol
+local_pizza,Pizza,Pizzy
+icecream,Icecream,Zmrzliny
+egg,Egg,Vajíčka

@@ -7,11 +7,13 @@ import { useAdminContext } from '../../context/adminContext';
 interface BaseDialogProp {
   header: string;
   sendRoute: string;
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactElement;
+  tooltip?: React.ReactElement;
+  afterProcess?: (data: any) => any;
 }
 
 // TODO: make available for custom button color.
-const BaseDialog = ({ header, sendRoute, children }: BaseDialogProp) => {
+const BaseDialog = ({ header, sendRoute, children, tooltip, afterProcess }: BaseDialogProp) => {
   const { translate, socket } = useAppContext();
   const [error, setError] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -33,6 +35,7 @@ const BaseDialog = ({ header, sendRoute, children }: BaseDialogProp) => {
         setTimeout(refresh, 500);
       },
       setError,
+      afterProcess || ((data) => data),
     );
 
   useEffect(() => {
@@ -47,9 +50,17 @@ const BaseDialog = ({ header, sendRoute, children }: BaseDialogProp) => {
       autoComplete="off"
       className="dialog-background"
     >
+      {tooltip != null ? (
+        <div
+          className="dialog dialog-tooltip"
+          style={{ transform: `translateX(${translateY})` }}
+        >
+          {tooltip}
+        </div>
+      ) : null}
       <div
         className="dialog"
-        style={{ transform: `translateY(${translateY})` }}
+        style={{ transform: `translateY(${translateY})`, gridColumn: '2' }}
       >
         <h1 className="dialog-header">{translate(header)}</h1>
         <div className="dialog-content">

@@ -4,7 +4,7 @@ export const hide = (e: Event, setTranslateY: (string) => void, setDialog: (stri
   setTimeout(() => setDialog('hidden'), 500);
 };
 
-export const submit = (e: Event, form: HTMLFormElement | null, selectedIDs: number[], setButtonDisabled: (data: boolean) => void, sendData: (data: any) => void, setError: (Error: string) => void) => {
+export const submit = (e: Event, form: HTMLFormElement | null, selectedIDs: number[], setButtonDisabled: (data: boolean) => void, sendData: (data: any) => void, setError: (Error: string) => void, afterProcess: (data: any) => any) => {
   e.preventDefault();
   if (!form) return;
   setButtonDisabled(true);
@@ -57,6 +57,6 @@ export const submit = (e: Event, form: HTMLFormElement | null, selectedIDs: numb
       .forEach((x) => delete data[x]);
   }
 
-  console.log(data);
-  sendData(data);
+  console.log(afterProcess(data));
+  sendData(afterProcess(data));
 };
