@@ -111,6 +111,7 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
                 class="inline small-text"
                 color="blue"
                 onClick={() => {
+                  setSelectedIDs([x.id]);
                   setDialog('edit');
                 }}
               >
@@ -120,9 +121,8 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
             </h2>
             {x.data.map((e) => (
               <Panel
-                onClick={() => setSelectedIDs(selectedIDs.includes(e.id) ? selectedIDs.filter((x) => x !== e.id) : [...selectedIDs, e.id])}
                 style={{
-                  outline: selectedIDs.includes(e.id) ? '1px solid var(--blue-color)' : 'unset',
+                  outline: 'unset',
                   gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr) auto',
                 }}
                 key={e.id}

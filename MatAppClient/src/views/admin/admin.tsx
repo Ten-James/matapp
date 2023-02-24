@@ -44,6 +44,7 @@ const Admin = () => {
     if (location.includes('ingredients')) return ingredients.filter((ingredient) => selectedIDs.includes(ingredient.id));
     if (location.includes('dishes')) return dishes.filter((dish) => selectedIDs.includes(dish.id));
     if (location.includes('users')) return users.filter((user) => selectedIDs.includes(user.id));
+    if (location.includes('storage')) return branchesStorages.filter((branch) => selectedIDs.includes(branch.id));
     if (location.includes('branches')) return branches.filter((branch) => selectedIDs.includes(branch.id));
     return [];
   }, [selectedIDs, ingredients, dishes, users, branches, branchesStorages, branchesOrders]);

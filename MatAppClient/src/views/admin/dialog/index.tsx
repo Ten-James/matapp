@@ -1,10 +1,6 @@
 import './style.css';
-import { AddIngredient, EditIngredient } from '../../../forms/ingredient';
-import { AddUser, ChangePasswordDialog, EditUser } from '../../../forms/user';
-import { AddDish, EditDish, EditDishCategoriesDialog } from '../../../forms/dish';
-import { AddBranch, EditBranch } from '../../../forms/branch';
-import DeleteDialog from '../../../forms/deleteDialog';
 import { useAdminContext } from '../../../context/adminContext';
+import { EditStorage, AddIngredient, EditIngredient, DeleteDialog, AddBranch, EditBranch, AddDish, EditDish, EditDishCategoriesDialog, AddUser, ChangePasswordDialog, EditUser } from '../../../forms';
 
 const Dialog = () => {
   const { dialog, setDialog, selectedIDs } = useAdminContext();
@@ -37,6 +33,7 @@ const Dialog = () => {
   }
 
   if (window.location.pathname.includes('storage')) {
+    if (dialog === 'edit') return <EditStorage />;
     return null;
   }
 
