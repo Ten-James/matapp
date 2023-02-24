@@ -144,7 +144,7 @@ const TableViewDishes = ({ data, getData, displayName, ...args }: TableViewProps
             >
               {translate('Ingredients')}:
             </div>
-            <div>{selectedIDs.includes(e.id) ? e.ingredients.map((e) => <div>{e}</div>) : <div>{e.ingredients[0]}...</div>}</div>
+            <div>{selectedIDs.includes(e.id) ? e.ingredients.map((e) => <div>{e}</div>) : <div>{e.ingredients.join(', ').slice(0, 25)}...</div>}</div>
           </Panel>
         ))}
       </div>

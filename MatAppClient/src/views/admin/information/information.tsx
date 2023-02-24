@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Panel } from '../../../components/common/panel';
+import { Button, Panel } from '../../../components/common/panel';
 import { Information } from '../../../types';
 import './information.css';
 import { useAppContext } from '../../../context/appContext';
@@ -16,19 +16,31 @@ const InformationView = () => {
     timeLog: {},
   });
 
+  const [data, setData] = useState<string>('');
+
+  const [visiblePanel, setVisiblePanel] = useState<'log' | 'data'>('log');
+
   const { socket, translate } = useAppContext();
   socket.on('info', (data) => {
     setInfo(data);
     console.log(Object.entries(data.timeLog));
   });
 
+  socket.on('data', (data: string) => {
+    setData(data);
+  });
+
   useEffect(() => {
     socket.emit('get_info');
     const int = setInterval(() => {
       socket.emit('get_info');
+      if (visiblePanel === 'data') socket.emit('get_data');
     }, 5000);
+
+    socket.emit('get_info');
+    if (visiblePanel === 'data') socket.emit('get_data');
     return () => clearInterval(int);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [visiblePanel]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className="s-grid">
@@ -70,8 +82,33 @@ const InformationView = () => {
         )}
       </Panel>
       <Panel class="s-data">
-        <h2>Server data log:</h2>
-        <div>{Info.data && Info.data.map((e) => <p key={Info.data.indexOf(e)}>{e}</p>)}</div>
+        <div>
+          <Button
+            onClick={() => setVisiblePanel('log')}
+            style={{ height: '4em', width: '10em', display: 'inline-flex' }}
+          >
+            Log
+          </Button>
+          <Button
+            onClick={() => setVisiblePanel('data')}
+            style={{ height: '4em', marginLeft: '1em', width: '10em', display: 'inline-flex' }}
+          >
+            Actual data
+          </Button>
+        </div>
+        {visiblePanel === 'log' ? (
+          <>
+            <h2>Server data log:</h2>
+            <div className="scrollable">{Info.data && Info.data.map((e) => <p key={Info.data.indexOf(e)}>{e}</p>)}</div>
+          </>
+        ) : (
+          <>
+            <h2>Actual data:</h2>
+            <div className="scrollable">
+              <code>{data}</code>
+            </div>
+          </>
+        )}
       </Panel>
       <Panel class="s-database-info">
         <h2>{translate('count of request')}:</h2>

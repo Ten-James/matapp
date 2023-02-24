@@ -4,6 +4,7 @@ import connection from './database';
 import { getLogsAsString, getTimeLog, writeLog } from './logger';
 import ProcessTables from './tables';
 import Realtime from './realtime';
+import Sessions from './realtime/session';
 
 const sendInfo = (socket: Socket) => {
   // send server uptime, io connected clients
@@ -46,6 +47,19 @@ const processConnection = (socket: Socket) => {
   socket.on('get_info', () => {
     writeLog(socket.handshake.address, 'get_information');
     sendInfo(socket);
+  });
+
+  socket.on('get_data', () => {
+    writeLog(socket.handshake.address, 'get_data');
+    socket.emit(
+      'data',
+      JSON.stringify({
+        time: new Date().toLocaleTimeString(),
+        data: {
+          session: Sessions,
+        },
+      }),
+    );
   });
 };
 

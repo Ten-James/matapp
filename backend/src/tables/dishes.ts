@@ -2,6 +2,7 @@ import type { MysqlError } from 'mysql';
 import connection, { query } from '../database';
 import { writeLog } from '../logger';
 import type { IDishIngredient, IDish, IDialogDish, IDialogDishCategory } from '../types';
+import { noResponseQueryCallback } from '../misc';
 
 const processDishes = (socket) => {
   socket.on('get_dishes', () => {
@@ -11,15 +12,10 @@ const processDishes = (socket) => {
       let data: IDish[] = [];
       result.forEach((x) => {
         // TODO: make this async and wait for it to finish
-        connection.query("SELECT CONCAT(di.count,'x ', i.name) as 'name', di.line FROM dish$ingredients di LEFT JOIN ingredients i ON di.ingredient_id = i.id WHERE dish_id = " + x.id, (err2: MysqlError, result2: IDishIngredient[]) => {
+        connection.query("SELECT CONCAT(di.count,'x ', i.name) as 'name' FROM dish$ingredients di LEFT JOIN ingredients i ON di.ingredient_id = i.id WHERE dish_id = " + x.id, (err2: MysqlError, result2: IDishIngredient[]) => {
           if (err2) throw err2;
           const lines = [...new Set(result2.map((x) => x.line))];
-          const ingredients = lines.map((line) =>
-            result2
-              .filter((x) => x.line === line)
-              .map((x) => x.name.replace('1x ', ''))
-              .join(' nebo '),
-          );
+          const ingredients = result2.map((x) => x.name.replace('1x ', ''));
 
           data.push({
             ...x,
@@ -61,14 +57,44 @@ const processDishes = (socket) => {
       //get dish id
       const dish_id = (await query(`SELECT id FROM dishes WHERE name = '${data.name}'`))[0].id;
       //insert ingredients
-      data.ingredients.forEach((x, i) => {
-        x.forEach((y) => {
-          query(`INSERT INTO dish$ingredients (dish_id, ingredient_id, count, line) VALUES (${dish_id}, ${y}, 1, ${i})`);
-        });
-      });
+      console.log(data.ingredients);
+      await Promise.all(data.ingredients.map((item) => query(`INSERT INTO dish$ingredients (dish_id, ingredient_id, count) VALUES (${dish_id}, ${item[0]}, 1)`)));
       socket.emit('admin_status', 'was_added');
     } catch (e) {
       socket.emit('admin_status', 'not_added');
+      console.error(e);
+    }
+  });
+
+  socket.on(`delete_${preset}`, async (data: any) => {
+    writeLog(socket.handshake.address, `delete_${preset} \n ${JSON.stringify(data)}`);
+
+    try {
+      await query(`DELETE FROM dish$ingredients WHERE dish_id IN (${data.id.join(',')})`);
+      query(`DELETE FROM dishes WHERE id IN (${data.id.join(',')})`, (err: MysqlError, result: any) => noResponseQueryCallback(() => socket.emit('admin_status', 'not_deleted'), err, result));
+      socket.emit('admin_status', 'was_deleted');
+    } catch (error) {
+      socket.emit('admin_status', 'not_deleted');
+    }
+  });
+
+  socket.on(`edit_${preset}`, async (data: IDialogDish) => {
+    writeLog(socket.handshake.address, `edit_${preset} \n ${JSON.stringify(data)}`);
+
+    try {
+      //insert into categories if not exists
+      await query(`INSERT IGNORE INTO dish_categories (name, icon) VALUES ('${data.category}', 'restaurant')`);
+      //get category id
+      const category_id = (await query(`SELECT id FROM dish_categories WHERE name = '${data.category}'`))[0].id;
+      //update dish
+      await query(`UPDATE dishes SET name = '${data.name}', cost = ${data.cost}, category_id = ${category_id} WHERE id = ${data.id}`);
+      //delete ingredients
+      await query(`DELETE FROM dish$ingredients WHERE dish_id = ${data.id}`);
+      //insert ingredients
+      await Promise.all(data.ingredients.map((item) => query(`INSERT INTO dish$ingredients (dish_id, ingredient_id, count) VALUES (${data.id}, ${item[0]}, 1)`)));
+      socket.emit('admin_status', 'was_edited');
+    } catch (e) {
+      socket.emit('admin_status', 'not_edited');
       console.error(e);
     }
   });

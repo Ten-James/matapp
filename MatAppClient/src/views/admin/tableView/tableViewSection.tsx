@@ -111,11 +111,11 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
                 class="inline small-text"
                 color="blue"
                 onClick={() => {
-                  setDialog('add');
+                  setDialog('edit');
                 }}
               >
                 <span className="material-symbols-outlined">add</span>
-                {translate('add')}
+                {translate('edit')}
               </Button>
             </h2>
             {x.data.map((e) => (
@@ -132,28 +132,7 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
                   // @ts-ignore
                   <div key={f}>{translate(e[f])}</div>
                 ))}
-                <div>
-                  <Button
-                    class="inline small"
-                    style={{ marginRight: '0.5rem' }}
-                    onClick={() => {
-                      setSelectedIDs([e.id]);
-                      setDialog('edit');
-                    }}
-                  >
-                    <span className="material-symbols-outlined">edit</span>
-                  </Button>
-                  <Button
-                    class="inline small"
-                    color="red"
-                    onClick={() => {
-                      setSelectedIDs([e.id]);
-                      setDialog('delete');
-                    }}
-                  >
-                    <span className="material-symbols-outlined">delete</span>
-                  </Button>
-                </div>
+                <div></div>
               </Panel>
             ))}
           </div>

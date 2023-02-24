@@ -38,19 +38,13 @@ export const submit = (e: Event, form: HTMLFormElement | null, selectedIDs: numb
   arr.forEach((e) => (data[e.id] = e.value));
 
   if (Object.keys(data).findIndex((x) => x.startsWith('line')) !== -1) {
-    //merge all lines into one array depending on line number
-    const lines = [
-      ...new Set(
-        Object.keys(data)
-          .filter((x) => x.startsWith('line'))
-          .map((x) => x.split('_')[1]),
-      ),
-    ];
-    data['ingredients'] = lines.map((line) =>
-      Object.keys(data)
-        .filter((x) => x.startsWith('line') && x.split('_')[1] === line)
-        .map((x) => data[x]),
-    );
+    data['ingredients'] = [];
+    Object.keys(data)
+      .filter((x) => x.startsWith('line'))
+      .forEach((x) => {
+        const id = x.split('_')[1];
+        data['ingredients'][id] = data[x];
+      });
     //delete all line keys
     Object.keys(data)
       .filter((x) => x.startsWith('line'))

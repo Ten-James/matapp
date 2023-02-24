@@ -20,9 +20,9 @@
 .s-data {
   grid-area: data;
 }
-.s-data > div {
+.s-data > .scrollable {
   overflow-y: scroll;
-  height: 90%;
+  height: 80%;
 }
 .s-database-info {
   grid-area: login;
