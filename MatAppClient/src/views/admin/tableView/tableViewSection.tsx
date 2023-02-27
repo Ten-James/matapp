@@ -108,8 +108,9 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
             >
               {x.name} {x.location}
               <Button
-                class="inline small-text"
+                class="inline"
                 color="blue"
+                style={{ height: '2em' }}
                 onClick={() => {
                   setSelectedIDs([x.id]);
                   setDialog('edit');

@@ -58,3 +58,8 @@ export interface IDialogDish {
   cost: number;
   ingredients: string[][];
 }
+
+export interface IDialogStorage {
+  id: number[];
+  data: {};
+}

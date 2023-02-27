@@ -19,6 +19,7 @@ const BaseDialog = ({ header, sendRoute, children, tooltip, afterProcess }: Base
   const [buttonDisabled, setButtonDisabled] = useState(false);
   const form = useRef<HTMLFormElement | null>(null);
   const [translateY, setTranslateY] = useState('-100vh');
+  const [tooltipX, setTooltipX] = useState('-101vh');
   const { setDialog, selectedIDs, refresh } = useAdminContext();
 
   const handleHide = (e: Event) => Handlers.hide(e, setTranslateY, setDialog);
@@ -44,20 +45,25 @@ const BaseDialog = ({ header, sendRoute, children, tooltip, afterProcess }: Base
     }, 100);
   }, []);
 
+  useEffect(() => {
+    setTimeout(() => {
+      if (tooltip != null) setTooltipX('0');
+      else setTooltipX('-100vh');
+    }, 100);
+  }, [tooltip]);
+
   return (
     <form
       ref={form}
       autoComplete="off"
       className="dialog-background"
     >
-      {tooltip != null ? (
-        <div
-          className="dialog dialog-tooltip"
-          style={{ transform: `translateX(${translateY})` }}
-        >
-          {tooltip}
-        </div>
-      ) : null}
+      <div
+        className="dialog dialog-tooltip"
+        style={{ transform: `translateX(${translateY === '-100vh' ? translateY : tooltipX})` }}
+      >
+        {tooltip}
+      </div>
       <div
         className="dialog"
         style={{ transform: `translateY(${translateY})`, gridColumn: '2' }}

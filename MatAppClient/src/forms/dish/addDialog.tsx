@@ -9,6 +9,7 @@ export const AddDialog = () => {
   const [lines, setLines] = useState<number>(1);
   const [dishCategories, setDishCategories] = useState<string[]>([]);
   const [estCost, setEstCost] = useState<number>(0);
+  const [sideText, setSideText] = useState<string[][]>([]);
 
   const { translate, socket } = useAppContext();
   const { ingredients, getIngredients } = useAdminContext();
@@ -20,10 +21,30 @@ export const AddDialog = () => {
     });
   }, [ingredients, getIngredients]);
 
+  useEffect(() => {
+    console.log(sideText);
+  }, [sideText]);
   return (
     <BaseDialog
       header="Add Dish"
       sendRoute="add_dishes"
+      tooltip={
+        sideText.length != 0 ? (
+          <table>
+            {sideText.map((e) => (
+              <tr>
+                <td>{e[0]}</td>
+                <td>{e[1]}</td>
+                <td>={e[2]}</td>
+              </tr>
+            ))}
+            <tr>
+              <td colSpan={2}>{translate('production price')}:</td>
+              <td style={{ textAlign: 'right' }}>{sideText.at(-1)[2]}</td>
+            </tr>
+          </table>
+        ) : null
+      }
     >
       <>
         <TextAttributeDialog
@@ -93,11 +114,13 @@ export const AddDialog = () => {
               ]}
               onClick={() => {
                 console.log('click');
+                setSideText([]);
                 setEstCost(
                   ([...document.querySelectorAll('select[name^="line_"]')] as HTMLInputElement[]).reduce((acc, val) => {
                     const ingredient = ingredients.find((i) => i.id === parseInt(val.value));
-                    if (ingredient) return acc + ingredient.cost;
-                    return acc;
+                    if (!ingredient) return acc;
+                    setSideText((old) => [...old, [ingredient.name, `${ingredient.cost}`, `${acc + ingredient.cost}`]]);
+                    return acc + ingredient.cost;
                   }, 0),
                 );
               }}

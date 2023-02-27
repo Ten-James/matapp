@@ -1,7 +1,7 @@
 import type { MysqlError } from 'mysql';
 import connection, { query } from '../database';
 import { writeLog } from '../logger';
-import type { IDishIngredient, IDish, IDialogDish, IDialogDishCategory } from '../types';
+import type { IDishIngredient, IDish, IDialogDish, IDialogDishCategory, IDialogStorage } from '../types';
 import { noResponseQueryCallback } from '../misc';
 
 const processDishes = (socket) => {
@@ -93,6 +93,16 @@ const processDishes = (socket) => {
       //insert ingredients
       await Promise.all(data.ingredients.map((item) => query(`INSERT INTO dish$ingredients (dish_id, ingredient_id, count) VALUES (${data.id}, ${item[0]}, 1)`)));
       socket.emit('admin_status', 'was_edited');
+    } catch (e) {
+      socket.emit('admin_status', 'not_edited');
+      console.error(e);
+    }
+  });
+
+  socket.on('edit_storage', async (data: IDialogStorage) => {
+    writeLog(socket.handshake.address, `edit_storage \n ${JSON.stringify(data)}`);
+    try {
+      await Promise.all(Object.entries(data.data).map(([id, count]) => query(`INSERT IGNORE INTO branch$ingredients (branch_id, ingredient_id, count) VALUES (${data.id[0]}, ${id}, ${count}) ON DUPLICATE KEY UPDATE count = ${count}`)));
     } catch (e) {
       socket.emit('admin_status', 'not_edited');
       console.error(e);
