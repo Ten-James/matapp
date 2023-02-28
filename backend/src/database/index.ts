@@ -10,13 +10,6 @@ var testConnection = mysql.createConnection({
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
 });
-testConnection.connect((err: MysqlError) => {
-  if (err) throw err;
-});
-
-testConnection.query('CREATE DATABASE IF NOT EXISTS ' + process.env.DB_NAME, (err: MysqlError) => {
-  if (err) throw err;
-});
 
 // if (!mysql) throw "mysql module not found";
 var connection = mysql.createConnection({
@@ -26,14 +19,20 @@ var connection = mysql.createConnection({
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
 });
-// if (!connection) throw "connection not found";
-connection.connect((err: MysqlError) => {
+
+testConnection.connect((err: MysqlError) => {
   if (err) throw err;
-  checkForDatabaseVersion(connection).then((result) => {
-    if (!result) {
-      console.error('Database version mismatch');
-      process.exit(1);
-    }
+  testConnection.query('CREATE DATABASE IF NOT EXISTS ' + process.env.DB_NAME, (err: MysqlError) => {
+    if (err) throw err;
+    connection.connect((err: MysqlError) => {
+      if (err) throw err;
+      checkForDatabaseVersion(connection).then((result) => {
+        if (!result) {
+          console.error('Database version mismatch');
+          process.exit(1);
+        }
+      });
+    });
   });
 });
 

@@ -1,16 +1,26 @@
 import * as mysql from 'mysql';
 import * as fs from 'fs';
 
-const processOne = async (connection: mysql.Connection) => {
+const process = async (connection: mysql.Connection, name: string) => {
   const data = fs
-    .readFileSync('version/1.sql', 'utf8')
+    .readFileSync(`version/${name}.sql`, 'utf8')
     .split(';')
     .filter((x) => x.trim() !== '');
-  console.log('Processing migration 1');
+  console.log(`Processing migration: ${name}`);
   await Promise.all(
     data.map(
       (query) =>
         new Promise((resolve, reject) => {
+          console.log(
+            query
+              .trim()
+              .replaceAll('\n', '')
+              .split(' ')
+              .filter((x) => x !== '')
+              .slice(0, 3)
+              .join(' ')
+              .replaceAll('`', ''),
+          );
           connection.query(query, (err: mysql.MysqlError) => {
             if (err) reject(err);
             else resolve(0);
@@ -20,10 +30,12 @@ const processOne = async (connection: mysql.Connection) => {
   );
 };
 
+export const DATABASE_VERSION = 2;
+
 const ProcessMigrations = async (connection: mysql.Connection, currentVersion: number) => {
-  if (currentVersion === 0) {
-    await processOne(connection);
+  while (currentVersion < DATABASE_VERSION) {
     currentVersion++;
+    await process(connection, currentVersion.toString());
   }
 
   connection.query(`UPDATE database_version SET version = ${currentVersion}`, (err: mysql.MysqlError) => {
