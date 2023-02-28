@@ -35,7 +35,6 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
           }),
     [filter, data],
   );
-
   const categories = useMemo(() => {
     if (data.length === 0) return [];
     let tmp = [];
@@ -56,43 +55,45 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
         />
       </div>
       <div className="d-table-header">
-        {show.length > 0 && (
-          <div
-            style={{
-              gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr) 6em',
-            }}
-          >
-            {Object.keys(show[0].data[0]).map((e) => (
-              <div key={e}>
-                <div className="d-table-header-label">
-                  {textUpperFirst(translate(e))}
-                  <span
-                    className="material-symbols-outlined d-table-header-asc"
-                    onClick={() => {
-                      setFilter({
-                        filterMatch: filter.filterMatch,
-                        sort: MakeSort(e, typeof show[0][e], true),
-                      });
-                    }}
-                  >
-                    expand_more
-                  </span>
-                  <span
-                    className="material-symbols-outlined d-table-header-dsc"
-                    onClick={() => {
-                      setFilter({
-                        filterMatch: filter.filterMatch,
-                        sort: MakeSort(e, typeof show[0][e], false),
-                      });
-                    }}
-                  >
-                    expand_less
-                  </span>
+        {show.length > 0 ? (
+          show[0].data.length > 0 ? (
+            <div
+              style={{
+                gridTemplateColumns: 'repeat(' + Object.keys(show[0]).length.toString() + ', 1fr) 6em',
+              }}
+            >
+              {Object.keys(show[0].data[0]).map((e) => (
+                <div key={e}>
+                  <div className="d-table-header-label">
+                    {textUpperFirst(translate(e))}
+                    <span
+                      className="material-symbols-outlined d-table-header-asc"
+                      onClick={() => {
+                        setFilter({
+                          filterMatch: filter.filterMatch,
+                          sort: MakeSort(e, typeof show[0][e], true),
+                        });
+                      }}
+                    >
+                      expand_more
+                    </span>
+                    <span
+                      className="material-symbols-outlined d-table-header-dsc"
+                      onClick={() => {
+                        setFilter({
+                          filterMatch: filter.filterMatch,
+                          sort: MakeSort(e, typeof show[0][e], false),
+                        });
+                      }}
+                    >
+                      expand_less
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
+              ))}
+            </div>
+          ) : null
+        ) : null}
       </div>
       <div className="d-table-content">
         {show.map((x) => (

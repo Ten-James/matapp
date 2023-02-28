@@ -149,4 +149,4 @@ CREATE TABLE
         CONSTRAINT `dish$ingredients_ibfk_1` FOREIGN KEY (`dish_id`) REFERENCES `dishes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
 
-INSERT INTO `users` VALUES (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', NULL, 1);
+INSERT INTO `users` VALUES (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', NULL, 2);
