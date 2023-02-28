@@ -4,6 +4,7 @@ import { Information } from '../../../types';
 import './information.css';
 import { useAppContext } from '../../../context/appContext';
 import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { fillArrayWithNulls } from '../../../misc/utils';
 
 const InformationView = () => {
   const [Info, setInfo] = useState<Information>({
@@ -23,7 +24,6 @@ const InformationView = () => {
   const { socket, translate } = useAppContext();
   socket.on('info', (data) => {
     setInfo(data);
-    console.log(Object.entries(data.timeLog));
   });
 
   socket.on('data', (data: string) => {
@@ -120,7 +120,7 @@ const InformationView = () => {
           <LineChart
             width={500}
             height={500}
-            data={Object.entries(Info.timeLog)}
+            data={Object.entries(fillArrayWithNulls(Info.timeLog))}
           >
             <XAxis dataKey="0" />
             <YAxis />
