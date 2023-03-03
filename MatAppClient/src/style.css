@@ -162,3 +162,7 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.selectable, .selectable * {
+  user-select: text;
+}

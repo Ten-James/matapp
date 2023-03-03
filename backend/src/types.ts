@@ -9,6 +9,7 @@ export interface IBranchStorageItem {
   id: number;
   name: string;
   category: string;
+  recommendedCount: number;
   count: number;
 }
 
@@ -27,6 +28,7 @@ export interface IDialogBranch {
   id?: number[];
   name: string;
   location: string;
+  size: number;
 }
 
 export interface IDialogUser {
@@ -44,6 +46,7 @@ export interface IDialogIngredient {
   cost: number;
   text: string;
   text_combo: string;
+  recommendedCount: number;
   allergens: number[];
 }
 

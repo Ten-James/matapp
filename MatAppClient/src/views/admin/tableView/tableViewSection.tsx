@@ -101,7 +101,7 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
             <h2
               style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr auto',
+                gridTemplateColumns: '1fr auto auto',
                 width: '85%',
                 padding: '0.5em 1em',
                 margin: '0.4em auto',
@@ -109,7 +109,7 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
             >
               {x.name} {x.location}
               <Button
-                class="inline"
+                class="inline button-normal"
                 color="blue"
                 style={{ height: '2em' }}
                 onClick={() => {
@@ -119,6 +119,18 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
               >
                 <span className="material-symbols-outlined">add</span>
                 {translate('edit')}
+              </Button>
+              <Button
+                class="inline button-normal"
+                color="blue"
+                style={{ height: '2em' }}
+                onClick={() => {
+                  setSelectedIDs([x.id]);
+                  setDialog('other');
+                }}
+              >
+                <span className="material-symbols-outlined">order_approve</span>
+                {translate('reorder')}
               </Button>
             </h2>
             {x.data.map((e) => (

@@ -9,7 +9,7 @@ const processIngredients = (socket: Socket) => {
   socket.on('get_ingredients', () => {
     writeLog(socket.handshake.address, 'get_ingredients');
     connection.query(
-      `SELECT i.id, i.name, CONCAT(i.text," ", ie.text) as "text", i.cost, t.name as 'category', IFNULL(GROUP_CONCAT(ia.num SEPARATOR ' '),"-") as 'allergens' FROM ingredients i 
+      `SELECT i.id, i.name, CONCAT(i.text," ", ie.text) as "text", i.cost, t.name as 'category', IFNULL(GROUP_CONCAT(ia.num SEPARATOR ' '),"-") as 'allergens', i.recommended_count as 'recommendedCount' FROM ingredients i 
       LEFT JOIN ingredient_types t ON i.ingredient_type_id = t.id
       LEFT JOIN ingredient_allergens ia ON i.id = ia.ingredient_id
       LEFT JOIN ingredient_text_extensions ie ON i.ingredient_text_extension_id = ie.id
@@ -32,7 +32,7 @@ const processIngredients = (socket: Socket) => {
       await query(`INSERT IGNORE INTO ingredient_types (name) VALUES ('${data.category}')`);
       const categoryId = (await query(`SELECT id FROM ingredient_types WHERE name = '${data.category}'`))[0].id;
       const extensionId = (await query(`SELECT id FROM ingredient_text_extensions WHERE text = '${data.text_combo}'`))[0].id;
-      await query(`INSERT INTO ingredients (name, cost, ingredient_type_id, text, ingredient_text_extension_id) VALUES ('${data.name}', '${data.cost}', '${categoryId}','${data.text}' , '${extensionId}')`);
+      await query(`INSERT INTO ingredients (name, cost, ingredient_type_id, text, ingredient_text_extension_id, recommended_count) VALUES ('${data.name}', '${data.cost}', '${categoryId}','${data.text}' , '${extensionId}', '${data.recommendedCount}')`);
       const id = (await query(`SELECT id FROM ingredients WHERE name = '${data.name}'`))[0].id;
       (data.allergens || []).forEach((allergen: number) => query(`INSERT INTO ingredient_allergens (ingredient_id, num) VALUES ('${id}', '${allergen + 1}')`));
       socket.emit('admin_status', 'was_added');
@@ -63,7 +63,7 @@ const processIngredients = (socket: Socket) => {
       const extensionId = (await query(`SELECT id FROM ingredient_text_extensions WHERE text = '${data.text_combo}'`))[0].id;
 
       //update
-      await query(`UPDATE ingredients SET name = '${data.name}', cost = '${data.cost}', ingredient_type_id = '${categoryId}', text = '${data.text}', ingredient_text_extension_id = '${extensionId}' WHERE id = '${id}'`);
+      await query(`UPDATE ingredients SET name = '${data.name}', cost = '${data.cost}', ingredient_type_id = '${categoryId}', text = '${data.text}', ingredient_text_extension_id = '${extensionId}', recommended_count = '${data.recommendedCount}' WHERE id = '${id}'`);
       await query(`DELETE FROM ingredient_allergens WHERE ingredient_id = '${id}'`);
 
       (data.allergens || []).forEach((allergen: number) => query(`INSERT INTO ingredient_allergens (ingredient_id, num) VALUES ('${id}', '${allergen + 1}')`));

@@ -115,6 +115,10 @@
   align-items: center;
   border-radius: 1rem;
 }
+.button-normal {
+  width: unset !important;
+  padding: 0.5em 1em !important;
+}
 
 .button:hover:not(:disabled) {
   scale: 1.1;

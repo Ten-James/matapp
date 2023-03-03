@@ -13,6 +13,7 @@ const BranchDialogBase = () => {
       id: 0,
       name: '',
       location: '',
+      size: 0,
     };
     return item;
   }, [selectedItems]);
@@ -27,6 +28,11 @@ const BranchDialogBase = () => {
         name="location"
         required
         value={data.location}
+      />
+      <TextAttributeDialog
+        name="size"
+        required
+        value={`${data.size}`}
       />
     </>
   );

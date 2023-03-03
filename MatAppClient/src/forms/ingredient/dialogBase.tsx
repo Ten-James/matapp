@@ -17,6 +17,7 @@ const IngredientDialogBase = () => {
       cost: 0,
       text: '',
       allergens: '',
+      recommendedCount: 10,
     };
     return item;
   }, [selectedItems]);
@@ -48,6 +49,12 @@ const IngredientDialogBase = () => {
         required
         isNumber
         value={`${data.cost}`}
+      />
+      <TextAttributeDialog
+        name="recommendedCount"
+        required
+        isNumber
+        value={`${data.recommendedCount}`}
       />
       <TextAttributeWithCombo
         name="text"

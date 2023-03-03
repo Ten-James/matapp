@@ -30,7 +30,7 @@ const process = async (connection: mysql.Connection, name: string) => {
   );
 };
 
-export const DATABASE_VERSION = 2;
+export const DATABASE_VERSION = 3;
 
 const ProcessMigrations = async (connection: mysql.Connection, currentVersion: number) => {
   while (currentVersion < DATABASE_VERSION) {

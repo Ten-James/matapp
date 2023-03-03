@@ -1,6 +1,6 @@
 import './style.css';
 import { useAdminContext } from '../../../context/adminContext';
-import { EditStorage, AddIngredient, EditIngredient, DeleteDialog, AddBranch, EditBranch, AddDish, EditDish, EditDishCategoriesDialog, AddUser, ChangePasswordDialog, EditUser } from '../../../forms';
+import { EditStorage, AddIngredient, EditIngredient, DeleteDialog, AddBranch, EditBranch, AddDish, EditDish, EditDishCategoriesDialog, AddUser, ChangePasswordDialog, EditUser, ReorderDialog } from '../../../forms';
 
 const Dialog = () => {
   const { dialog, setDialog, selectedIDs } = useAdminContext();
@@ -34,6 +34,7 @@ const Dialog = () => {
 
   if (window.location.pathname.includes('storage')) {
     if (dialog === 'edit') return <EditStorage />;
+    if (dialog === 'other') return <ReorderDialog />;
     return null;
   }
 
