@@ -1,6 +1,7 @@
 import { Socket } from 'socket.io';
 import Sessions from './session';
 import { ISession } from '../types';
+import * as fs from 'fs';
 
 const Realtime = (socket: Socket) => {
   socket.on('get_session', (branchId: number) =>
@@ -19,6 +20,10 @@ const Realtime = (socket: Socket) => {
     }
     socket.broadcast.emit('session', session);
     socket.emit('session', session);
+    fs.writeFile('sessions.json', JSON.stringify(Sessions), (err) => {
+      if (err) throw err;
+      console.log('The file has been saved!');
+    });
   });
 };
 

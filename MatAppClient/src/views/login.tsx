@@ -16,6 +16,11 @@ const LoginPage = (props: Props) => {
   const waiting = useRef(null);
   useEffect(() => {
     setLoading(false);
+    //testing
+    socket.emit('login', {
+      name: 'admin',
+      pass: 'admin',
+    });
   }, []);
   socket.on('login', (data) => {
     if (data.status) {

@@ -1,7 +1,7 @@
 import type { MysqlError } from 'mysql';
-import connection from '../database';
+import connection, { query } from '../database';
 import { writeLog } from '../logger';
-import type { IBranchStorageItem, IBranch, IBranchData, IIngredient, IDialogBranch } from '../types';
+import type { IBranchStorageItem, IBranch, IBranchData, IIngredient, IDialogBranch, IDialogStorage } from '../types';
 import { noResponseQuery, noResponseQueryCallback } from '../misc';
 
 const processBranches = (socket) => {
@@ -9,7 +9,7 @@ const processBranches = (socket) => {
     writeLog(socket.handshake.address, 'get_branches');
     connection.query('SELECT * FROM branches', (err: MysqlError, result: IBranch[]) => {
       if (err) throw err;
-      socket.emit('branches', result);
+      socket.emit('branches', result as IBranch[]);
     });
   });
 
@@ -50,6 +50,32 @@ const processBranches = (socket) => {
     });
   });
 
+  socket.on('get_branch_storage', (id: number) => {
+    writeLog(socket.handshake.address, `get_branch_storage \n ${JSON.stringify(id)}`);
+    connection.query('SELECT * FROM branches WHERE id = ?', [id], (err: MysqlError, result: IBranch[]) => {
+      if (err) throw err;
+      const data = { ...result[0], data: [] } as IBranchData<IIngredient>;
+      connection.query(
+        "SELECT i.id, i.name, t.name as 'category', bi.count, i.recommended_count as 'recommendedCount' FROM branch$ingredients bi LEFT JOIN ingredients i on bi.ingredient_id = i.id LEFT JOIN ingredient_types t ON i.ingredient_type_id = t.id WHERE branch_id = ?",
+        [id],
+        (err2: MysqlError, result2: IBranchStorageItem[]) => {
+          if (err2) throw err2;
+          result2 = result2.map((d) => {
+            return {
+              id: d.id,
+              name: d.name,
+              category: d.category,
+              count: d.count,
+              recommendedCount: d.recommendedCount * data.size,
+            };
+          });
+          data.data = [...result2] as IIngredient[];
+          socket.emit('branch_storage', data);
+        },
+      );
+    });
+  });
+
   const preset = 'branches';
   socket.on(`add_${preset}`, (data: IDialogBranch) => {
     writeLog(socket.handshake.address, `add_${preset} \n ${JSON.stringify(data)}`);
@@ -78,6 +104,26 @@ const processBranches = (socket) => {
       socket.emit('admin_status', 'was_deleted');
     } catch (error) {
       socket.emit('admin_status', 'not_deleted');
+    }
+  });
+
+  socket.on('edit_storage', async (data: IDialogStorage) => {
+    writeLog(socket.handshake.address, `edit_storage \n ${JSON.stringify(data)}`);
+    try {
+      await Promise.all(
+        Object.entries(data.data).map(async ([id, count]) => {
+          const entry = await query(`SELECT id FROM branch$ingredients WHERE ingredient_id = ${id} AND branch_id = ${data.id[0]}`);
+          if (entry.length === 0) {
+            await query(`INSERT INTO branch$ingredients (ingredient_id, branch_id, count) VALUES (${id}, ${data.id[0]}, ${count})`);
+          } else {
+            await query(`UPDATE branch$ingredients SET count = ${count} WHERE id = ${entry[0].id}`);
+          }
+        }),
+      );
+      socket.emit('admin_status', 'was_edited');
+    } catch (e) {
+      socket.emit('admin_status', 'not_edited');
+      console.error(e);
     }
   });
 };

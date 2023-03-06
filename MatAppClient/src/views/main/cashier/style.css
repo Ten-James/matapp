@@ -1,0 +1,165 @@
+.layout {
+    display: grid;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    grid-template: 
+    "header header header" auto
+    "categories dishes info" 1fr
+    "categories dishes order" 2fr /
+    auto 3fr 1fr;
+}
+
+.categories {
+    grid-area: categories;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.dishes {
+    grid-area: dishes;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+
+.info {
+    grid-area: info;
+}
+
+.order {
+    grid-area: order;
+    position: relative;
+}
+
+.category {
+    width: 100%;
+    padding-top: 0.5em;
+    height: 10em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid  var(--black-color);
+}
+
+.category > span {
+    font-size: 3em;
+}
+
+.category > h3 {
+    font-size: 1.5em;
+    max-width: 15ch;
+    text-align: center;
+    line-height: 1;
+}
+
+.no-order-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 4em;
+
+}
+
+.order-container {
+    position: absolute;
+    top: 0;
+    left: 1em;
+    right: 1em;
+    bottom: 1em;
+    display: grid;
+    grid-template:
+    "dish" 1fr
+    "line" auto
+    "total" auto
+    "buttons" auto /
+    1fr;
+}
+
+.order-dishes {
+    grid-area: dish;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
+    scroll-behavior: smooth;
+}
+.order-dish {
+    width: 100%;
+    padding-top: 0.5em;
+    display: grid;
+    grid-template:
+    "name name button" auto
+    "price quantity total" auto /
+    1fr 1fr 1fr;
+    border-bottom: 1px solid  var(--black-color);
+}
+
+.order-dish-name {
+    grid-area: name;
+    font-size: 1.5em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.order-dish-button {
+    grid-area: button;
+    text-align: right;
+    border: none;
+    padding: 0;
+}
+
+.order-dish-price {
+    grid-area: price;
+}
+
+.order-dish-quantity {
+    grid-area: quantity;
+}
+
+.order-dish-total {
+    grid-area: total;
+    text-align: right;
+    font-weight: 600;
+}
+
+.line {
+    grid-area: "line";
+    width: 100%;
+    height: 3px;
+    background-color:  var(--black-color);
+}
+
+.order-total {
+    grid-area: total;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    font-size: 1.5em;
+    width: 100%;
+}
+
+.order-total-name {
+    flex-grow: 1;
+}
+

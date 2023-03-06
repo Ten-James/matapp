@@ -1,0 +1,1 @@
+INSERT INTO `ingredient_text_extensions` VALUES (3, "g");

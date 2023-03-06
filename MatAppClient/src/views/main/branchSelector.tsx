@@ -14,8 +14,10 @@ const BranchSelector = () => {
   useEffect(() => {
     setLoading(true);
     setTimeout(GenerateFries, 20);
-    getBranches();
-    setTimeout(() => setLoading(false), 3000);
+    setTimeout(() => {
+      setLoading(false);
+      getBranches();
+    }, 3000);
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (

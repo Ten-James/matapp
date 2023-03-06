@@ -2,7 +2,7 @@ import os
 
 # Get all files in the project
 sourceFiles = []
-for path, subdirs, files in os.walk(".."):
+for path, subdirs, files in os.walk("."):
     for name in files:
         sourceFiles.append(os.path.join(path, name))
 # filtre files with extensions .ts, .tsx, .css

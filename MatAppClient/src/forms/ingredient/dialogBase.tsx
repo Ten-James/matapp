@@ -15,7 +15,7 @@ const IngredientDialogBase = () => {
       name: '',
       category: '',
       cost: 0,
-      text: '',
+      text: '1',
       allergens: '',
       recommendedCount: 10,
     };
@@ -61,7 +61,7 @@ const IngredientDialogBase = () => {
         isNumber
         required
         value={data.text}
-        combo={['ks', 'ml']}
+        combo={['ks', 'ml', 'g']}
       />
       <CheckboxGroupDialog
         name="allergens"

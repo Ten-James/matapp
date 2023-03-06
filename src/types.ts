@@ -46,7 +46,7 @@ export interface IUser extends INamedBaseModel {
 
 export interface IOrder extends IBaseModel {
   date: string;
-  dishes: string;
+  dishes: { id: number; count: number }[];
   cost: number;
   type: string;
 }
@@ -54,6 +54,6 @@ export interface IOrder extends IBaseModel {
 export interface ISession {
   id: number;
   branchId: number;
-  startTime: Date;
+  startTime: string;
   currentOrders: any[];
 }
