@@ -35,7 +35,7 @@ export const AddDialog = () => {
               <tr>
                 <td>{e[0]}</td>
                 <td>{e[1]}</td>
-                <td>={e[2]}</td>
+                <td style={{ textAlign: 'right' }}>={e[2]}</td>
               </tr>
             ))}
             <tr>
@@ -104,27 +104,54 @@ export const AddDialog = () => {
               </Button> */}
             </h2>
 
-            <UnsetComboBoxDialog
-              name={`line_${line}`}
-              comboValue={[
-                { name: '-- vyber ingredienci --', value: '0' },
-                ...ingredients.map((i) => {
-                  return { name: i.name, value: `${i.id}` };
-                }),
-              ]}
-              onClick={() => {
-                console.log('click');
-                setSideText([]);
-                setEstCost(
-                  ([...document.querySelectorAll('select[name^="line_"]')] as HTMLInputElement[]).reduce((acc, val) => {
-                    const ingredient = ingredients.find((i) => i.id === parseInt(val.value));
-                    if (!ingredient) return acc;
-                    setSideText((old) => [...old, [ingredient.name, `${ingredient.cost}`, `${acc + ingredient.cost}`]]);
-                    return acc + ingredient.cost;
-                  }, 0),
-                );
-              }}
-            />
+            <div style={{ paddingLeft: '1em' }}>
+              <UnsetComboBoxDialog
+                name={`line_${line}`}
+                comboValue={[
+                  { name: '-- vyber ingredienci --', value: '0' },
+                  ...ingredients.map((i) => {
+                    return { name: i.name, value: `${i.id}` };
+                  }),
+                ]}
+                onClick={() => {
+                  console.log('click');
+                  setSideText([]);
+                  setEstCost(
+                    ([...document.querySelectorAll('select[name^="line_"]')] as HTMLInputElement[]).reduce((acc, val) => {
+                      const ingredient = ingredients.find((i) => i.id === parseInt(val.value));
+                      if (!ingredient) return acc;
+                      console.log(val.name.split('_')[1]);
+                      console.log(document.querySelector(`input[name="line_${val.name.split('_')[1]}_amount"]`));
+                      const count = parseInt(document.querySelector<HTMLInputElement>(`input[name="line_${val.name.split('_')[1]}_amount"]`).value) || 1;
+                      setSideText((old) => [...old, [ingredient.name, `${count}x ${ingredient.cost}`, `${acc + ingredient.cost * count}`]]);
+                      return acc + ingredient.cost * count;
+                    }, 0),
+                  );
+                }}
+              />
+              <TextAttributeDialog
+                name={`line_${line}_amount`}
+                visibleName="count"
+                value="1"
+                isNumber
+                required
+                onClick={() => {
+                  console.log('click');
+                  setSideText([]);
+                  setEstCost(
+                    ([...document.querySelectorAll('select[name^="line_"]')] as HTMLInputElement[]).reduce((acc, val) => {
+                      const ingredient = ingredients.find((i) => i.id === parseInt(val.value));
+                      if (!ingredient) return acc;
+                      console.log(val.name.split('_')[1]);
+                      console.log(document.querySelector(`input[name="line_${val.name.split('_')[1]}_amount"]`));
+                      const count = parseInt(document.querySelector<HTMLInputElement>(`input[name="line_${val.name.split('_')[1]}_amount"]`).value) || 1;
+                      setSideText((old) => [...old, [ingredient.name, `${count}x ${ingredient.cost}`, `${acc + ingredient.cost * count}`]]);
+                      return acc + ingredient.cost * count;
+                    }, 0),
+                  );
+                }}
+              />
+            </div>
           </>
         ))}
         <div className="dialog-split-line"></div>

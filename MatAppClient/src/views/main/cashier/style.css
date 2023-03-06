@@ -36,6 +36,11 @@
     scroll-behavior: smooth;
 }
 
+.storage-table-container {
+    height: 10ch;
+    overflow-y: scroll;
+}
+
 .info {
     grid-area: info;
 }

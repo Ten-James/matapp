@@ -4,11 +4,13 @@ import { textUpperFirst } from '../../misc/utils';
 
 interface TextAttributeDialogProp {
   name: string;
+  visibleName?: string;
   required?: boolean;
   isNumber?: boolean;
+  onClick?: VoidFunction;
   value?: string;
 }
-export const TextAttributeDialog = ({ name, required = false, isNumber, value }: TextAttributeDialogProp) => {
+export const TextAttributeDialog = ({ name, required = false, isNumber, value, visibleName, onClick }: TextAttributeDialogProp) => {
   const { translate } = useAppContext();
   const ref = useRef<HTMLInputElement | null>(null);
   return (
@@ -17,7 +19,7 @@ export const TextAttributeDialog = ({ name, required = false, isNumber, value }:
         htmlFor={name}
         className={required ? 'required' : ''}
       >
-        {textUpperFirst(translate(name))}
+        {textUpperFirst(translate(visibleName || name))}
       </label>
       <div>
         <input
@@ -25,6 +27,7 @@ export const TextAttributeDialog = ({ name, required = false, isNumber, value }:
           name={name}
           type={isNumber ? 'number' : name === 'password' ? 'password' : 'text'}
           required={required}
+          onChange={onClick}
           defaultValue={value}
           ref={ref}
         />
@@ -34,7 +37,6 @@ export const TextAttributeDialog = ({ name, required = false, isNumber, value }:
 };
 
 interface TextAttributeDialogWithComboProp extends TextAttributeDialogProp {
-  onClick?: VoidFunction;
   combo?: string[];
   comboValue?: { name: string; value: string }[];
 }

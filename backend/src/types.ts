@@ -1,10 +1,5 @@
 export * from '../../src/types';
 
-export interface IDishIngredient {
-  name: string;
-  line: number;
-}
-
 export interface IBranchStorageItem {
   id: number;
   name: string;

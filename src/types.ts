@@ -30,7 +30,7 @@ export interface IIngredient extends ICategoryBaseModel {
 
 export interface IDish extends ICategoryBaseModel {
   cost: number;
-  ingredients: string[];
+  ingredients: IIngredient[];
 }
 
 export interface IDishCategory extends INamedBaseModel {

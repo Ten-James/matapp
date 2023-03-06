@@ -40,10 +40,10 @@ export const submit = (e: Event, form: HTMLFormElement | null, selectedIDs: numb
   if (Object.keys(data).findIndex((x) => x.startsWith('line')) !== -1) {
     data['ingredients'] = [];
     Object.keys(data)
-      .filter((x) => x.startsWith('line'))
+      .filter((x) => x.startsWith('line') && !x.endsWith('_amount'))
       .forEach((x) => {
         const id = x.split('_')[1];
-        data['ingredients'][id] = data[x];
+        data['ingredients'][id] = [data[x], data[`line_${id}_amount`]];
       });
     //delete all line keys
     Object.keys(data)

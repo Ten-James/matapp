@@ -1,7 +1,7 @@
 import type { MysqlError } from 'mysql';
 import connection, { query } from '../database';
 import { writeLog } from '../logger';
-import type { IDishIngredient, IDish, IDialogDish, IDialogDishCategory, IDialogStorage } from '../types';
+import type { IDish, IDialogDish, IDialogDishCategory, IDialogStorage, IIngredient } from '../types';
 import { noResponseQueryCallback } from '../misc';
 
 const processDishes = (socket) => {
@@ -12,13 +12,17 @@ const processDishes = (socket) => {
       let data: IDish[] = [];
       result.forEach((x) => {
         // TODO: make this async and wait for it to finish
-        connection.query("SELECT CONCAT(di.count,'x ', i.name) as 'name' FROM dish$ingredients di LEFT JOIN ingredients i ON di.ingredient_id = i.id WHERE dish_id = " + x.id, (err2: MysqlError, result2: IDishIngredient[]) => {
+        connection.query("SELECT i.id, i.name, di.count as 'count' FROM dish$ingredients di LEFT JOIN ingredients i ON di.ingredient_id = i.id WHERE dish_id = " + x.id, (err2: MysqlError, result2: IIngredient[]) => {
           if (err2) throw err2;
-          const ingredients = result2.map((x) => x?.name?.replace('1x ', '') || '') || [];
-
           data.push({
             ...x,
-            ingredients: ingredients,
+            ingredients: result2.map((y) => {
+              return {
+                id: y.id,
+                name: y.name,
+                count: y.count,
+              } as IIngredient;
+            }),
           } as IDish);
           socket.emit('dishes', data);
         });
@@ -66,7 +70,7 @@ const processDishes = (socket) => {
       console.log(data.ingredients);
       data.ingredients = data.ingredients.filter((x) => x[0] !== undefined && x[0] !== null && x[0] !== '' && x[0] !== '0');
       console.log(data.ingredients);
-      await Promise.all(data.ingredients.map((item) => query(`INSERT INTO dish$ingredients (dish_id, ingredient_id, count) VALUES (${dish_id}, ${item[0]}, 1)`)));
+      await Promise.all(data.ingredients.map((item) => query(`INSERT INTO dish$ingredients (dish_id, ingredient_id, count) VALUES (${dish_id}, ${item[0]}, ${item[1]})`)));
       socket.emit('admin_status', 'was_added');
     } catch (e) {
       socket.emit('admin_status', 'not_added');
@@ -101,7 +105,7 @@ const processDishes = (socket) => {
       //insert ingredients
       data.ingredients = data.ingredients.filter((x) => x[0] !== undefined && x[0] !== null && x[0] !== '' && x[0] !== '0');
 
-      await Promise.all(data.ingredients.map((item) => query(`INSERT INTO dish$ingredients (dish_id, ingredient_id, count) VALUES (${data.id}, ${item[0]}, 1)`)));
+      await Promise.all(data.ingredients.map((item) => query(`INSERT INTO dish$ingredients (dish_id, ingredient_id, count) VALUES (${data.id}, ${item[0]}, ${item[1]})`)));
       socket.emit('admin_status', 'was_edited');
     } catch (e) {
       socket.emit('admin_status', 'not_edited');

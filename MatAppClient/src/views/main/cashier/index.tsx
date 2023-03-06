@@ -33,9 +33,9 @@ const Cashier = () => {
       dataAccurateStorage.map(({ name, count }) => {
         const newCount = currentOrderDishes.reduce((acc, [dish, dishCount]) => {
           if (dish === undefined) return acc;
-          const ing = dish.ingredients.find((ing) => ing === name);
+          const ing = dish.ingredients.find((ing) => ing.name === name);
           if (ing === undefined) return acc;
-          return acc - dishCount;
+          return acc - dishCount * ing.count;
         }, count);
         return { name, count: newCount };
       }),
@@ -45,21 +45,15 @@ const Cashier = () => {
   const availableDishes = useMemo(() => {
     if (currentStorage === undefined) return [];
     return dishes.filter((dish) => {
-      const ing = dish.ingredients.map((ing) => currentStorage.find((st) => st.name === ing));
-      return ing.every((ing) => ing !== undefined && ing.count > 0);
+      const ing = dish.ingredients.map((ing) => [currentStorage.find((st) => st.name === ing.name)?.count || 0, ing.count] as const);
+      return ing.every(([have, need]) => have !== undefined && have > need);
     });
   }, [currentStorage]);
 
-  //testing purposes
-  const showDishesAll = useMemo(() => {
+  const showDishes = useMemo(() => {
     if (selectedCategory === undefined) return [];
     return dishes.filter((dish) => dish.category === selectedCategory);
   }, [selectedCategory, dishes]);
-
-  const showDishes = useMemo(() => {
-    if (selectedCategory === undefined) return [];
-    return availableDishes.filter((dish) => dish.category === selectedCategory);
-  }, [selectedCategory, availableDishes]);
 
   useEffect(() => {
     if (session === null) throw new Error('Session is null');
@@ -101,13 +95,56 @@ const Cashier = () => {
           ))}
         </div>
         <div className="dishes">
-          <div>{JSON.stringify(showDishesAll)}</div>
-          <div>{JSON.stringify(showDishes)}</div>
-          <div>{JSON.stringify(dataAccurateStorage)}</div>
-          <div>{JSON.stringify(currentStorage)}</div>
+          <div>
+            {showDishes
+              .map((dish) => [dish, availableDishes.find((d) => d.id === dish.id) !== undefined] as const)
+              .map(([dish, exist]) => (
+                <div
+                  style={{ opacity: exist ? '1' : '0.25' }}
+                  key={dish.id}
+                  className="dish"
+                  onClick={() => {
+                    if (!exist) return;
+                    if (currentOrder === undefined) return;
+                    if (currentOrder.dishes.find((d) => d.id === dish.id) === undefined) {
+                      setCurrentOrder({ ...currentOrder, dishes: [...currentOrder.dishes, { id: dish.id, count: 1 }] });
+                      return;
+                    }
+                    const newDishes = currentOrder.dishes.map((d) => {
+                      if (d.id === dish.id) return { ...d, count: d.count + 1 };
+                      return d;
+                    });
+                    setCurrentOrder({ ...currentOrder, dishes: newDishes });
+                  }}
+                >
+                  <h3>{dish.name}</h3>
+                  <p>{dish.cost}</p>
+                </div>
+              ))}
+          </div>
         </div>
         <div className="info">
           <p>time {new Date(session.startTime).toLocaleString()}</p>
+          <div className="storage-table-container">
+            <table className="storage-table">
+              <thead>
+                <tr>
+                  <th>name</th>
+                  <th>count</th>
+                  <th>after</th>
+                </tr>
+              </thead>
+              {dataAccurateStorage.map(({ name, count }) =>
+                count !== 0 ? (
+                  <tr>
+                    <td>{name}:</td>
+                    <td style={{ textAlign: 'right' }}> {count}</td>
+                    <td style={{ textAlign: 'right' }}>{currentStorage.find((st) => st.name === name)?.count}</td>
+                  </tr>
+                ) : null,
+              )}
+            </table>
+          </div>
         </div>
         <div className="order">
           {currentOrder && currentOrderDishes.length !== 0 ? (
@@ -120,7 +157,21 @@ const Cashier = () => {
                       key={dish.id}
                     >
                       <span className="order-dish-name">{dish.name}</span>
-                      <div className="order-dish-button">x</div>
+                      <div
+                        className="order-dish-button"
+                        onClick={() => {
+                          if (currentOrder === undefined) return;
+                          const newDishes = currentOrder.dishes
+                            .map((d) => {
+                              if (d.id === dish.id) return { ...d, count: d.count - 1 };
+                              return d;
+                            })
+                            .filter((d) => d.count !== 0);
+                          setCurrentOrder({ ...currentOrder, dishes: newDishes });
+                        }}
+                      >
+                        x
+                      </div>
                       <span className="order-dish-price">cost: {dish.cost}</span>
                       <span className="order-dish-quantity">{count}x</span>
                       <span className="order-dish-total">{dish.cost * count}</span>

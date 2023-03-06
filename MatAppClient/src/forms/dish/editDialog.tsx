@@ -13,6 +13,7 @@ export const EditDialog = () => {
   const [lines, setLines] = useState<number>((selectedItems[0] as IDish).ingredients.length);
   const [dishCategories, setDishCategories] = useState<string[]>([]);
   const [estCost, setEstCost] = useState<number>(0);
+  const [sideText, setSideText] = useState<string[][]>([]);
 
   useEffect(() => {
     if (ingredients.length === 0) getIngredients();
@@ -31,12 +32,43 @@ export const EditDialog = () => {
 
   useEffect(() => {
     console.log(selectedItems[0]);
+    setTimeout(() => {
+      setSideText([]);
+      setEstCost(
+        ([...document.querySelectorAll('select[name^="line_"]')] as HTMLInputElement[]).reduce((acc, val) => {
+          const ingredient = ingredients.find((i) => i.id === parseInt(val.value));
+          if (!ingredient) return acc;
+          console.log(val.name.split('_')[1]);
+          console.log(document.querySelector(`input[name="line_${val.name.split('_')[1]}_amount"]`));
+          const count = parseInt(document.querySelector<HTMLInputElement>(`input[name="line_${val.name.split('_')[1]}_amount"]`).value) || 1;
+          setSideText((old) => [...old, [ingredient.name, `${count}x ${ingredient.cost}`, `${acc + ingredient.cost * count}`]]);
+          return acc + ingredient.cost * count;
+        }, 0),
+      );
+    }, 100);
   }, [selectedItems]);
 
   return (
     <BaseDialog
       header="Edit Dish"
       sendRoute="edit_dishes"
+      tooltip={
+        sideText.length != 0 ? (
+          <table>
+            {sideText.map((e) => (
+              <tr>
+                <td>{e[0]}</td>
+                <td>{e[1]}</td>
+                <td style={{ textAlign: 'right' }}>={e[2]}</td>
+              </tr>
+            ))}
+            <tr>
+              <td colSpan={2}>{translate('production price')}:</td>
+              <td style={{ textAlign: 'right' }}>{sideText.at(-1)[2]}</td>
+            </tr>
+          </table>
+        ) : null
+      }
     >
       <>
         <TextAttributeDialog
@@ -98,27 +130,56 @@ export const EditDialog = () => {
               <span className="material-symbols-outlined">delete</span>
             </Button> */}
                 </h2>
+                <div style={{ paddingLeft: '1em' }}>
+                  <UnsetComboBoxDialog
+                    name={`line_${line}`}
+                    comboValue={[
+                      { name: '-- vyber ingredienci --', value: '0' },
+                      ...ingredients.map((i) => {
+                        return { name: i.name, value: `${i.id}` };
+                      }),
+                    ]}
+                    value={(selectedItems[0] as IDish).ingredients.length !== 0 ? ingredients.find((x) => x.name === (selectedItems[0] as IDish).ingredients[line].name)?.id.toString() : '0'}
+                    onClick={() => {
+                      console.log('click');
+                      setSideText([]);
+                      setEstCost(
+                        ([...document.querySelectorAll('select[name^="line_"]')] as HTMLInputElement[]).reduce((acc, val) => {
+                          const ingredient = ingredients.find((i) => i.id === parseInt(val.value));
+                          if (!ingredient) return acc;
+                          console.log(val.name.split('_')[1]);
+                          console.log(document.querySelector(`input[name="line_${val.name.split('_')[1]}_amount"]`));
+                          const count = parseInt(document.querySelector<HTMLInputElement>(`input[name="line_${val.name.split('_')[1]}_amount"]`).value) || 1;
+                          setSideText((old) => [...old, [ingredient.name, `${count}x ${ingredient.cost}`, `${acc + ingredient.cost * count}`]]);
+                          return acc + ingredient.cost * count;
+                        }, 0),
+                      );
+                    }}
+                  />
 
-                <UnsetComboBoxDialog
-                  name={`line_${line}`}
-                  comboValue={[
-                    { name: '-- vyber ingredienci --', value: '0' },
-                    ...ingredients.map((i) => {
-                      return { name: i.name, value: `${i.id}` };
-                    }),
-                  ]}
-                  value={ingredients.find((x) => x.name === (selectedItems[0] as IDish).ingredients[line])?.id.toString()}
-                  onClick={() => {
-                    console.log('click');
-                    setEstCost(
-                      ([...document.querySelectorAll('select[name^="line_"]')] as HTMLInputElement[]).reduce((acc, val) => {
-                        const ingredient = ingredients.find((i) => i.id === parseInt(val.value));
-                        if (ingredient) return acc + ingredient.cost;
-                        return acc;
-                      }, 0),
-                    );
-                  }}
-                />
+                  <TextAttributeDialog
+                    name={`line_${line}_amount`}
+                    visibleName="count"
+                    value={(selectedItems[0] as IDish)?.ingredients[line]?.count.toString() || '1'}
+                    isNumber
+                    required
+                    onClick={() => {
+                      console.log('click');
+                      setSideText([]);
+                      setEstCost(
+                        ([...document.querySelectorAll('select[name^="line_"]')] as HTMLInputElement[]).reduce((acc, val) => {
+                          const ingredient = ingredients.find((i) => i.id === parseInt(val.value));
+                          if (!ingredient) return acc;
+                          console.log(val.name.split('_')[1]);
+                          console.log(document.querySelector(`input[name="line_${val.name.split('_')[1]}_amount"]`));
+                          const count = parseInt(document.querySelector<HTMLInputElement>(`input[name="line_${val.name.split('_')[1]}_amount"]`).value) || 1;
+                          setSideText((old) => [...old, [ingredient.name, `${count}x ${ingredient.cost}`, `${acc + ingredient.cost * count}`]]);
+                          return acc + ingredient.cost * count;
+                        }, 0),
+                      );
+                    }}
+                  />
+                </div>
               </>
             ))
           : 'loading'}
