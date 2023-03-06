@@ -66,18 +66,6 @@ const Cashier = () => {
     setSelectedCategory(categories[0]?.name);
   }, [categories]);
 
-  useEffect(() => {
-    setTimeout(() => {
-      setCurrentOrder({
-        date: new Date().toString(),
-        dishes: [{ id: 5, count: 1 }],
-        id: 1,
-        cost: 0,
-        type: 'normal',
-      } as IOrder);
-    }, 1000);
-  }, []);
-
   return (
     <div>
       <div className="layout">
@@ -89,39 +77,49 @@ const Cashier = () => {
               key={category.id}
               onClick={() => setSelectedCategory(category.name)}
             >
-              <span className="material-symbols-outlined">{category.icon}</span>
-              <h3 style={{ fontWeight: selectedCategory === category.name ? 'bold' : 'normal' }}>{category.name}</h3>
+              <span
+                style={{ fontSize: selectedCategory === category.name ? '3.5em' : '3em' }}
+                className="material-symbols-outlined"
+              >
+                {category.icon}
+              </span>
+              <h3 style={{ fontWeight: selectedCategory === category.name ? 'bold' : '200' }}>{category.name}</h3>
             </div>
           ))}
         </div>
         <div className="dishes">
-          <div>
-            {showDishes
-              .map((dish) => [dish, availableDishes.find((d) => d.id === dish.id) !== undefined] as const)
-              .map(([dish, exist]) => (
-                <div
-                  style={{ opacity: exist ? '1' : '0.25' }}
-                  key={dish.id}
-                  className="dish"
-                  onClick={() => {
-                    if (!exist) return;
-                    if (currentOrder === undefined) return;
-                    if (currentOrder.dishes.find((d) => d.id === dish.id) === undefined) {
-                      setCurrentOrder({ ...currentOrder, dishes: [...currentOrder.dishes, { id: dish.id, count: 1 }] });
-                      return;
-                    }
-                    const newDishes = currentOrder.dishes.map((d) => {
-                      if (d.id === dish.id) return { ...d, count: d.count + 1 };
-                      return d;
-                    });
-                    setCurrentOrder({ ...currentOrder, dishes: newDishes });
-                  }}
-                >
-                  <h3>{dish.name}</h3>
-                  <p>{dish.cost}</p>
-                </div>
-              ))}
-          </div>
+          {showDishes
+            .map((dish) => [dish, availableDishes.find((d) => d.id === dish.id) !== undefined] as const)
+            .map(([dish, exist]) => (
+              <div
+                style={{ opacity: exist ? '1' : '0.25' }}
+                key={dish.id}
+                className="dish"
+                onClick={() => {
+                  if (!exist) return;
+                  if (currentOrder === undefined)
+                    setCurrentOrder({
+                      date: new Date().toString(),
+                      dishes: [],
+                      id: 0,
+                      cost: 0,
+                      type: 'normal',
+                    } as IOrder);
+                  if (currentOrder.dishes.find((d) => d.id === dish.id) === undefined) {
+                    setCurrentOrder({ ...currentOrder, dishes: [...currentOrder.dishes, { id: dish.id, count: 1 }] });
+                    return;
+                  }
+                  const newDishes = currentOrder.dishes.map((d) => {
+                    if (d.id === dish.id) return { ...d, count: d.count + 1 };
+                    return d;
+                  });
+                  setCurrentOrder({ ...currentOrder, dishes: newDishes });
+                }}
+              >
+                <h3>{dish.name}</h3>
+                <p>{dish.cost}</p>
+              </div>
+            ))}
         </div>
         <div className="info">
           <p>time {new Date(session.startTime).toLocaleString()}</p>
@@ -184,9 +182,29 @@ const Cashier = () => {
                   <span className="order-total-price">{currentOrderDishes.reduce((acc, dish) => acc + dish[0].cost * dish[1], 0)}</span>
                 </div>
                 <div className="order-buttons">
-                  <button className="order-button">decline</button>
+                  <button
+                    onClick={() => {
+                      setCurrentOrder(undefined);
+                    }}
+                    className="order-button"
+                  >
+                    decline
+                  </button>
                   <button className="order-button">tip</button>
-                  <button className="order-button">Pay</button>
+                  <button
+                    onClick={() => {
+                      if (currentOrder === undefined) return;
+                      socket.emit('order', branchID, currentOrder);
+                      socket.on('admin_status', (status) => {
+                        if (status === 'order_success') {
+                          setCurrentOrder(undefined);
+                        }
+                      });
+                    }}
+                    className="order-button"
+                  >
+                    Pay
+                  </button>
                 </div>
               </div>
             </>

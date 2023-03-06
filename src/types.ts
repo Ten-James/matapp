@@ -55,5 +55,5 @@ export interface ISession {
   id: number;
   branchId: number;
   startTime: string;
-  currentOrders: any[];
+  currentOrders: IOrder[];
 }

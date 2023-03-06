@@ -5,6 +5,7 @@ import { getLogsAsString, getTimeLog, writeLog } from './logger';
 import ProcessTables from './tables';
 import Realtime from './realtime';
 import Sessions from './realtime/session';
+import processOrders from './order';
 
 const sendInfo = (socket: Socket) => {
   // send server uptime, io connected clients
@@ -44,6 +45,7 @@ const sendInfo = (socket: Socket) => {
 const processConnection = (socket: Socket) => {
   Realtime(socket);
   ProcessTables(socket);
+  processOrders(socket);
   socket.on('get_info', () => {
     writeLog(socket.handshake.address, 'get_information');
     sendInfo(socket);

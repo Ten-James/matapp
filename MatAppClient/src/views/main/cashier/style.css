@@ -28,12 +28,21 @@
     grid-area: dishes;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: center;
     height: 100%;
     width: 100%;
     overflow-y: scroll;
     scroll-behavior: smooth;
+}
+
+.dish {
+    width: 80%;
+    font-size: 1.5em;
+    padding-top: 0.7em;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border-bottom: 1px solid  var(--black-color);
 }
 
 .storage-table-container {
@@ -168,3 +177,25 @@
     flex-grow: 1;
 }
 
+.order-buttons {
+    grid-area: buttons;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    height: 100%;
+    width: 100%;
+}
+
+.order-button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    border: none;
+    background-color:  unset;
+    color:  var(--black-color);
+    font-size: 1.5em;
+    font-weight: 600;
+    text-transform: uppercase;
+}
