@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 
 const useStatus = () => {
   const [status, setStatus] = useState('');
+  const [extraData, setExtraData] = useState('');
   const [statusTranslate, setStatusTranslate] = useState('-5em');
   const statusStyle = useMemo<React.CSSProperties>(() => {
     return { transform: `translate(-50%, ${statusTranslate})` };
@@ -13,7 +14,12 @@ const useStatus = () => {
     return () => clearTimeout(id);
   }, [statusTranslate]);
 
-  const setStatusHandler = (status: string) => {
+  const setStatusHandler = (status: string, ...data: any) => {
+    setExtraData('');
+    if (data.length > 0) {
+      console.log(data);
+      setExtraData(data[0]);
+    }
     setStatus(status);
     setStatusTranslate('1em');
   };
@@ -21,7 +27,7 @@ const useStatus = () => {
     e.preventDefault();
     setStatusTranslate('-5em');
   };
-  return { status, statusStyle, setStatusHandler, onClick };
+  return { status, statusStyle, setStatusHandler, onClick, extraData };
 };
 
 export default useStatus;

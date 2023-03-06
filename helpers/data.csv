@@ -74,3 +74,10 @@ icecream,Icecream,Zmrzliny
 egg,Egg,Vajíčka
 recommendedcount,Recommended Count,Doporučený počet
 reorder,Order missing,Doobjednat
+total,Total,Suma
+decline,Decline,Zamítnout
+accept,Accept,Přijmout
+start_time,Start Time,Čas začátku
+count_current_order,Count Current Order,Počet aktuálních objednávek
+order_success,Order Success,Objednávka byla úspěšná
+no_session,No Session,Nebyla nalezena session

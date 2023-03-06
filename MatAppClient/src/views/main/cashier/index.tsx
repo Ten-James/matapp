@@ -6,7 +6,7 @@ import useSocket from '../../../hooks/useSocket';
 import './style.css';
 
 const Cashier = () => {
-  const { socket } = useAppContext();
+  const { socket, translate } = useAppContext();
   const { branchID, session, setSession, getSession } = useMainContext();
   const [categories, getCategories] = useSocket<IDishCategory[]>(socket, 'dish_categories_without_empty', []);
   const [dishes, getDishes] = useSocket<IDish[]>(socket, 'dishes', []);
@@ -69,7 +69,7 @@ const Cashier = () => {
   return (
     <div>
       <div className="layout">
-        <h1 className="header">Cashier</h1>
+        <h1 className="header">{translate('cashier')}</h1>
         <div className="categories">
           {categories?.map((category) => (
             <div
@@ -122,27 +122,12 @@ const Cashier = () => {
             ))}
         </div>
         <div className="info">
-          <p>time {new Date(session.startTime).toLocaleString()}</p>
-          <div className="storage-table-container">
-            <table className="storage-table">
-              <thead>
-                <tr>
-                  <th>name</th>
-                  <th>count</th>
-                  <th>after</th>
-                </tr>
-              </thead>
-              {dataAccurateStorage.map(({ name, count }) =>
-                count !== 0 ? (
-                  <tr>
-                    <td>{name}:</td>
-                    <td style={{ textAlign: 'right' }}> {count}</td>
-                    <td style={{ textAlign: 'right' }}>{currentStorage.find((st) => st.name === name)?.count}</td>
-                  </tr>
-                ) : null,
-              )}
-            </table>
-          </div>
+          <p>
+            {translate('start_time')}: {new Date(session.startTime).toLocaleString()}
+          </p>
+          <p>
+            {translate('count_current_order')}: {session.currentOrders.length || 0}
+          </p>
         </div>
         <div className="order">
           {currentOrder && currentOrderDishes.length !== 0 ? (
@@ -170,7 +155,9 @@ const Cashier = () => {
                       >
                         x
                       </div>
-                      <span className="order-dish-price">cost: {dish.cost}</span>
+                      <span className="order-dish-price">
+                        {translate('cost')}: {dish.cost}
+                      </span>
                       <span className="order-dish-quantity">{count}x</span>
                       <span className="order-dish-total">{dish.cost * count}</span>
                     </div>
@@ -178,7 +165,7 @@ const Cashier = () => {
                 </div>
                 <div className="line"></div>
                 <div className="order-total">
-                  <span className="order-total-name">Total</span>
+                  <span className="order-total-name">{translate('total')}</span>
                   <span className="order-total-price">{currentOrderDishes.reduce((acc, dish) => acc + dish[0].cost * dish[1], 0)}</span>
                 </div>
                 <div className="order-buttons">
@@ -188,9 +175,9 @@ const Cashier = () => {
                     }}
                     className="order-button"
                   >
-                    decline
+                    {translate('decline')}
                   </button>
-                  <button className="order-button">tip</button>
+                  <button className="order-button"></button>
                   <button
                     onClick={() => {
                       if (currentOrder === undefined) return;
@@ -203,7 +190,7 @@ const Cashier = () => {
                     }}
                     className="order-button"
                   >
-                    Pay
+                    {translate('accept')}
                   </button>
                 </div>
               </div>

@@ -97,7 +97,7 @@ CREATE TABLE
         `id` int NOT NULL AUTO_INCREMENT,
         `branch_id` int NOT NULL,
         `s_date` date NOT NULL,
-        `e_date` date NOT NULL,
+        `e_date` date NULL,
         PRIMARY KEY (`id`),
         KEY `serve_sessions_ibfk_1` (`branch_id`),
         CONSTRAINT `serve_sessions_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`) ON DELETE CASCADE ON UPDATE CASCADE

@@ -24,7 +24,7 @@ const socket = socketIOClient('http://localhost:2238');
 const App = () => {
   const [loading, setLoading] = useState(true);
   const [settingsVisible, setSettingsVisible] = useState(false);
-  const { status, statusStyle, setStatusHandler, onClick } = useStatus();
+  const { status, statusStyle, setStatusHandler, onClick, extraData } = useStatus();
 
   const [language, setLanguage] = useLocalStorage<LanguageType>('mat_lang', 'english');
   const [theme, setTheme] = useLocalStorage<ThemeType>('mat_theme', 'light');
@@ -100,6 +100,7 @@ const App = () => {
             onClick={onClick}
           >
             {Translate(status, language)}
+            {extraData ? `: ${extraData}` : null}
           </Panel>
         </div>
       </Loader>

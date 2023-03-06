@@ -16,7 +16,7 @@ const processOrders = (socket: Socket) => {
       }
       session.currentOrders.push(data);
       socket.broadcast.emit('session', session);
-      socket.emit('status', 'order_success');
+      socket.emit('status', 'order_success', data.id);
       fs.writeFile('sessions.json', JSON.stringify(Sessions), (err) => {
         if (err) throw err;
         console.log('The file has been saved!');
