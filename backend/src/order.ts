@@ -2,6 +2,7 @@ import type { Socket } from 'socket.io';
 import { IOrder } from './types';
 import { writeLog } from './logger';
 import Sessions from './realtime/session';
+import * as fs from 'fs';
 
 const processOrders = (socket: Socket) => {
   socket.on('order', (branchID: number, data: IOrder) => {
@@ -15,9 +16,13 @@ const processOrders = (socket: Socket) => {
       }
       session.currentOrders.push(data);
       socket.broadcast.emit('session', session);
-      socket.emit('admin_status', 'order_success');
+      socket.emit('status', 'order_success');
+      fs.writeFile('sessions.json', JSON.stringify(Sessions), (err) => {
+        if (err) throw err;
+        console.log('The file has been saved!');
+      });
     } else {
-      socket.emit('admin_status', 'no_session');
+      socket.emit('status', 'no_session');
     }
   });
 };

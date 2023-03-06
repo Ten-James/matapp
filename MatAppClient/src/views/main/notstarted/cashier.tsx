@@ -21,7 +21,7 @@ const CashierNotStarted = () => {
                 id: 1,
                 branchId: branchID,
                 currentOrders: [],
-                startTime: new Date(),
+                startTime: new Date().toLocaleString(),
               } as ISession);
             }}
           >

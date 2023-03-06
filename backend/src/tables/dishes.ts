@@ -71,9 +71,9 @@ const processDishes = (socket) => {
       data.ingredients = data.ingredients.filter((x) => x[0] !== undefined && x[0] !== null && x[0] !== '' && x[0] !== '0');
       console.log(data.ingredients);
       await Promise.all(data.ingredients.map((item) => query(`INSERT INTO dish$ingredients (dish_id, ingredient_id, count) VALUES (${dish_id}, ${item[0]}, ${item[1]})`)));
-      socket.emit('admin_status', 'was_added');
+      socket.emit('status', 'was_added');
     } catch (e) {
-      socket.emit('admin_status', 'not_added');
+      socket.emit('status', 'not_added');
       console.error(e);
     }
   });
@@ -83,10 +83,10 @@ const processDishes = (socket) => {
 
     try {
       await query(`DELETE FROM dish$ingredients WHERE dish_id IN (${data.id.join(',')})`);
-      query(`DELETE FROM dishes WHERE id IN (${data.id.join(',')})`, (err: MysqlError, result: any) => noResponseQueryCallback(() => socket.emit('admin_status', 'not_deleted'), err, result));
-      socket.emit('admin_status', 'was_deleted');
+      query(`DELETE FROM dishes WHERE id IN (${data.id.join(',')})`, (err: MysqlError, result: any) => noResponseQueryCallback(() => socket.emit('status', 'not_deleted'), err, result));
+      socket.emit('status', 'was_deleted');
     } catch (error) {
-      socket.emit('admin_status', 'not_deleted');
+      socket.emit('status', 'not_deleted');
     }
   });
 
@@ -106,9 +106,9 @@ const processDishes = (socket) => {
       data.ingredients = data.ingredients.filter((x) => x[0] !== undefined && x[0] !== null && x[0] !== '' && x[0] !== '0');
 
       await Promise.all(data.ingredients.map((item) => query(`INSERT INTO dish$ingredients (dish_id, ingredient_id, count) VALUES (${data.id}, ${item[0]}, ${item[1]})`)));
-      socket.emit('admin_status', 'was_edited');
+      socket.emit('status', 'was_edited');
     } catch (e) {
-      socket.emit('admin_status', 'not_edited');
+      socket.emit('status', 'not_edited');
       console.error(e);
     }
   });

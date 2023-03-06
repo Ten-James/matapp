@@ -195,7 +195,7 @@ const Cashier = () => {
                     onClick={() => {
                       if (currentOrder === undefined) return;
                       socket.emit('order', branchID, currentOrder);
-                      socket.on('admin_status', (status) => {
+                      socket.on('status', (status) => {
                         if (status === 'order_success') {
                           setCurrentOrder(undefined);
                         }

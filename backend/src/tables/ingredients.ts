@@ -35,10 +35,10 @@ const processIngredients = (socket: Socket) => {
       await query(`INSERT INTO ingredients (name, cost, ingredient_type_id, text, ingredient_text_extension_id, recommended_count) VALUES ('${data.name}', '${data.cost}', '${categoryId}','${data.text}' , '${extensionId}', '${data.recommendedCount}')`);
       const id = (await query(`SELECT id FROM ingredients WHERE name = '${data.name}'`))[0].id;
       (data.allergens || []).forEach((allergen: number) => query(`INSERT INTO ingredient_allergens (ingredient_id, num) VALUES ('${id}', '${allergen + 1}')`));
-      socket.emit('admin_status', 'was_added');
+      socket.emit('status', 'was_added');
     } catch (error) {
       console.log(error);
-      socket.emit('admin_status', 'not_added');
+      socket.emit('status', 'not_added');
     }
   });
 
@@ -46,10 +46,10 @@ const processIngredients = (socket: Socket) => {
     writeLog(socket.handshake.address, `delete_${preset} \n ${JSON.stringify(data)}`);
 
     try {
-      query(`DELETE FROM ingredients WHERE id IN (${data.id.join(',')})`, (err: MysqlError, result: any) => noResponseQueryCallback(() => socket.emit('admin_status', 'not_deleted'), err, result));
-      socket.emit('admin_status', 'was_deleted');
+      query(`DELETE FROM ingredients WHERE id IN (${data.id.join(',')})`, (err: MysqlError, result: any) => noResponseQueryCallback(() => socket.emit('status', 'not_deleted'), err, result));
+      socket.emit('status', 'was_deleted');
     } catch (error) {
-      socket.emit('admin_status', 'not_deleted');
+      socket.emit('status', 'not_deleted');
     }
   });
 
@@ -67,10 +67,10 @@ const processIngredients = (socket: Socket) => {
       await query(`DELETE FROM ingredient_allergens WHERE ingredient_id = '${id}'`);
 
       (data.allergens || []).forEach((allergen: number) => query(`INSERT INTO ingredient_allergens (ingredient_id, num) VALUES ('${id}', '${allergen + 1}')`));
-      socket.emit('admin_status', 'was_eddited');
+      socket.emit('status', 'was_eddited');
     } catch (error) {
       console.log(error);
-      socket.emit('admin_status', 'not_edited');
+      socket.emit('status', 'not_edited');
     }
   });
 

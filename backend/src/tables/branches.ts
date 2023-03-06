@@ -81,9 +81,9 @@ const processBranches = (socket) => {
     writeLog(socket.handshake.address, `add_${preset} \n ${JSON.stringify(data)}`);
     try {
       connection.query(`INSERT INTO branches (name, location,size) VALUES ('${data.name}', '${data.location}', '${data.size}')`, noResponseQuery);
-      socket.emit('admin_status', 'was_added');
+      socket.emit('status', 'was_added');
     } catch (err) {
-      socket.emit('admin_status', 'not_added');
+      socket.emit('status', 'not_added');
     }
   });
 
@@ -91,9 +91,9 @@ const processBranches = (socket) => {
     writeLog(socket.handshake.address, `edit_${preset} \n ${JSON.stringify(data)}`);
     try {
       connection.query(`UPDATE branches SET name = '${data.name}', location = '${data.location}', size = '${data.size}' WHERE id = ${data.id}`, noResponseQuery);
-      socket.emit('admin_status', 'was_edited');
+      socket.emit('status', 'was_edited');
     } catch (error) {
-      socket.emit('admin_status', 'not_edited');
+      socket.emit('status', 'not_edited');
     }
   });
 
@@ -101,9 +101,9 @@ const processBranches = (socket) => {
     writeLog(socket.handshake.address, `delete_${preset} \n ${JSON.stringify(data.id)}`);
     try {
       connection.query(`DELETE FROM branches WHERE id IN (${data.id.join(',')})`, noResponseQuery);
-      socket.emit('admin_status', 'was_deleted');
+      socket.emit('status', 'was_deleted');
     } catch (error) {
-      socket.emit('admin_status', 'not_deleted');
+      socket.emit('status', 'not_deleted');
     }
   });
 
@@ -120,9 +120,9 @@ const processBranches = (socket) => {
           }
         }),
       );
-      socket.emit('admin_status', 'was_edited');
+      socket.emit('status', 'was_edited');
     } catch (e) {
-      socket.emit('admin_status', 'not_edited');
+      socket.emit('status', 'not_edited');
       console.error(e);
     }
   });

@@ -32,7 +32,7 @@ const App = () => {
   //TODO- move to branchSelector
   const [branches, getBranches, clearBranches] = useSocket<IBranch[]>(socket, 'branches', []);
 
-  socket.on('admin_status', setStatusHandler);
+  socket.on('status', setStatusHandler);
 
   const [user, setUser] = useState<IUser | null>(null);
 

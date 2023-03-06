@@ -13,17 +13,19 @@ export const ChangePasswordDialog = () => {
       header="Change Password"
       sendRoute=""
     >
-      <p>change password for {selectedItems[0].name}</p>
-      <Button
-        onClick={(e) => {
-          e.preventDefault();
-          getNewPassword(selectedItems[0].id);
-        }}
-      >
-        create new password
-      </Button>
+      <>
+        <p>change password for {selectedItems[0].name}</p>
+        <Button
+          onClick={(e) => {
+            e.preventDefault();
+            getNewPassword(selectedItems[0].id);
+          }}
+        >
+          create new password
+        </Button>
 
-      <p style={{ userSelect: 'all' }}>{newPassword}</p>
+        <p style={{ userSelect: 'all' }}>{newPassword}</p>
+      </>
     </BaseDialog>
   );
 };

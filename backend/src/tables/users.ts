@@ -41,9 +41,9 @@ const processUsers = (socket: Socket) => {
     try {
       connection.query(`INSERT INTO users (name, password, access, branch_id) VALUES ('${data.name}', md5('${data.password}'), ${data.access}, ${data.branch})`, noResponseQuery);
 
-      socket.emit('admin_status', 'was_added');
+      socket.emit('status', 'was_added');
     } catch (error) {
-      socket.emit('admin_status', 'not_added');
+      socket.emit('status', 'not_added');
     }
   });
 
@@ -51,9 +51,9 @@ const processUsers = (socket: Socket) => {
     writeLog(socket.handshake.address, `delete_${preset} \n ${JSON.stringify(data)}`);
     try {
       connection.query(`DELETE FROM users WHERE id IN (${data.id.join(',')})`, noResponseQuery);
-      socket.emit('admin_status', 'was_deleted');
+      socket.emit('status', 'was_deleted');
     } catch (error) {
-      socket.emit('admin_status', 'not_deleted');
+      socket.emit('status', 'not_deleted');
     }
   });
 
@@ -63,9 +63,9 @@ const processUsers = (socket: Socket) => {
     try {
       if (data.password !== '') connection.query(`UPDATE users SET name = '${data.name}', password = md5('${data.password}'), branch_id = '${data.branch}' where id = ${data.id}`);
       else connection.query(`UPDATE users SET name = '${data.name}', branch_id = '${data.branch}' where id = ${data.id}`, noResponseQuery);
-      socket.emit('admin_status', 'was_edited');
+      socket.emit('status', 'was_edited');
     } catch (error) {
-      socket.emit('admin_status', 'not_edited');
+      socket.emit('status', 'not_edited');
     }
   });
 
