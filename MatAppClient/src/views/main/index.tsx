@@ -9,6 +9,7 @@ import useSession from '../../hooks/useSession';
 import { useAppContext } from '../../context/appContext';
 import CashierNotStarted from './notstarted/cashier';
 import KitchenNotStarted from './notstarted/kitchen';
+import Orders from './orders';
 
 const Main = () => {
   const { socket } = useAppContext();
@@ -30,6 +31,10 @@ const Main = () => {
             element={<KitchenNotStarted />}
           />
           <Route
+            path="orders"
+            element={<p>wait</p>}
+          />
+          <Route
             path="*"
             element={<ErrorPage />}
           />
@@ -43,6 +48,10 @@ const Main = () => {
           <Route
             path="kitchen"
             element={<Kitchen />}
+          />
+          <Route
+            path="orders"
+            element={<Orders />}
           />
           <Route
             path="*"

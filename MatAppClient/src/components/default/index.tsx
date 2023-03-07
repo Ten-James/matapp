@@ -5,6 +5,7 @@ import { useAppContext } from '../../context/appContext';
 
 const ROUTES = [
   { path: '/main/cashier', name: 'cashier', icon: 'home' },
+  { path: '/main/orders', name: 'order', icon: 'monitor' },
   { path: '/main/kitchen', name: 'kitchen', icon: 'kitchen' },
   { path: '/admin', name: 'management', icon: 'admin_panel_settings' },
 ] as const;

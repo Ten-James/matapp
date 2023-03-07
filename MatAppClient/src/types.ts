@@ -18,6 +18,7 @@ export interface AppContextType {
   clearBranches: VoidFunction;
   user: IUser;
   setUser: Dispatch<SetStateAction<IUser>>;
+  setShowButtons: Dispatch<SetStateAction<boolean>>;
 }
 
 export type LanguageType = 'english' | 'czech';

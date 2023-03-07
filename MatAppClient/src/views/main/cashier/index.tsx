@@ -103,7 +103,7 @@ const Cashier = () => {
                       dishes: [],
                       id: 0,
                       cost: 0,
-                      type: 'normal',
+                      type: 'open',
                     } as IOrder);
                   if (currentOrder.dishes.find((d) => d.id === dish.id) === undefined) {
                     setCurrentOrder({ ...currentOrder, dishes: [...currentOrder.dishes, { id: dish.id, count: 1 }] });

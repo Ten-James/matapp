@@ -25,6 +25,7 @@ const processOrders = (socket: Socket) => {
 
       data.id = id;
       session.currentOrders.push(data);
+      socket.emit('session', session);
       socket.broadcast.emit('session', session);
       socket.emit('status', 'order_success', data.displayId);
       fs.writeFile('sessions.json', JSON.stringify(Sessions), (err) => {

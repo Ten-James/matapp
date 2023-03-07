@@ -27,9 +27,6 @@ const Kitchen = () => {
   useEffect(() => {
     console.log(session);
   }, [session]);
-  useEffect(() => {
-    console.log(orderStatus);
-  }, [orderStatus]);
 
   const currentOrders = useMemo(() => {
     if (session === null) return [];
@@ -43,7 +40,7 @@ const Kitchen = () => {
           }),
         };
       });
-  }, [session, dishes]);
+  }, [session, session.currentOrders.length, dishes]);
 
   const handleDishDone = useCallback((orderID: number, dishID: number) => {
     setOrderStatus((prev) => {

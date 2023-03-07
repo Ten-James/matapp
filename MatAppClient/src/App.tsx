@@ -17,7 +17,7 @@ import useStatus from './hooks/useStatus';
 import Main from './views/main';
 import useSocket from './hooks/useSocket';
 // TODO: move to env file
-const socket = socketIOClient('http://localhost:2238');
+const socket = socketIOClient('http://192.168.1.101:2238');
 
 // TODO: use styled components?
 
@@ -28,6 +28,7 @@ const App = () => {
 
   const [language, setLanguage] = useLocalStorage<LanguageType>('mat_lang', 'english');
   const [theme, setTheme] = useLocalStorage<ThemeType>('mat_theme', 'light');
+  const [buttonVisible, setButtonVisible] = useState(true);
   const location = useLocation();
   //TODO- move to branchSelector
   const [branches, getBranches, clearBranches] = useSocket<IBranch[]>(socket, 'branches', []);
@@ -50,6 +51,7 @@ const App = () => {
     user,
     setUser,
     clearBranches,
+    setShowButtons: setButtonVisible,
   };
 
   return (
@@ -76,23 +78,27 @@ const App = () => {
                 element={<ErrorPage />}
               />
             </Routes>
-            {location.pathname !== '/' ? (
-              <Button
-                class="lang-button"
-                color="gray"
-                style={{ right: '5em' }}
-                onClick={() => setSettingsVisible((x) => !x)}
-              >
-                <span className="material-symbols-outlined">settings</span>
-              </Button>
+            {buttonVisible ? (
+              <>
+                {location.pathname !== '/' ? (
+                  <Button
+                    class="lang-button"
+                    color="gray"
+                    style={{ right: '5em' }}
+                    onClick={() => setSettingsVisible((x) => !x)}
+                  >
+                    <span className="material-symbols-outlined">settings</span>
+                  </Button>
+                ) : null}
+                <Button
+                  class="lang-button"
+                  color="gray"
+                  onClick={() => setUser(null)}
+                >
+                  <span className="material-symbols-outlined">logout</span>
+                </Button>
+              </>
             ) : null}
-            <Button
-              class="lang-button"
-              color="gray"
-              onClick={() => setUser(null)}
-            >
-              <span className="material-symbols-outlined">logout</span>
-            </Button>
           </LoginPage>
           <Panel
             class="status"
