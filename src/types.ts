@@ -45,6 +45,7 @@ export interface IUser extends INamedBaseModel {
 }
 
 export interface IOrder extends IBaseModel {
+  displayId: number;
   date: string;
   dishes: { id: number; count: number }[];
   cost: number;
