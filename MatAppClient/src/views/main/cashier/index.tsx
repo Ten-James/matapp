@@ -200,6 +200,12 @@ const Cashier = () => {
           )}
         </div>
       </div>
+      <button
+        onClick={() => socket.emit('close_session', branchID)}
+        className="cls-button"
+      >
+        close session
+      </button>
     </div>
   );
 };

@@ -30,7 +30,10 @@ const Orders = () => {
       <h3 className="title">{translate('to_claim')}</h3>
       <div className="finished-orders">
         {finishedOrders.map((o) => (
-          <div key={o}>
+          <div
+            onClick={() => socket.emit('order_finish', session.currentOrders.find((co) => co.displayId === o).id)}
+            key={o}
+          >
             <div>{o}</div>
           </div>
         ))}

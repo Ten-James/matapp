@@ -199,3 +199,15 @@
     font-weight: 600;
     text-transform: uppercase;
 }
+
+.cls-button {
+    background-color:  var(--red-color);
+    color:  var(--white-color);
+    outline: none;
+    position: absolute;
+    top: 5rem;
+    right: 1rem;
+    border-radius: 0.2em;
+    border: none;
+    padding: 0.5em;
+}

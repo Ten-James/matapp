@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useMemo, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router';
+import { Route, Routes, redirect, useLocation, useNavigate } from 'react-router';
 import socketIOClient from 'socket.io-client';
 
 import { Button, Panel } from './components/common/panel';
@@ -25,6 +25,7 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [settingsVisible, setSettingsVisible] = useState(false);
   const { status, statusStyle, setStatusHandler, onClick, extraData } = useStatus();
+  const navigate = useNavigate();
 
   const [language, setLanguage] = useLocalStorage<LanguageType>('mat_lang', 'english');
   const [theme, setTheme] = useLocalStorage<ThemeType>('mat_theme', 'light');
@@ -81,14 +82,24 @@ const App = () => {
             {buttonVisible ? (
               <>
                 {location.pathname !== '/' ? (
-                  <Button
-                    class="lang-button"
-                    color="gray"
-                    style={{ right: '5em' }}
-                    onClick={() => setSettingsVisible((x) => !x)}
-                  >
-                    <span className="material-symbols-outlined">settings</span>
-                  </Button>
+                  <>
+                    <Button
+                      class="lang-button"
+                      color="gray"
+                      style={{ right: '10em' }}
+                      onClick={() => navigate('')}
+                    >
+                      <span className="material-symbols-outlined">home</span>
+                    </Button>
+                    <Button
+                      class="lang-button"
+                      color="gray"
+                      style={{ right: '5em' }}
+                      onClick={() => setSettingsVisible((x) => !x)}
+                    >
+                      <span className="material-symbols-outlined">settings</span>
+                    </Button>
+                  </>
                 ) : null}
                 <Button
                   class="lang-button"

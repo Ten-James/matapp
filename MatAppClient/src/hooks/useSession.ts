@@ -8,6 +8,9 @@ const useSession = (socket: Socket, branchId: number) => {
   socket.on('session', (data: ISession) => {
     if (data.branchId === branchId) setData(data);
   });
+  socket.on('closed_session', (id: number) => {
+    if (id === branchId) setData(null);
+  });
   const getData = useCallback(() => socket.emit(`get_session`, branchId), [socket, branchId]);
   const sendData = useCallback((data: ISession) => socket.emit(`set_session`, data), [socket]);
 

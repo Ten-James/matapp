@@ -59,6 +59,29 @@ const processOrders = (socket: Socket) => {
       socket.emit('status', 'no_session');
     }
   });
+
+  socket.on('order_finish', async (id: number) => {
+    writeLog(socket.handshake.address, `order_done\n ${JSON.stringify(id)}`);
+    const session = Sessions.find((s) => s.currentOrders.find((o) => o.id === id));
+    if (session) {
+      const order = session.currentOrders.find((o) => o.id === id);
+      if (order) {
+        order.type = 'finished';
+        await query('UPDATE serves SET type_id = 3 WHERE id = ?', [id]);
+        socket.emit('session', session);
+        socket.broadcast.emit('session', session);
+        socket.emit('status', 'order_done_success');
+        fs.writeFile('sessions.json', JSON.stringify(Sessions), (err) => {
+          if (err) throw err;
+          console.log('The file has been saved!');
+        });
+      } else {
+        socket.emit('status', 'no_order');
+      }
+    } else {
+      socket.emit('status', 'no_session');
+    }
+  });
 };
 
 export default processOrders;

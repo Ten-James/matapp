@@ -29,6 +29,20 @@ const Realtime = (socket: Socket) => {
       console.log('The file has been saved!');
     });
   });
+
+  socket.on('close_session', async (branchId: number) => {
+    const index = Sessions.findIndex((x) => x.branchId === branchId);
+    if (index !== -1) {
+      await query('UPDATE serve_sessions SET e_date = ? WHERE id = ?', [new Date().toLocaleString(), Sessions[index].id]);
+      Sessions.splice(index, 1);
+    }
+    socket.emit('closed_session', branchId);
+    socket.broadcast.emit('closed_session', branchId);
+    fs.writeFile('sessions.json', JSON.stringify(Sessions), (err) => {
+      if (err) throw err;
+      console.log('The file has been saved!');
+    });
+  });
 };
 
 export default Realtime;
