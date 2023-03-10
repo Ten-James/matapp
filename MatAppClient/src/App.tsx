@@ -5,7 +5,6 @@ import socketIOClient from 'socket.io-client';
 import { Button, Panel } from './components/common/panel';
 import { Translate } from './misc/transcripter';
 import { AppContextType, IBranch, IUser, LanguageType, ThemeType } from './types';
-import Admin from './views/admin/admin';
 import ErrorPage from './views/errorPage';
 import Loader from './views/loading';
 import BaseView from './views';
@@ -14,7 +13,8 @@ import useLocalStorage from './hooks/useLocalStorage';
 import { AppContext } from './context/appContext';
 import LoginPage from './views/login';
 import useStatus from './hooks/useStatus';
-import Main from './views/main';
+const Admin = React.lazy(() => import('./views/admin'));
+const Main = React.lazy(() => import('./views/main'));
 import useSocket from './hooks/useSocket';
 // TODO: move to env file
 const socket = socketIOClient('http://localhost:2238');

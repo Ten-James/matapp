@@ -15,6 +15,37 @@ const processOrders = (socket: Socket) => {
       } else {
         data.displayId = session.currentOrders[session.currentOrders.length - 1].displayId + 1;
       }
+      //insane backend skills
+      const allCost = (await query('SELECT dish_id, ingredient_id, SUM(count) as count FROM dish$ingredients WHERE dish_id IN (?) GROUP BY dish_id, ingredient_id', [data.dishes.map((d) => d.id).join(', ')])) as { dish_id: number; ingredient_id: number; count: number }[];
+      const allCost2 = allCost
+        .map((a) => {
+          const dish = data.dishes.find((d) => d.id === a.dish_id);
+          if (dish) {
+            return { ingredient_id: a.ingredient_id, count: a.count * dish.count };
+          }
+          return { ingredient_id: a.ingredient_id, count: a.count };
+        })
+        .reduce((acc, cur) => {
+          const index = acc.findIndex((a) => a.ingredient_id === cur.ingredient_id);
+          if (index === -1) {
+            acc.push(cur);
+          } else {
+            acc[index].count += cur.count;
+          }
+          return acc;
+        }, [] as { ingredient_id: number; count: number }[]);
+
+      console.log(allCost2.map((a) => [a.ingredient_id, a.count, branchID]));
+      await Promise.all(allCost2.map((a) => query(`UPDATE branch$ingredients SET count = count - ${a.count} WHERE ingredient_id = ${a.ingredient_id} AND branch_id = ${branchID}`)));
+
+      const negative = (await query('SELECT ingredient_id FROM branch$ingredients WHERE count < 0 AND branch_id = ?', [branchID])) as { ingredient_id: number; count: number }[];
+      if (negative.length > 0) {
+        const name = (await query('SELECT name FROM dishes WHERE id = ?', [allCost.find((a) => a.ingredient_id === negative[0].ingredient_id)?.dish_id]))[0].name;
+        socket.emit('status', 'order_failed', name);
+        await Promise.all(allCost2.map((a) => query(`UPDATE branch$ingredients SET count = count + ${a.count} WHERE ingredient_id = ${a.ingredient_id} AND branch_id = ${branchID}`)));
+        return;
+      }
+
       await query('INSERT INTO serves (serve_date, session_id, type_id, cost, display_id) VALUES (?, ?, 1, ?, ?)', [data.date, session.id, data.cost, data.displayId]);
       const id = (await query('SELECT id FROM serves WHERE serve_date = ? AND session_id = ? AND type_id = 1 AND cost = ? AND display_id = ?', [data.date, session.id, data.cost, data.displayId]))[0].id;
       await Promise.all(

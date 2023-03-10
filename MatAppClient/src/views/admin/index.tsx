@@ -6,7 +6,7 @@ import type { AdminContextType, IDialogOption, IBranch, IBranchData, IDish, IIng
 import Dialog from './dialog';
 import InformationView from './information/information';
 import Navigation from './navigation';
-import TableView from './tableView/';
+import TableView from './tableView';
 import TableViewDishes from './tableView/tableViewDishes';
 import TableViewSection from './tableView/tableViewSection';
 import AdminDefaultView from './default';

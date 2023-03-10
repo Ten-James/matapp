@@ -41,7 +41,7 @@ const BranchSelector = () => {
                 }}
                 class="branch-button"
               >
-                Log in
+                {translate('log_in')}
               </Button>
             </Panel>
           ))}

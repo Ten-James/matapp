@@ -94,3 +94,5 @@ start_session,Start Session,Začít pracovat
 wait_for_cashier,Wait for Cashier,Čeká na pokladníka
 start,Start,Začít
 arr,All right reserved,Všechna práva vyhrazena
+order_failed,Order Failed, missing,Objednávka selhala, chybí
+log_in,Log in,Přihlásit se

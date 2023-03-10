@@ -15,6 +15,15 @@ const Cashier = () => {
   const [selectedCategory, setSelectedCategory] = useState<String | undefined>(undefined);
   const [currentOrder, setCurrentOrder] = useState<IOrder | undefined>();
 
+  socket.on('status', (status) => {
+    if (status === 'order_success') {
+      setCurrentOrder(undefined);
+    }
+    if (status === 'order_failed') {
+      setCurrentOrder(undefined);
+    }
+  });
+
   const currentOrderDishes = useMemo(() => {
     if (currentOrder === undefined) return [];
     return currentOrder.dishes.map((dish) => [dishes.find((d) => d.id === dish.id), dish.count] as const);
@@ -46,7 +55,7 @@ const Cashier = () => {
     if (currentStorage === undefined) return [];
     return dishes.filter((dish) => {
       const ing = dish.ingredients.map((ing) => [currentStorage.find((st) => st.name === ing.name)?.count || 0, ing.count] as const);
-      return ing.every(([have, need]) => have !== undefined && have > need);
+      return ing.every(([have, need]) => have !== undefined && have >= need);
     });
   }, [currentStorage]);
 
@@ -182,11 +191,7 @@ const Cashier = () => {
                     onClick={() => {
                       if (currentOrder === undefined) return;
                       socket.emit('order', branchID, currentOrder);
-                      socket.on('status', (status) => {
-                        if (status === 'order_success') {
-                          setCurrentOrder(undefined);
-                        }
-                      });
+                      getStorage(branchID);
                     }}
                     className="order-button"
                   >
