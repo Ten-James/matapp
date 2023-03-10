@@ -5,7 +5,7 @@ import { useMainContext } from '../../../context/mainContext';
 import './style.css';
 
 const Orders = () => {
-  const { socket, setShowButtons, branches } = useAppContext();
+  const { socket, setShowButtons, branches, translate } = useAppContext();
   const { branchID, session } = useMainContext();
   useEffect(() => {
     setShowButtons(false);
@@ -16,8 +16,10 @@ const Orders = () => {
 
   return (
     <div className="orders-container">
-      <h1>{branches.find((b) => b.id === branchID).name} objednavky</h1>
-      <h3 className="title">připravujeme</h3>
+      <h1>
+        {branches.find((b) => b.id === branchID).name} {translate('orders')}
+      </h1>
+      <h3 className="title">{translate('preparing')}</h3>
       <div className="ongoing-orders">
         {onGoingOrders.map((o) => (
           <div key={o}>
@@ -25,7 +27,7 @@ const Orders = () => {
           </div>
         ))}
       </div>
-      <h3 className="title">k vyzvednuti</h3>
+      <h3 className="title">{translate('to_claim')}</h3>
       <div className="finished-orders">
         {finishedOrders.map((o) => (
           <div key={o}>

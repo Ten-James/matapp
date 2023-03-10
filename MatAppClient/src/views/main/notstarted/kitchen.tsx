@@ -1,7 +1,9 @@
 import LogoSVG from '../../../components/common/logo';
 import { Panel } from '../../../components/common/panel';
+import { useAppContext } from '../../../context/appContext';
 
 const KitchenNotStarted = () => {
+  const { translate } = useAppContext();
   return (
     <div className="App">
       <Panel
@@ -10,9 +12,9 @@ const KitchenNotStarted = () => {
       >
         <LogoSVG class="upper" />
         <div>
-          <h1>Wait till cashier start Session</h1>
+          <h1>{translate('wait_for_cashier')}</h1>
         </div>
-        <p>All rights reserved</p>
+        <p>{translate('arr')}</p>
       </Panel>
     </div>
   );

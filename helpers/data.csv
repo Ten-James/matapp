@@ -81,3 +81,16 @@ start_time,Start Time,Čas začátku
 count_current_order,Count Current Order,Počet aktuálních objednávek
 order_success,Order Success,Objednávka byla úspěšná
 no_session,No Session,Nebyla nalezena session
+order_done_success,Order Done Success,Objednávka byla úspěšně dokončena
+no_order,No Order,Nebyla nalezena objednávka
+no_orders,No Orders,Nebyly nalezeny žádné objednávky
+finish_order,Finish Order,Dokončit objednávku
+work_on_order,Work on Order,Pracujte na objednávce
+order,Order,Objednávka
+orders,Orders,Objednávky
+preparing,Preparing,Připravuje se
+to_claim,To Claim,Čeká na převzetí
+start_session,Start Session,Začít pracovat
+wait_for_cashier,Wait for Cashier,Čeká na pokladníka
+start,Start,Začít
+arr,All right reserved,Všechna práva vyhrazena

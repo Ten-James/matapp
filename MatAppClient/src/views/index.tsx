@@ -9,7 +9,7 @@ interface Props {
   showSettings: () => void;
 }
 const BaseView = ({ showSettings }: Props) => {
-  const { setLoading } = useAppContext();
+  const { setLoading, translate } = useAppContext();
   useEffect(() => {
     GenerateFries();
     setTimeout(() => setLoading(false), 1000);
@@ -22,7 +22,7 @@ const BaseView = ({ showSettings }: Props) => {
       >
         <LogoSVG class="upper" />
         <SelectorContainer showSettings={showSettings} />
-        <p>All rights reserved</p>
+        <p>{translate('arr')}</p>
       </Panel>
     </div>
   );

@@ -8,7 +8,7 @@ import { useMainContext } from '../../context/mainContext';
 import { Link } from 'react-router-dom';
 
 const BranchSelector = () => {
-  const { branches, getBranches, setLoading } = useAppContext();
+  const { branches, getBranches, setLoading, translate } = useAppContext();
   const { setBranchID } = useMainContext();
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const BranchSelector = () => {
           >
             Go main page
           </Link>
-          <p>All rights reserved</p>
+          <p>{translate('arr')}</p>
         </div>
       </Panel>
     </div>

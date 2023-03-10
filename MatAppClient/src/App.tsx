@@ -17,7 +17,7 @@ import useStatus from './hooks/useStatus';
 import Main from './views/main';
 import useSocket from './hooks/useSocket';
 // TODO: move to env file
-const socket = socketIOClient('http://192.168.1.101:2238');
+const socket = socketIOClient('http://localhost:2238');
 
 // TODO: use styled components?
 

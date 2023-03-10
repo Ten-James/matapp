@@ -15,7 +15,7 @@ interface IOrderStatus {
 }
 
 const Kitchen = () => {
-  const { socket } = useAppContext();
+  const { socket, translate } = useAppContext();
   const { branchID, session } = useMainContext();
   const [dishes, getDishes] = useSocket<IDish[]>(socket, 'dishes', []);
   const [orderStatus, setOrderStatus] = useState<IOrderStatus[]>([]);
@@ -51,7 +51,7 @@ const Kitchen = () => {
   }, []);
   return (
     <div>
-      <h1>Kitchen</h1>
+      <h1>{translate('kitchen')}</h1>
       {currentOrders?.length !== 0 ? (
         <div className="kitchen-order-container">
           {currentOrders.map((order) => {
@@ -91,17 +91,17 @@ const Kitchen = () => {
                       socket.emit('order_done', order.id);
                     }}
                   >
-                    Finish Order
+                    {translate('finish_order')}
                   </p>
                 ) : (
-                  <p className="finish-order">zpracujte objednavku.</p>
+                  <p className="finish-order">{translate('work_on_order')}</p>
                 )}
               </div>
             );
           })}
         </div>
       ) : (
-        <p>No orders</p>
+        <p>{translate('no_orders')}</p>
       )}
     </div>
   );

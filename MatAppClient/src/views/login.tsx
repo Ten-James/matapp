@@ -9,7 +9,7 @@ interface Props {
 }
 
 const LoginPage = (props: Props) => {
-  const { user, setUser, setLoading, socket } = useAppContext();
+  const { user, setUser, setLoading, socket, translate } = useAppContext();
   const [status, setStatus] = useState('');
   const nameRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
@@ -65,7 +65,7 @@ const LoginPage = (props: Props) => {
               </Button>
               <p>Ask manager if you lost your access</p>
             </div>
-            <p>All rights reserved</p>
+            <p>{translate('arr')}</p>
           </Panel>
         </div>
       ) : (

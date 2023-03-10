@@ -1,9 +1,11 @@
 import LogoSVG from '../../../components/common/logo';
 import { Button, Panel } from '../../../components/common/panel';
+import { useAppContext } from '../../../context/appContext';
 import { useMainContext } from '../../../context/mainContext';
 import { ISession } from '../../../types';
 
 const CashierNotStarted = () => {
+  const { translate } = useAppContext();
   const { setSession, branchID } = useMainContext();
   return (
     <div className="App">
@@ -13,7 +15,7 @@ const CashierNotStarted = () => {
       >
         <LogoSVG class="upper" />
         <div>
-          <h1>Please Start Session</h1>
+          <h1>{translate('start_session')}</h1>
 
           <Button
             onClick={() => {
@@ -25,10 +27,10 @@ const CashierNotStarted = () => {
               } as ISession);
             }}
           >
-            Create
+            {translate('start')}
           </Button>
         </div>
-        <p>All rights reserved</p>
+        <p>{translate('arr')}</p>
       </Panel>
     </div>
   );
