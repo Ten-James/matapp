@@ -31,7 +31,7 @@ const sendInfo = (socket: Socket) => {
       const databaseData = result[0];
       socket.emit('info', {
         uptime: uptime,
-        clients: io.engine.clientsCount,
+        clients: 0,
         memory: Math.floor(process.memoryUsage().heapTotal / 1024 / 1024) + 'MB',
         time: new Date().toLocaleTimeString(),
         data: getLogsAsString(),
