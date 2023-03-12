@@ -14,4 +14,4 @@ export const io = new Server(httpServer, {
 
 io.on('connection', processConnection);
 
-httpServer.listen(2238, () => {});
+httpServer.listen(process.env.PORT, () => {});

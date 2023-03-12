@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "main": "./dist/main.js",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "vi": "tsc --version",
     "build": "tsc && vite build",
     "preview": "vite preview",
