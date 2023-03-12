@@ -17,7 +17,7 @@ const Admin = React.lazy(() => import('./views/admin'));
 const Main = React.lazy(() => import('./views/main'));
 import useSocket from './hooks/useSocket';
 // TODO: move to env file
-const socket = socketIOClient('http://localhost:2238');
+const socket = socketIOClient(import.meta.env.VITE_SERVER_API || 'http://localhost:2238');
 
 // TODO: use styled components?
 
