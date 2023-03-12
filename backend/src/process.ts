@@ -28,7 +28,7 @@ const sendInfo = (socket: Socket) => {
 	`,
     (err, result) => {
       if (err) throw err;
-      const databaseData = result[0];
+      const databaseData = result[0] ?? { size: 0, rows: 0 };
       socket.emit('info', {
         uptime: uptime,
         clients: 0,
