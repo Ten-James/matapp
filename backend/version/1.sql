@@ -1,8 +1,8 @@
 CREATE TABLE
     `dish_categories` (
         `id` int NOT NULL AUTO_INCREMENT,
-        `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-        `icon` varchar(255) COLLATE utf8mb4_czech_ci DEFAULT NULL,
+        `name` varchar(255) NOT NULL,
+        `icon` varchar(255) DEFAULT NULL,
         PRIMARY KEY (`id`),
         UNIQUE KEY `dish_categories_UN` (`name`)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
@@ -10,7 +10,7 @@ CREATE TABLE
 CREATE TABLE
     `dishes` (
         `id` int NOT NULL AUTO_INCREMENT,
-        `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+        `name` varchar(255) NOT NULL,
         `cost` int NOT NULL,
         `category_id` int NOT NULL DEFAULT '1',
         PRIMARY KEY (`id`),
@@ -22,8 +22,8 @@ CREATE TABLE
 CREATE TABLE
     `branches` (
         `id` int NOT NULL AUTO_INCREMENT,
-        `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-        `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+        `name` varchar(255) NOT NULL,
+        `location` varchar(255) NOT NULL,
         PRIMARY KEY (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
 
@@ -31,13 +31,13 @@ CREATE TABLE
 CREATE TABLE
     `ingredient_text_extensions` (
         `id` int NOT NULL AUTO_INCREMENT,
-        `text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+        `text` varchar(255) NOT NULL,
         PRIMARY KEY (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
 CREATE TABLE
     `ingredient_types` (
         `id` int NOT NULL AUTO_INCREMENT,
-        `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+        `name` varchar(255) NOT NULL,
         PRIMARY KEY (`id`),
         UNIQUE KEY `ingredient_types_name_IDX` (`name`) USING BTREE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
@@ -45,8 +45,8 @@ CREATE TABLE
 CREATE TABLE
     `users` (
         `id` int NOT NULL AUTO_INCREMENT,
-        `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-        `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+        `name` varchar(255) NOT NULL,
+        `password` varchar(255) NOT NULL,
         `branch_id` int DEFAULT NULL,
         `access` int NOT NULL DEFAULT '0',
         PRIMARY KEY (`id`),
@@ -58,10 +58,10 @@ CREATE TABLE
 CREATE TABLE
     `ingredients` (
         `id` int NOT NULL AUTO_INCREMENT,
-        `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+        `name` varchar(255) NOT NULL,
         `ingredient_type_id` int NOT NULL,
         `cost` int NOT NULL DEFAULT '0',
-        `text` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+        `text` varchar(255) DEFAULT NULL,
         `ingredient_text_extension_id` int DEFAULT NULL,
         PRIMARY KEY (`id`),
         KEY `ingredients_FK` (
@@ -89,7 +89,7 @@ CREATE TABLE
 CREATE TABLE
     `serve_type` (
         `id` int NOT NULL AUTO_INCREMENT,
-        `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+        `name` varchar(255) NOT NULL,
         PRIMARY KEY (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
 CREATE TABLE
