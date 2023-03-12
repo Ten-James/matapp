@@ -4,3 +4,4 @@ backend/node_modules/
 *.DS_Store
 .vite
 .vscode
+*-lock.json
