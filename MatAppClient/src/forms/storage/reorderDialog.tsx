@@ -19,9 +19,9 @@ export const ReorderDialog = () => {
           <div>
             <h3>{storage.name}</h3>
             {storage.data.map((ing) =>
-              ing.count < ing.recommendedCount ? (
+              ing.count! < ing.recommendedCount ? (
                 <p>
-                  {ing.recommendedCount - ing.count}x {ing.name}{' '}
+                  {ing.recommendedCount - ing.count!}x {ing.name}{' '}
                 </p>
               ) : null,
             )}

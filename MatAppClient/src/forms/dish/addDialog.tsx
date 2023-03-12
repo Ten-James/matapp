@@ -40,10 +40,12 @@ export const AddDialog = () => {
             ))}
             <tr>
               <td colSpan={2}>{translate('production price')}:</td>
-              <td style={{ textAlign: 'right' }}>{sideText.at(-1)[2]}</td>
+              <td style={{ textAlign: 'right' }}>{sideText.at(-1)![2]}</td>
             </tr>
           </table>
-        ) : null
+        ) : (
+          <></>
+        )
       }
     >
       <>
@@ -122,7 +124,7 @@ export const AddDialog = () => {
                       if (!ingredient) return acc;
                       console.log(val.name.split('_')[1]);
                       console.log(document.querySelector(`input[name="line_${val.name.split('_')[1]}_amount"]`));
-                      const count = parseInt(document.querySelector<HTMLInputElement>(`input[name="line_${val.name.split('_')[1]}_amount"]`).value) || 1;
+                      const count = parseInt(document.querySelector<HTMLInputElement>(`input[name="line_${val.name.split('_')[1]}_amount"]`)?.value || '1') || 1;
                       setSideText((old) => [...old, [ingredient.name, `${count}x ${ingredient.cost}`, `${acc + ingredient.cost * count}`]]);
                       return acc + ingredient.cost * count;
                     }, 0),
@@ -144,7 +146,7 @@ export const AddDialog = () => {
                       if (!ingredient) return acc;
                       console.log(val.name.split('_')[1]);
                       console.log(document.querySelector(`input[name="line_${val.name.split('_')[1]}_amount"]`));
-                      const count = parseInt(document.querySelector<HTMLInputElement>(`input[name="line_${val.name.split('_')[1]}_amount"]`).value) || 1;
+                      const count = parseInt(document.querySelector<HTMLInputElement>(`input[name="line_${val.name.split('_')[1]}_amount"]`)?.value || '1') || 1;
                       setSideText((old) => [...old, [ingredient.name, `${count}x ${ingredient.cost}`, `${acc + ingredient.cost * count}`]]);
                       return acc + ingredient.cost * count;
                     }, 0),

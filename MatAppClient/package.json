@@ -5,6 +5,7 @@
   "main": "./dist/main.js",
   "scripts": {
     "dev": "vite",
+    "vi": "tsc --version",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "esbuild-cjs": "esbuild main.js --format=cjs --outfile=./dist/main.js",
@@ -28,7 +29,7 @@
     "electron": "^21.1.1",
     "electron-packager": "^16.0.0",
     "esbuild": "^0.15.11",
-    "typescript": "^4.6.4",
+    "typescript": "^4.9.5",
     "vite": "^3.1.0"
   }
 }

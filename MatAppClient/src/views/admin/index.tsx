@@ -6,7 +6,7 @@ import type { AdminContextType, IDialogOption, IBranch, IBranchData, IDish, IIng
 import Dialog from './dialog';
 import InformationView from './information/information';
 import Navigation from './navigation';
-import TableView from './tableView';
+import TableView from './tableView/tableView';
 import TableViewDishes from './tableView/tableViewDishes';
 import TableViewSection from './tableView/tableViewSection';
 import AdminDefaultView from './default';
@@ -71,7 +71,7 @@ const Admin = () => {
     >
       {dialog !== 'hidden' && <Dialog />}
       <div className="App App-grid">
-        <Navigation userAccess={user.access} />
+        <Navigation userAccess={user!.access} />
         <Routes>
           <Route
             path="/branches"
@@ -84,7 +84,7 @@ const Admin = () => {
               />
             }
           />
-          {user.access === 2 ? (
+          {user!.access === 2 ? (
             <>
               <Route
                 path="/branches/storage"

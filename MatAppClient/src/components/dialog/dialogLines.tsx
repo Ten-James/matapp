@@ -58,7 +58,7 @@ export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo
           name={name}
           type={isNumber ? 'number' : 'text'}
           required={required}
-          defaultValue={value.split(' ')[0]}
+          defaultValue={value?.split(' ')[0] || ''}
           ref={ref}
         />
         <select
@@ -70,7 +70,7 @@ export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo
             combo.map((x, ind) => (
               <option
                 key={ind}
-                selected={x === value.split(' ')[1]}
+                selected={x === value?.split(' ')[1] ? true : false}
                 value={x}
               >
                 {x}
@@ -84,6 +84,7 @@ export const TextAttributeWithCombo = ({ name, required = false, isNumber, combo
 
 export const ComboBoxDialog = ({ name, required = false, comboValue, value }: TextAttributeDialogWithComboProp) => {
   const { translate } = useAppContext();
+  //@ts-ignore
   const [values, setValues] = useState([...comboValue]);
   useEffect(() => {
     setValues([...comboValue]);
@@ -118,6 +119,7 @@ export const ComboBoxDialog = ({ name, required = false, comboValue, value }: Te
 
 export const UnsetComboBoxDialog = ({ name, required = false, comboValue, value, onClick }: TextAttributeDialogWithComboProp) => {
   const { translate } = useAppContext();
+  // @ts-ignore
   const [values, setValues] = useState([...comboValue]);
   useEffect(() => {
     setValues([...comboValue]);
@@ -147,6 +149,7 @@ export const UnsetComboBoxDialog = ({ name, required = false, comboValue, value,
 
 export const TextAttributeWithAutoCompleteDialog = ({ name, required = false, combo, value }: TextAttributeDialogWithComboProp) => {
   const { translate } = useAppContext();
+  //@ts-ignore
   const [values, setValues] = useState([...combo]);
   useEffect(() => {
     setValues([...combo]);
@@ -170,7 +173,7 @@ export const TextAttributeWithAutoCompleteDialog = ({ name, required = false, co
           name={name}
           defaultValue={value}
           onKeyUp={(e) => {
-            setValues(combo.filter((x) => x.startsWith(e.currentTarget.value)));
+            setValues(values.filter((x) => x.startsWith(e.currentTarget.value)));
             setShow(true);
           }}
         />
@@ -183,7 +186,7 @@ export const TextAttributeWithAutoCompleteDialog = ({ name, required = false, co
                 onClick={(e) => {
                   e.preventDefault();
                   const input = document.querySelector<HTMLInputElement>(`#${name}`);
-                  input.value = x;
+                  if (input) input.value = x;
                   setShow((old) => !old);
                 }}
                 value={x}
@@ -214,7 +217,7 @@ export const CheckboxGroupDialog = ({ name, radios, checked }: CheckboxGroupDial
                 type="checkbox"
                 id={name + '-' + ind}
                 name={name}
-                defaultChecked={checked.includes(x)}
+                defaultChecked={checked?.includes(x)}
                 value={x}
               />
               <label htmlFor={name + ind}>{x}</label>

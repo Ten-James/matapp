@@ -7,7 +7,7 @@ interface PanelProps {
   disabled?: boolean;
   color?: 'red' | 'blue' | 'white' | 'gray';
   children: React.ReactNode;
-  onClick?: (event) => void;
+  onClick?: (event: any) => void;
 }
 export const Panel = (props: PanelProps) => {
   return (

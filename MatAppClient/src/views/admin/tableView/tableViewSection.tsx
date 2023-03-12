@@ -8,9 +8,9 @@ import './tableView.css';
 import { Button, Panel } from '../../../components/common/panel';
 import { IBranchData, INamedBaseModel, FilterData, Sort } from '../../../types';
 import { BaseButtons } from '../../../components/tableView/baseButtons';
-import { TableViewProps } from '.';
 import { useAdminContext } from '../../../context/adminContext';
 import { useAppContext } from '../../../context/appContext';
+import { TableViewProps } from './type';
 
 const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayName, ...args }: TableViewProps<IBranchData<T>>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
@@ -37,7 +37,7 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
   );
   const categories = useMemo(() => {
     if (data.length === 0) return [];
-    let tmp = [];
+    let tmp: string[] = [];
     // @ts-ignore
     data.forEach((x) => x.data.forEach((e) => tmp.push(e.category)));
     return [...new Set(tmp)];
@@ -71,6 +71,7 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
                       onClick={() => {
                         setFilter({
                           filterMatch: filter.filterMatch,
+                          // @ts-ignore
                           sort: MakeSort(e, typeof show[0][e], true),
                         });
                       }}
@@ -82,6 +83,7 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
                       onClick={() => {
                         setFilter({
                           filterMatch: filter.filterMatch,
+                          // @ts-ignore
                           sort: MakeSort(e, typeof show[0][e], false),
                         });
                       }}

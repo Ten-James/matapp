@@ -18,4 +18,4 @@ export const MakeSort = <T extends IBaseModel>(e: string, t: string, ord: boolea
   }
 };
 
-export const defaultFilter = { filterMatch: (x) => true, sort: (a, b) => 1 };
+export const defaultFilter = { filterMatch: (x: any) => true, sort: (a: any, b: any) => 1 };

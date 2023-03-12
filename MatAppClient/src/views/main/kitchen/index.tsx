@@ -24,9 +24,7 @@ const Kitchen = () => {
     getDishes();
   }, []);
 
-  useEffect(() => {
-    console.log(session);
-  }, [session]);
+  if (!session) return null;
 
   const currentOrders = useMemo(() => {
     if (session === null) return [];
@@ -40,12 +38,12 @@ const Kitchen = () => {
           }),
         };
       });
-  }, [session, session.currentOrders.length, dishes]);
+  }, [session, session?.currentOrders.length, dishes]);
 
   const handleDishDone = useCallback((orderID: number, dishID: number) => {
     setOrderStatus((prev) => {
-      const order = prev.find((o) => o.id === orderID) ? prev.find((o) => o.id === orderID) : { id: orderID, dishes: currentOrders.find((o) => o.id === orderID).dishes.map((d) => ({ id: d[0].id, done: false })) };
-      const newOrder = { ...order, dishes: order.dishes.map(({ id, done }) => (id === dishID ? { id: id, done: true } : { id: id, done: done })) } as IOrderStatus;
+      const order = prev.find((o) => o.id === orderID) ? prev.find((o) => o.id === orderID) : { id: orderID, dishes: currentOrders.find((o) => o.id === orderID)?.dishes.map((d) => ({ id: d[0].id, done: false })) };
+      const newOrder = { ...order, dishes: order?.dishes?.map(({ id, done }) => (id === dishID ? { id: id, done: true } : { id: id, done: done })) } as IOrderStatus;
       return [...prev.filter((o) => o.id !== orderID), newOrder];
     });
   }, []);
@@ -64,8 +62,8 @@ const Kitchen = () => {
                 <div className="dishes">
                   {order.dishes
                     .sort(([dishA, countA], [dishB, countB]) => {
-                      const A = orderStatus.find((o) => o.id === order.id)?.dishes.find((d) => d.id === dishA.id).done || false;
-                      const B = orderStatus.find((o) => o.id === order.id)?.dishes.find((d) => d.id === dishB.id).done || false;
+                      const A = orderStatus.find((o) => o.id === order.id)?.dishes.find((d) => d.id === dishA.id)?.done || false;
+                      const B = orderStatus.find((o) => o.id === order.id)?.dishes.find((d) => d.id === dishB.id)?.done || false;
                       if (A && !B) return 1;
                       if (!A && B) return -1;
                       return 0;
@@ -74,7 +72,7 @@ const Kitchen = () => {
                       return (
                         <div
                           onClick={() => handleDishDone(order.id, dish.id)}
-                          style={{ opacity: orderStatus.find((o) => o.id === order.id)?.dishes.find((d) => d.id === dish.id).done || false ? '0.25' : '1' }}
+                          style={{ opacity: orderStatus.find((o) => o.id === order.id)?.dishes.find((d) => d.id === dish.id)?.done || false ? '0.25' : '1' }}
                           key={dish.id}
                         >
                           <p>

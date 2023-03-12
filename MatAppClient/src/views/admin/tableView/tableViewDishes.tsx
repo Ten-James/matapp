@@ -8,9 +8,9 @@ import './tableView.css';
 import { Button, Panel } from '../../../components/common/panel';
 import { IDish, FilterData } from '../../../types';
 import { BaseButtons } from '../../../components/tableView/baseButtons';
-import { TableViewProps } from '.';
 import { useAdminContext } from '../../../context/adminContext';
 import { useAppContext } from '../../../context/appContext';
+import { TableViewProps } from './type';
 
 const TableViewDishes = ({ data, getData, displayName, ...args }: TableViewProps<IDish>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
@@ -68,6 +68,7 @@ const TableViewDishes = ({ data, getData, displayName, ...args }: TableViewProps
                         onClick={() => {
                           setFilter({
                             filterMatch: filter.filterMatch,
+                            //@ts-ignore
                             sort: MakeSort(e, typeof show[0][e], true),
                           });
                         }}
@@ -79,6 +80,7 @@ const TableViewDishes = ({ data, getData, displayName, ...args }: TableViewProps
                         onClick={() => {
                           setFilter({
                             filterMatch: filter.filterMatch,
+                            //@ts-ignore
                             sort: MakeSort(e, typeof show[0][e], false),
                           });
                         }}

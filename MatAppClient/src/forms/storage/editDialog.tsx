@@ -23,8 +23,10 @@ export const EditDialog = () => {
         };
         Object.keys(data).forEach((key) => {
           if (ingredients.findIndex((a) => a.name === key) === -1) {
+            //@ts-ignore
             newData[key] = data[key];
           } else {
+            //@ts-ignore
             newData['data'][ingredients.find((a) => a.name === key)?.id] = parseInt(data[key]);
           }
         });

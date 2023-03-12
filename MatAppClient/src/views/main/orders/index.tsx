@@ -11,13 +11,15 @@ const Orders = () => {
     setShowButtons(false);
   }, []);
 
+  if (!session) return null;
+  if (!branches) return null;
   const onGoingOrders = useMemo(() => session?.currentOrders.filter((o) => o.type === 'open').map((o) => o.displayId) || [], [session]);
   const finishedOrders = useMemo(() => session?.currentOrders.filter((o) => o.type === 'submitted').map((o) => o.displayId) || [], [session]);
 
   return (
     <div className="orders-container">
       <h1>
-        {branches.find((b) => b.id === branchID).name} {translate('orders')}
+        {branches.find((b) => b.id === branchID)?.name || 'not found'} {translate('orders')}
       </h1>
       <h3 className="title">{translate('preparing')}</h3>
       <div className="ongoing-orders">
@@ -31,7 +33,7 @@ const Orders = () => {
       <div className="finished-orders">
         {finishedOrders.map((o) => (
           <div
-            onClick={() => socket.emit('order_finish', session.currentOrders.find((co) => co.displayId === o).id)}
+            onClick={() => socket.emit('order_finish', session?.currentOrders.find((co) => co.displayId === o)?.id)}
             key={o}
           >
             <div>{o}</div>

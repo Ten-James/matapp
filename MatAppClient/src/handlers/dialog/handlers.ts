@@ -1,4 +1,6 @@
-export const hide = (e: Event, setTranslateY: (string) => void, setDialog: (string) => void) => {
+import { IDialogOption } from '../../types';
+
+export const hide = (e: Event, setTranslateY: (string: string) => void, setDialog: React.Dispatch<React.SetStateAction<IDialogOption>>) => {
   e.preventDefault();
   setTranslateY('-100vh');
   setTimeout(() => setDialog('hidden'), 500);
@@ -30,7 +32,9 @@ export const submit = (e: Event, form: HTMLFormElement | null, selectedIDs: numb
 
   checkboxes.forEach((checkbox) => {
     if (checkbox.checked) {
+      // @ts-ignore
       if (!Object.keys(data).includes(checkbox.name)) data[checkbox.name] = [];
+      // @ts-ignore
       data[checkbox.name].push(checkbox.id.split('-')[1]);
     }
   });
@@ -38,16 +42,19 @@ export const submit = (e: Event, form: HTMLFormElement | null, selectedIDs: numb
   arr.forEach((e) => (data[e.id] = e.value));
 
   if (Object.keys(data).findIndex((x) => x.startsWith('line')) !== -1) {
+    //@ts-ignore
     data['ingredients'] = [];
     Object.keys(data)
       .filter((x) => x.startsWith('line') && !x.endsWith('_amount'))
       .forEach((x) => {
         const id = x.split('_')[1];
+        //@ts-ignore
         data['ingredients'][id] = [data[x], data[`line_${id}_amount`]];
       });
     //delete all line keys
     Object.keys(data)
       .filter((x) => x.startsWith('line'))
+      //@ts-ignore
       .forEach((x) => delete data[x]);
   }
 

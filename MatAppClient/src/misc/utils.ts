@@ -15,8 +15,10 @@ export const fillArrayWithNulls = (arr: { [key: string]: number }): { [key: stri
   const newArr = {};
   newKeys.forEach((key) => {
     if (arr[key]) {
+      // @ts-ignore
       newArr[key] = arr[key];
     } else {
+      // @ts-ignore
       newArr[key] = 0;
     }
   });

@@ -1,23 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
 import { textUpperFirst } from '../../../misc/utils';
-import ParamButtons from '../../../components/tableView/paramButtons';
-import { defaultFilter, MakeSort } from '../../../handlers/tableView/handlers';
 
 import './tableView.css';
 
 import { Button, Panel } from '../../../components/common/panel';
 import { IBaseModel, FilterData, ICategoryBaseModel } from '../../../types';
-import { BaseButtons } from '../../../components/tableView/baseButtons';
 import { useAdminContext } from '../../../context/adminContext';
 import { useAppContext } from '../../../context/appContext';
-
-export interface TableViewProps<T> {
-  data: T[];
-  getData: VoidFunction;
-  displayName: string;
-  showButtons?: boolean;
-  additionalButtons?: React.ReactNode;
-}
+import { BaseButtons } from '../../../components/tableView/baseButtons';
+import ParamButtons from '../../../components/tableView/paramButtons';
+import { defaultFilter, MakeSort } from '../../../handlers/tableView/handlers';
+import { TableViewProps } from './type';
 
 const TableView = <T extends IBaseModel>({ data, getData, displayName, ...args }: TableViewProps<T>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
@@ -73,6 +66,7 @@ const TableView = <T extends IBaseModel>({ data, getData, displayName, ...args }
                     onClick={() => {
                       setFilter({
                         filterMatch: filter.filterMatch,
+                        //@ts-ignore
                         sort: MakeSort(e, typeof show[0][e], true),
                       });
                     }}
@@ -84,6 +78,7 @@ const TableView = <T extends IBaseModel>({ data, getData, displayName, ...args }
                     onClick={() => {
                       setFilter({
                         filterMatch: filter.filterMatch,
+                        //@ts-ignore
                         sort: MakeSort(e, typeof show[0][e], false),
                       });
                     }}

@@ -10,7 +10,7 @@ const Cashier = () => {
   const { branchID, session, setSession, getSession } = useMainContext();
   const [categories, getCategories] = useSocket<IDishCategory[]>(socket, 'dish_categories_without_empty', []);
   const [dishes, getDishes] = useSocket<IDish[]>(socket, 'dishes', []);
-  const [storage, getStorage] = useSocket<IBranchData<IIngredient>>(socket, 'branch_storage', undefined);
+  const [storage, getStorage] = useSocket<IBranchData<IIngredient> | undefined>(socket, 'branch_storage', undefined);
 
   const [selectedCategory, setSelectedCategory] = useState<String | undefined>(undefined);
   const [currentOrder, setCurrentOrder] = useState<IOrder | undefined>();
@@ -26,25 +26,25 @@ const Cashier = () => {
 
   const currentOrderDishes = useMemo(() => {
     if (currentOrder === undefined) return [];
-    return currentOrder.dishes.map((dish) => [dishes.find((d) => d.id === dish.id), dish.count] as const);
+    return currentOrder.dishes.map((dish) => [dishes.find((d) => d.id === dish.id)!, dish.count] as const);
   }, [currentOrder]);
 
   const dataAccurateStorage = useMemo(() => {
     if (storage === undefined) return [];
     console.log(storage);
     return storage.data.map((ing) => {
-      return { name: ing.name, count: ing.count } as const;
+      return { name: ing.name, count: ing?.count || 1 } as const;
     });
   }, [storage]);
 
   const currentStorage = useMemo(
     () =>
       dataAccurateStorage.map(({ name, count }) => {
-        const newCount = currentOrderDishes.reduce((acc, [dish, dishCount]) => {
+        const newCount = currentOrderDishes.reduce<number>((acc, [dish, dishCount]) => {
           if (dish === undefined) return acc;
-          const ing = dish.ingredients.find((ing) => ing.name === name);
+          const ing = dish.ingredients.find((ing) => ing.name === name)! as IIngredient;
           if (ing === undefined) return acc;
-          return acc - dishCount * ing.count;
+          return acc - dishCount * (ing?.count || 1);
         }, count);
         return { name, count: newCount };
       }),
@@ -54,7 +54,7 @@ const Cashier = () => {
   const availableDishes = useMemo(() => {
     if (currentStorage === undefined) return [];
     return dishes.filter((dish) => {
-      const ing = dish.ingredients.map((ing) => [currentStorage.find((st) => st.name === ing.name)?.count || 0, ing.count] as const);
+      const ing = dish.ingredients.map((ing) => [currentStorage.find((st) => st.name === ing.name)?.count || 0, ing?.count || 1] as const);
       return ing.every(([have, need]) => have !== undefined && have >= need);
     });
   }, [currentStorage]);
@@ -112,17 +112,18 @@ const Cashier = () => {
                       dishes: [],
                       id: 0,
                       cost: 0,
+                      displayId: 0,
                       type: 'open',
                     } as IOrder);
-                  if (currentOrder.dishes.find((d) => d.id === dish.id) === undefined) {
-                    setCurrentOrder({ ...currentOrder, dishes: [...currentOrder.dishes, { id: dish.id, count: 1 }] });
+                  if (currentOrder!.dishes.find((d) => d.id === dish.id) === undefined) {
+                    setCurrentOrder({ ...currentOrder!, dishes: [...currentOrder!.dishes, { id: dish.id, count: 1 }] });
                     return;
                   }
-                  const newDishes = currentOrder.dishes.map((d) => {
+                  const newDishes = currentOrder!.dishes.map((d) => {
                     if (d.id === dish.id) return { ...d, count: d.count + 1 };
                     return d;
                   });
-                  setCurrentOrder({ ...currentOrder, dishes: newDishes });
+                  setCurrentOrder({ ...currentOrder!, dishes: newDishes });
                 }}
               >
                 <h3>{dish.name}</h3>
@@ -132,10 +133,10 @@ const Cashier = () => {
         </div>
         <div className="info">
           <p>
-            {translate('start_time')}: {new Date(session.startTime).toLocaleString()}
+            {translate('start_time')}: {new Date(session!.startTime).toLocaleString()}
           </p>
           <p>
-            {translate('count_current_order')}: {session.currentOrders.length || 0}
+            {translate('count_current_order')}: {session!.currentOrders.length || 0}
           </p>
         </div>
         <div className="order">

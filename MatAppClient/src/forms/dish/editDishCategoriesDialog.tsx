@@ -31,8 +31,10 @@ export const EditDishCategoriesDialog = () => {
         };
         Object.keys(data).forEach((key) => {
           if (dishCategories.findIndex((a) => a.name === key) === -1) {
+            //@ts-ignore
             newData[key] = data[key];
           } else {
+            //@ts-ignore
             newData['data'][dishCategories.find((a) => a.name === key)?.id] = data[key];
           }
         });

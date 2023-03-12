@@ -1,4 +1,4 @@
-import React, { Dispatch, useState } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 
 const useLocalStorage = <T>(key: string, initialValue: T) => {
   const [storedValue, setStoredValue] = useState<T>(() => {
@@ -10,7 +10,7 @@ const useLocalStorage = <T>(key: string, initialValue: T) => {
       return initialValue;
     }
   });
-  const setValue: Dispatch<T> = (value) => {
+  const setValue: Dispatch<SetStateAction<T>> = (value) => {
     try {
       const valueToStore = value instanceof Function ? value(storedValue) : value;
       setStoredValue(valueToStore);

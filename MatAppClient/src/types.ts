@@ -16,8 +16,8 @@ export interface AppContextType {
   setLoading: Dispatch<SetStateAction<boolean>>;
   getBranches: VoidFunction;
   clearBranches: VoidFunction;
-  user: IUser;
-  setUser: Dispatch<SetStateAction<IUser>>;
+  user: IUser | null;
+  setUser: Dispatch<SetStateAction<IUser | null>>;
   setShowButtons: Dispatch<SetStateAction<boolean>>;
 }
 
@@ -43,7 +43,7 @@ export interface AdminContextType {
 export interface MainContextType {
   branchID: number;
   setBranchID: Dispatch<SetStateAction<number>>;
-  session: ISession;
+  session: ISession | null;
   getSession: VoidFunction;
   setSession: (data: ISession) => void;
 }
