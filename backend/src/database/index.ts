@@ -20,19 +20,13 @@ var connection = mysql.createConnection({
   database: process.env.DB_NAME,
 });
 
-testConnection.connect((err: MysqlError) => {
+connection.connect((err: MysqlError) => {
   if (err) throw err;
-  testConnection.query('CREATE DATABASE IF NOT EXISTS ' + process.env.DB_NAME, (err: MysqlError) => {
-    if (err) throw err;
-    connection.connect((err: MysqlError) => {
-      if (err) throw err;
-      checkForDatabaseVersion(connection).then((result) => {
-        if (!result) {
-          console.error('Database version mismatch');
-          process.exit(1);
-        }
-      });
-    });
+  checkForDatabaseVersion(connection).then((result) => {
+    if (!result) {
+      console.error('Database version mismatch');
+      process.exit(1);
+    }
   });
 });
 
