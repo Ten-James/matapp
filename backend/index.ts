@@ -14,4 +14,5 @@ export const io = new Server(httpServer, {
 
 io.on('connection', processConnection);
 
-httpServer.listen(process.env.PORT, () => {});
+httpServer.listen(process.env.PORT || 2238, () => {});
+console.log(`Server started on port ${process.env.PORT || 2238}`);

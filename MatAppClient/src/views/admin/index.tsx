@@ -9,7 +9,6 @@ import Navigation from './navigation';
 import TableView from './tableView/tableView';
 import TableViewDishes from './tableView/tableViewDishes';
 import TableViewSection from './tableView/tableViewSection';
-import AdminDefaultView from './default';
 import { useAppContext } from '../../context/appContext';
 import { AdminContext } from '../../context/adminContext';
 import useSocket from '../../hooks/useSocket';
@@ -17,17 +16,17 @@ import { Button } from '../../components/common/panel';
 
 const Admin = () => {
   const { socket, setLoading, branches, getBranches, user, clearBranches, translate } = useAppContext();
+  if (user === null) throw new Error('User is null, this should not happen, please report this bug to the developers');
 
   // TODO - dont share seters make hook?
   const [ingredients, getIngredients, clearIngredients] = useSocket<IIngredient[]>(socket, 'ingredients', []);
   const [dishes, getDishes, clearDishes] = useSocket<IDish[]>(socket, 'dishes', []);
   const [users, getUsers, clearUsers] = useSocket<IUser[]>(socket, 'users', []);
-  const [branchesStorages, getBranchesStorages, clearBranchesStorage] = useSocket<IBranchData<IIngredient>[]>(socket, 'branches_storage', []);
+  const [branchesStorages, getBranchesStorages, clearBranchesStorage] = useSocket<IBranchData<IIngredient>[]>(socket, user.access === 2 ? 'branches_storage' : 'branch_storage', []);
   const [branchesOrders, getBranchesOrders, clearBranchesOrders] = useSocket<IBranchData<any>[]>(socket, 'branches_orders', []);
   const [dialog, setDialog] = useState<IDialogOption>('hidden');
 
   const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
-  const [Status, setStatus] = useState('');
 
   const refresh = () => {
     setSelectedIDs([]);
@@ -111,7 +110,13 @@ const Admin = () => {
             <>
               <Route
                 path="/branches/storage"
-                element={<>test storage</>}
+                element={
+                  <TableViewSection
+                    data={branchesStorages}
+                    getData={getBranchesStorages}
+                    displayName="Branch Storage"
+                  />
+                }
               />
               <Route
                 path="/branches/orders"
@@ -174,7 +179,7 @@ const Admin = () => {
           />
           <Route
             path="/"
-            element={<AdminDefaultView />}
+            element={<InformationView />}
           />
         </Routes>
       </div>

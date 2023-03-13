@@ -60,12 +60,6 @@ const Navigation = ({ userAccess }: NavigationProps) => {
                     onClick={() => setExpanded(false)}
                   />
                   <BetterLink
-                    to="branches/orders"
-                    expandedText={translate('Orders')}
-                    icon="list_alt"
-                    onClick={() => setExpanded(false)}
-                  />
-                  <BetterLink
                     to={location.pathname}
                     expandedText={translate('Refresh')}
                     icon="sync"
@@ -78,7 +72,7 @@ const Navigation = ({ userAccess }: NavigationProps) => {
                     to="branches"
                     expandedText={translate('Branches')}
                     icon="store"
-                    count={3}
+                    count={2}
                   >
                     <BetterLink
                       to="branches/reports"
@@ -90,12 +84,6 @@ const Navigation = ({ userAccess }: NavigationProps) => {
                       to="branches/storage"
                       expandedText={translate('Storage')}
                       icon="warehouse"
-                      onClick={() => setExpanded(false)}
-                    />
-                    <BetterLink
-                      to="branches/orders"
-                      expandedText={translate('Orders')}
-                      icon="list_alt"
                       onClick={() => setExpanded(false)}
                     />
                   </SubBetterLink>

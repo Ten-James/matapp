@@ -47,30 +47,30 @@ const InformationView = () => {
       <h1 className="s-name">{translate('information')}</h1>
       <Panel class="s-status">
         <h2>{translate('Current Server info')}:</h2>
-        {Info.uptime && (
+        {Info.uptime ? (
           <p>
             {translate('Update')}: {Info.uptime}
           </p>
-        )}
-        {Info.memory && (
+        ) : null}
+        {Info.memory ? (
           <p>
             {translate('Memory Usage')}: {Info.memory}
           </p>
-        )}
-        {Info.clients && (
+        ) : null}
+        {Info.clients ? (
           <p>
             {translate('Current Clients')}: {Info.clients}
           </p>
-        )}
-        {Info.time && (
+        ) : null}
+        {Info.time ? (
           <p>
             {translate('Updated time')}: {Info.time}
           </p>
-        )}
+        ) : null}
 
         <h2>{translate('database info')}:</h2>
 
-        {Info.database && (
+        {Info.database ? (
           <>
             <p>
               {translate('Database Size')}: {Info.database[0]} MB
@@ -79,7 +79,7 @@ const InformationView = () => {
               {translate('Database Rows')}: {Info.database[1]}
             </p>
           </>
-        )}
+        ) : null}
       </Panel>
       <Panel class="s-data">
         <div>

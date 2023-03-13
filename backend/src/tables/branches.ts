@@ -70,7 +70,7 @@ const processBranches = (socket) => {
             };
           });
           data.data = [...result2] as IIngredient[];
-          socket.emit('branch_storage', data);
+          socket.emit('branch_storage', [data]);
         },
       );
     });

@@ -25,7 +25,7 @@ const processUsers = (socket: Socket) => {
 
   socket.on('login', ({ name, pass }: ILoginProps): void => {
     writeLog(socket.handshake.address, 'login attempt');
-    connection.query(`SELECT name, id, branch_id, access FROM users WHERE name = '${name}' AND password = md5('${pass}')`, (err: MysqlError, result: IUser[]): void => {
+    connection.query(`SELECT name, id, branch_id as 'branchId', access FROM users WHERE name = '${name}' AND password = md5('${pass}')`, (err: MysqlError, result: IUser[]): void => {
       if (err) throw err;
       if (result.length === 0) {
         socket.emit('login', { status: false });

@@ -10,7 +10,7 @@ const Cashier = () => {
   const { branchID, session, setSession, getSession } = useMainContext();
   const [categories, getCategories] = useSocket<IDishCategory[]>(socket, 'dish_categories_without_empty', []);
   const [dishes, getDishes] = useSocket<IDish[]>(socket, 'dishes', []);
-  const [storage, getStorage] = useSocket<IBranchData<IIngredient> | undefined>(socket, 'branch_storage', undefined);
+  const [storage, getStorage] = useSocket<IBranchData<IIngredient>[] | undefined>(socket, 'branch_storage', undefined);
 
   const [selectedCategory, setSelectedCategory] = useState<String | undefined>(undefined);
   const [currentOrder, setCurrentOrder] = useState<IOrder | undefined>();
@@ -32,7 +32,7 @@ const Cashier = () => {
   const dataAccurateStorage = useMemo(() => {
     if (storage === undefined) return [];
     console.log(storage);
-    return storage.data.map((ing) => {
+    return storage[0].data.map((ing) => {
       return { name: ing.name, count: ing?.count || 1 } as const;
     });
   }, [storage]);

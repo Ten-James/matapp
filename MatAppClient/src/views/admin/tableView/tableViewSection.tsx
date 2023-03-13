@@ -14,13 +14,17 @@ import { TableViewProps } from './type';
 
 const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayName, ...args }: TableViewProps<IBranchData<T>>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
-  const { socket, translate } = useAppContext();
+  const { socket, translate, user } = useAppContext();
+  if (!user) throw new Error('User is null, this should not happen, please report this bug to the developers');
 
   const [filter, setFilter] = useState<FilterData<T>>(defaultFilter);
 
   useEffect(() => {
+    console.log(data);
+    console.log(user);
     if (data.length === 0) {
-      getData();
+      if (user.access === 2) getData();
+      else getData(user.branchId);
     }
     setSelectedIDs([]);
     setFilter(defaultFilter);
