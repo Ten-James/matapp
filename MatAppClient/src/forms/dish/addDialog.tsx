@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextAttributeWithAutoCompleteDialog, TextAttributeDialog, UnsetComboBoxDialog } from '../../components/dialog/dialogLines';
 import { useAdminContext } from '../../context/adminContext';
 import { Button } from '../../components/common/panel';
@@ -32,7 +32,7 @@ export const AddDialog = () => {
         sideText.length != 0 ? (
           <table>
             {sideText.map((e) => (
-              <tr>
+              <tr key={e[0]}>
                 <td>{e[0]}</td>
                 <td>{e[1]}</td>
                 <td style={{ textAlign: 'right' }}>={e[2]}</td>
@@ -40,7 +40,7 @@ export const AddDialog = () => {
             ))}
             <tr>
               <td colSpan={2}>{translate('production price')}:</td>
-              <td style={{ textAlign: 'right' }}>{sideText.at(-1)![2]}</td>
+              <td style={{ textAlign: 'right' }}>{(sideText.at(-1) || [0, 0, 0])[2]}</td>
             </tr>
           </table>
         ) : (

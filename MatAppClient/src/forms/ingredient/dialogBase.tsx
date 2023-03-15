@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { TextAttributeDialog, TextAttributeWithAutoCompleteDialog, TextAttributeWithCombo, CheckboxGroupDialog } from '../../components/dialog/dialogLines';
 import { IIngredient } from '../../types';
 import { useAdminContext } from '../../context/adminContext';
@@ -7,7 +7,7 @@ import { useAppContext } from '../../context/appContext';
 const IngredientDialogBase = () => {
   const { socket } = useAppContext();
   const { selectedItems, dialog } = useAdminContext();
-  const [categoires, setCategoires] = useState(['']);
+  const [categories, setCategories] = useState(['']);
   const data = useMemo<IIngredient>(() => {
     if (dialog === 'edit') return selectedItems[0] as IIngredient;
     const item: IIngredient = {
@@ -24,7 +24,7 @@ const IngredientDialogBase = () => {
 
   socket.on('ingredient_types', (data: string[]) => {
     console.log(data);
-    setCategoires(data);
+    setCategories(data);
   });
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const IngredientDialogBase = () => {
       <TextAttributeWithAutoCompleteDialog
         name="category"
         required
-        combo={categoires}
+        combo={categories}
         value={data.category}
       />
       <TextAttributeDialog

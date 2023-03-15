@@ -13,7 +13,7 @@
   padding: 2.5em;
   margin: 1em;
   border-radius: 1rem;
-  background:var(--white-color);
+  background: var(--white-color);
 }
 
 .dialog-background + div {
@@ -131,7 +131,7 @@
 }
 
 .dialog-line input,
-.dialog-line select{
+.dialog-line select {
   font-weight: normal;
   font-family: 'Cairo';
   width: 100%;
@@ -143,7 +143,7 @@
   border: unset;
 }
 
-.light-color .dialog-line input, 
+.light-color .dialog-line input,
 .light-color .dialog-line select {
   background-color: white;
 }
@@ -155,8 +155,6 @@
   font-size: 1.2em;
   border: unset;
 }
-
-
 
 @media (min-width: 990px) {
   .dialog-tooltip {

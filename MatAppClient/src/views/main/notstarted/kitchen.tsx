@@ -1,3 +1,4 @@
+import React from 'react';
 import LogoSVG from '../../../components/common/logo';
 import { Panel } from '../../../components/common/panel';
 import { useAppContext } from '../../../context/appContext';

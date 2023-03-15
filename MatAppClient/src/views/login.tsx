@@ -1,5 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
-import { CSSTransition } from 'react-transition-group';
+import React, { useEffect, useRef, useState } from 'react';
 import LogoSVG from '../components/common/logo';
 import { useAppContext } from '../context/appContext';
 import { Button, Panel } from '../components/common/panel';
@@ -13,7 +12,6 @@ const LoginPage = (props: Props) => {
   const [status, setStatus] = useState('');
   const nameRef = useRef<HTMLInputElement>(null);
   const passRef = useRef<HTMLInputElement>(null);
-  const waiting = useRef(null);
   useEffect(() => {
     setLoading(false);
     //testing
@@ -26,7 +24,7 @@ const LoginPage = (props: Props) => {
     if (data.status) {
       setUser(data.user);
     } else {
-      setStatus('Wrong password or username');
+      setStatus(translate('login_failed'));
     }
   });
   return (
@@ -39,16 +37,32 @@ const LoginPage = (props: Props) => {
           >
             <LogoSVG class="upper" />
             <div className="login-container">
-              <h2>Please Log in:</h2>
+              <h2>{translate('log_in')}:</h2>
               <input
                 ref={nameRef}
                 type="text"
                 placeholder="Username"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!nameRef.current || !passRef.current) return;
+                  socket.emit('login', {
+                    name: nameRef.current.value,
+                    pass: passRef.current.value,
+                  });
+                }}
               />
               <input
                 ref={passRef}
                 type="password"
                 placeholder="Password"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (!nameRef.current || !passRef.current) return;
+                  socket.emit('login', {
+                    name: nameRef.current.value,
+                    pass: passRef.current.value,
+                  });
+                }}
               />
               <div>{status}</div>
               <Button
@@ -61,9 +75,9 @@ const LoginPage = (props: Props) => {
                   });
                 }}
               >
-                Log In
+                {translate('log_in')}
               </Button>
-              <p>Ask manager if you lost your access</p>
+              <p>{translate('lost_access')}</p>
             </div>
             <p>{translate('arr')}</p>
           </Panel>

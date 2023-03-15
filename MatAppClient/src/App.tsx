@@ -1,5 +1,5 @@
-import React, { createContext, useEffect, useMemo, useState } from 'react';
-import { Route, Routes, redirect, useLocation, useNavigate } from 'react-router';
+import React, { useState } from 'react';
+import { Route, Routes, useLocation, useNavigate } from 'react-router';
 import socketIOClient from 'socket.io-client';
 
 import { Button, Panel } from './components/common/panel';
@@ -13,9 +13,10 @@ import useLocalStorage from './hooks/useLocalStorage';
 import { AppContext } from './context/appContext';
 import LoginPage from './views/login';
 import useStatus from './hooks/useStatus';
-const Admin = React.lazy(() => import('./views/admin'));
-const Main = React.lazy(() => import('./views/main'));
+
 import useSocket from './hooks/useSocket';
+import Main from './views/main';
+import Admin from './views/admin';
 // TODO: move to env file
 const socket = socketIOClient(import.meta.env.VITE_SERVER_API || 'http://localhost:2238');
 

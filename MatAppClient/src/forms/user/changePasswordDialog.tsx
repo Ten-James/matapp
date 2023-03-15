@@ -1,9 +1,11 @@
+import React from 'react';
 import { Button } from '../../components/common/panel';
 import BaseDialog from '../../components/dialog/baseDialog';
 import { useAdminContext } from '../../context/adminContext';
 import { useAppContext } from '../../context/appContext';
 import useSocket from '../../hooks/useSocket';
 
+//TODO: translation
 export const ChangePasswordDialog = () => {
   const { socket } = useAppContext();
   const { selectedItems } = useAdminContext();

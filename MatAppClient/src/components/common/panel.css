@@ -2,7 +2,7 @@
   padding: 2.5em;
   margin: 1em;
   border-radius: 1rem;
-  background:var(--white-color);
+  background: var(--white-color);
   box-shadow: 5px 5px 9px var(--shadow-2);
 }
 
@@ -20,7 +20,6 @@
   font-size: 0.5em !important;
   margin-left: auto;
   display: inline-flex !important;
-
 }
 
 .selector {
@@ -35,7 +34,7 @@
   gap: 0.5rem;
 }
 
-.selector *{
+.selector * {
   text-decoration: unset !important;
 }
 
@@ -48,15 +47,12 @@
   height: 3em !important;
 }
 
-.small-text{
-
+.small-text {
   height: 3em !important;
-
 }
 
-.small-text > span{
+.small-text > span {
   font-size: 1.2em;
-
 }
 
 .small > span {
@@ -129,15 +125,13 @@
 }
 
 .color-red {
-  background:var(--red-color);
+  background: var(--red-color);
   box-shadow: 5px 5px 9px var(--shadow-2);
-
 }
 
 .color-blue {
-  background:var(--blue-color);
+  background: var(--blue-color);
   box-shadow: 5px 5px 9px var(--shadow-2);
-
 }
 
 .color-white {

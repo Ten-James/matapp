@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Button, Panel } from '../components/common/panel';
 import LogoSVG from '../components/common/logo';
 import { SelectorContainer } from '../components/default';

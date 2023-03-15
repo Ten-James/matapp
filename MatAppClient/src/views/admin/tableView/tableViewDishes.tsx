@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { textUpperFirst } from '../../../misc/utils';
 import ParamButtons from '../../../components/tableView/paramButtons';
 import { defaultFilter, MakeSort } from '../../../handlers/tableView/handlers';
@@ -14,7 +14,7 @@ import { TableViewProps } from './type';
 
 const TableViewDishes = ({ data, getData, displayName, ...args }: TableViewProps<IDish>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
-  const { socket, translate } = useAppContext();
+  const { translate } = useAppContext();
 
   const [filter, setFilter] = useState<FilterData<IDish>>(defaultFilter);
 
@@ -149,8 +149,8 @@ const TableViewDishes = ({ data, getData, displayName, ...args }: TableViewProps
             <div>
               {selectedIDs.includes(e.id) ? (
                 e.ingredients.map((e) => (
-                  <div>
-                    {e.count}x {e.name}
+                  <div key={e.id}>
+                    {e.count || 1}x {e.name}
                   </div>
                 ))
               ) : (
@@ -166,7 +166,7 @@ const TableViewDishes = ({ data, getData, displayName, ...args }: TableViewProps
           </Panel>
         ))}
       </div>
-      <div className="d-buttons">{args.showButtons ? <BaseButtons children={args?.additionalButtons} /> : <></>}</div>
+      <div className="d-buttons">{args.showButtons ? <BaseButtons>{args.additionalButtons}</BaseButtons> : <></>}</div>
     </div>
   );
 };

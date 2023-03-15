@@ -17,7 +17,7 @@ export const submit = (e: Event, form: HTMLFormElement | null, selectedIDs: numb
   if (
     !arr
       .reverse()
-      .map<Boolean>((input) => {
+      .map<boolean>((input) => {
         if (input.required && !input.value) {
           setError(`${input.name} is not filled`);
           return false;

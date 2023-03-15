@@ -1,8 +1,8 @@
-import { createContext, FormEvent, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { GenerateFries } from '../../misc/fries';
-import type { AdminContextType, IDialogOption, IBranch, IBranchData, IDish, IIngredient, IUser } from '../../types';
+import type { IDialogOption, IBranchData, IDish, IIngredient, IUser, IOrder } from '../../types';
 import Dialog from './dialog';
 import InformationView from './information/information';
 import Navigation from './navigation';
@@ -23,7 +23,7 @@ const Admin = () => {
   const [dishes, getDishes, clearDishes] = useSocket<IDish[]>(socket, 'dishes', []);
   const [users, getUsers, clearUsers] = useSocket<IUser[]>(socket, 'users', []);
   const [branchesStorages, getBranchesStorages, clearBranchesStorage] = useSocket<IBranchData<IIngredient>[]>(socket, user.access === 2 ? 'branches_storage' : 'branch_storage', []);
-  const [branchesOrders, getBranchesOrders, clearBranchesOrders] = useSocket<IBranchData<any>[]>(socket, 'branches_orders', []);
+  const [branchesOrders, getBranchesOrders, clearBranchesOrders] = useSocket<IBranchData<IOrder>[]>(socket, 'branches_orders', []);
   const [dialog, setDialog] = useState<IDialogOption>('hidden');
 
   const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
@@ -70,7 +70,7 @@ const Admin = () => {
     >
       {dialog !== 'hidden' && <Dialog />}
       <div className="App App-grid">
-        <Navigation userAccess={user!.access} />
+        <Navigation userAccess={user.access} />
         <Routes>
           <Route
             path="/branches"
@@ -83,7 +83,7 @@ const Admin = () => {
               />
             }
           />
-          {user!.access === 2 ? (
+          {user.access === 2 ? (
             <>
               <Route
                 path="/branches/storage"
@@ -97,13 +97,7 @@ const Admin = () => {
               />
               <Route
                 path="/branches/orders"
-                element={
-                  <TableViewSection
-                    data={branchesOrders}
-                    displayName="Branches Orders"
-                    getData={getBranchesOrders}
-                  />
-                }
+                element={<></>}
               />
             </>
           ) : (

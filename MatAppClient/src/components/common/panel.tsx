@@ -1,3 +1,4 @@
+import React from 'react';
 import './panel.css';
 
 // TODO: class should be choose value not string

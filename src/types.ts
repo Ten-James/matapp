@@ -16,7 +16,7 @@ export interface IBranch extends INamedBaseModel {
   size: number;
 }
 
-export interface IBranchData<T extends INamedBaseModel> extends IBranch {
+export interface IBranchData<T extends IBaseModel> extends IBranch {
   data: T[];
 }
 

@@ -1,36 +1,36 @@
-import { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import LogoSVG from '../components/common/logo';
 import { Panel } from '../components/common/panel';
 import { useAppContext } from '../context/appContext';
 const ErrorPage = () => {
-  const { setLoading } = useAppContext();
+  const { setLoading, translate } = useAppContext();
   useEffect(() => {
     setLoading(false);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
   return (
     <div className="App">
       <Panel class="center">
         <h1>Error 404</h1>
-        <h2>We are currently cooking this page</h2>
+        <h2>{translate('cooking_page')}</h2>
         <LogoSVG />
         <Link
           style={{ marginRight: '2em' }}
           to="/admin"
         >
-          Go to Admin
+          {translate('goto')} Admin
         </Link>
         <Link
           style={{ marginRight: '2em' }}
           to="/main/cashier"
         >
-          Go to Cashier
+          {translate('goto')} Cashier
         </Link>
         <Link
           style={{ marginRight: '2em' }}
           to="/main/kitchen"
         >
-          Go to Kitchen
+          {translate('goto')} Kitchen
         </Link>
       </Panel>
     </div>

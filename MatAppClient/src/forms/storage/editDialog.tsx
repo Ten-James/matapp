@@ -1,12 +1,10 @@
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import BaseDialog from '../../components/dialog/baseDialog';
 import { useAdminContext } from '../../context/adminContext';
-import { useAppContext } from '../../context/appContext';
 import { IBranchData, IIngredient } from '../../types';
 import { TextAttributeDialog } from '../../components/dialog/dialogLines';
 
 export const EditDialog = () => {
-  const { translate } = useAppContext();
   const { ingredients, getIngredients, selectedItems } = useAdminContext();
   const storageData = useMemo(() => selectedItems[0] as IBranchData<IIngredient>, [selectedItems]);
 
@@ -18,7 +16,7 @@ export const EditDialog = () => {
       header="Edit Storage"
       sendRoute="edit_storage"
       afterProcess={(data) => {
-        let newData = {
+        const newData = {
           data: {},
         };
         Object.keys(data).forEach((key) => {
@@ -36,6 +34,7 @@ export const EditDialog = () => {
       <>
         {ingredients?.map((ing) => (
           <TextAttributeDialog
+            key={ing.id}
             name={ing.name}
             isNumber
             value={`${storageData?.data.find((i) => i.id === ing.id)?.count || 0}`}

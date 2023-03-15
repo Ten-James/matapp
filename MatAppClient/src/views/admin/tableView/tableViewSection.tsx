@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { textUpperFirst } from '../../../misc/utils';
 import ParamButtons from '../../../components/tableView/paramButtons';
 import { defaultFilter, MakeSort } from '../../../handlers/tableView/handlers';
@@ -6,15 +6,15 @@ import { defaultFilter, MakeSort } from '../../../handlers/tableView/handlers';
 import './tableView.css';
 
 import { Button, Panel } from '../../../components/common/panel';
-import { IBranchData, INamedBaseModel, FilterData, Sort } from '../../../types';
+import { IBranchData, INamedBaseModel, FilterData } from '../../../types';
 import { BaseButtons } from '../../../components/tableView/baseButtons';
 import { useAdminContext } from '../../../context/adminContext';
 import { useAppContext } from '../../../context/appContext';
 import { TableViewProps } from './type';
 
 const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayName, ...args }: TableViewProps<IBranchData<T>>) => {
-  const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
-  const { socket, translate, user } = useAppContext();
+  const { setSelectedIDs, setDialog } = useAdminContext();
+  const { translate, user } = useAppContext();
   if (!user) throw new Error('User is null, this should not happen, please report this bug to the developers');
 
   const [filter, setFilter] = useState<FilterData<T>>(defaultFilter);
@@ -41,10 +41,9 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
   );
   const categories = useMemo(() => {
     if (data.length === 0) return [];
-    let tmp: string[] = [];
-    // @ts-ignore
-    data.forEach((x) => x.data.forEach((e) => tmp.push(e.category)));
-    return [...new Set(tmp)];
+    const tmp: string[] = [];
+    data.forEach((x) => x.data.forEach((e) => tmp.push('category' in e && typeof e.category === 'string' ? e.category : '')));
+    return [...new Set(tmp.filter((e) => e !== ''))];
   }, [data]);
 
   return (
@@ -158,7 +157,7 @@ const TableViewSection = <T extends INamedBaseModel>({ data, getData, displayNam
           </div>
         ))}
       </div>
-      <div className="d-buttons">{args.showButtons ? <BaseButtons children={args?.additionalButtons} /> : <></>}</div>
+      <div className="d-buttons">{args.showButtons ? <BaseButtons> {args.additionalButtons}</BaseButtons> : <></>}</div>
     </div>
   );
 };

@@ -68,7 +68,7 @@
   border-radius: 1rem;
   align-items: center;
   justify-content: center;
-  background:var(--white-color);
+  background: var(--white-color);
   color: var(--black-color);
   text-decoration: none;
   box-shadow: 5px 5px 9px var(--shadow-1);
@@ -102,17 +102,16 @@
   margin: 1em;
   border-radius: 1rem;
   align-items: center;
-  background:var(--white-color);
+  background: var(--white-color);
   color: var(--black-color);
   text-decoration: none;
   box-shadow: 5px 5px 9px var(--shadow-1);
 }
 
-
 .nav-link > .nav-link {
   margin: 1em;
   border-radius: 1rem;
-  background:var(--white-color);
+  background: var(--white-color);
   box-shadow: 5px 5px 9px var(--shadow-1);
 }
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import '../../views/admin/dialog/style.css';
 import { Button } from '../common/panel';
 import { ThemeType } from '../../types';

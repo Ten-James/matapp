@@ -5,3 +5,4 @@ backend/node_modules/
 .vite
 .vscode
 *-lock.json
+node_modules/

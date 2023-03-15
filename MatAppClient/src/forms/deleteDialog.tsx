@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import BaseDialog from '../components/dialog/baseDialog';
 import { useAdminContext } from '../context/adminContext';
 
@@ -8,7 +8,6 @@ interface Props {
 
 const DeleteDialog = ({ sendRoute }: Props) => {
   const { selectedItems } = useAdminContext();
-  const [error, setError] = useState('');
 
   return (
     <BaseDialog
@@ -18,7 +17,7 @@ const DeleteDialog = ({ sendRoute }: Props) => {
       <>
         {selectedItems.map((item) => (
           /*TODO better display casting*/
-          <div>{item.name}</div>
+          <div key={item.id}>{item.name}</div>
         ))}
       </>
     </BaseDialog>

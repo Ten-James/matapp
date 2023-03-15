@@ -18,7 +18,6 @@ CREATE TABLE
         CONSTRAINT `dishes_ibfk_1` FOREIGN KEY (`category_id`) REFERENCES `dish_categories` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
 
-
 CREATE TABLE
     `branches` (
         `id` int NOT NULL AUTO_INCREMENT,
@@ -27,13 +26,13 @@ CREATE TABLE
         PRIMARY KEY (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
 
-
 CREATE TABLE
     `ingredient_text_extensions` (
         `id` int NOT NULL AUTO_INCREMENT,
         `text` varchar(255) NOT NULL,
         PRIMARY KEY (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
+
 CREATE TABLE
     `ingredient_types` (
         `id` int NOT NULL AUTO_INCREMENT,
@@ -86,12 +85,14 @@ CREATE TABLE
         CONSTRAINT `branch$ingredients_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
         CONSTRAINT `branch$ingredients_ibfk_2` FOREIGN KEY (`ingredient_id`) REFERENCES `ingredients` (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
+
 CREATE TABLE
     `serve_type` (
         `id` int NOT NULL AUTO_INCREMENT,
         `name` varchar(255) NOT NULL,
         PRIMARY KEY (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
+
 CREATE TABLE
     `serve_sessions` (
         `id` int NOT NULL AUTO_INCREMENT,
@@ -102,6 +103,7 @@ CREATE TABLE
         KEY `serve_sessions_ibfk_1` (`branch_id`),
         CONSTRAINT `serve_sessions_ibfk_1` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
+
 CREATE TABLE
     `ingredient_allergens` (
         `id` int NOT NULL AUTO_INCREMENT,
@@ -125,6 +127,7 @@ CREATE TABLE
         CONSTRAINT `serves_ibfk_1` FOREIGN KEY (`session_id`) REFERENCES `serve_sessions` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
         CONSTRAINT `serves_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `serve_type` (`id`)
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
+
 CREATE TABLE
     `serve$dishes` (
         `id` int NOT NULL AUTO_INCREMENT,
@@ -137,6 +140,7 @@ CREATE TABLE
         CONSTRAINT `serve$dishes_ibfk_1` FOREIGN KEY (`serve_id`) REFERENCES `serves` (`id`),
         CONSTRAINT `serve$dishes_ibfk_2` FOREIGN KEY (`dish_id`) REFERENCES `dishes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
+
 CREATE TABLE
     `dish$ingredients` (
         `id` int NOT NULL AUTO_INCREMENT,
@@ -149,4 +153,11 @@ CREATE TABLE
         CONSTRAINT `dish$ingredients_ibfk_1` FOREIGN KEY (`dish_id`) REFERENCES `dishes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
     ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4 COLLATE = utf8mb4_czech_ci;
 
-INSERT INTO `users` VALUES (1, 'admin', '21232f297a57a5a743894a0e4a801fc3', NULL, 2);
+INSERT INTO `users`
+VALUES (
+        1,
+        'admin',
+        '21232f297a57a5a743894a0e4a801fc3',
+        NULL,
+        2
+    );

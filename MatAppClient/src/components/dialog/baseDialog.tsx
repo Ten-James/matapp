@@ -1,5 +1,5 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Panel } from '../common/panel';
+import React, { useEffect, useRef, useState } from 'react';
+import { Button } from '../common/panel';
 import * as Handlers from '../../handlers/dialog/handlers';
 import { useAppContext } from '../../context/appContext';
 import { useAdminContext } from '../../context/adminContext';

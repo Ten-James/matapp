@@ -96,3 +96,8 @@ start,Start,Začít
 arr,All right reserved,Všechna práva vyhrazena
 order_failed,Order Failed, missing,Objednávka selhala, chybí
 log_in,Log in,Přihlásit se
+lost_access,Ask manager for new access,Obraťte se na manažera pro nový přístup
+login_failed,Login Failed,Chybné přihlašovací údaje
+goto, Go to, Přejít na
+cooking_page, We are currently cooking this page, Aktuálně připravujeme tuto stránku
+goback, Go back, Vrátit se zpět

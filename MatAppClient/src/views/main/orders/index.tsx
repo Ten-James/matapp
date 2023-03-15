@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { useAppContext } from '../../../context/appContext';
 import { useMainContext } from '../../../context/mainContext';
 

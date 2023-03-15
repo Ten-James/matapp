@@ -15,7 +15,7 @@ body {
   margin: 0;
   overflow-y: hidden;
   font-family: 'Cairo';
-  background-color:var(--white-color);
+  background-color: var(--white-color);
 }
 
 #root,
@@ -23,8 +23,6 @@ body {
   transition: none;
   overflow: hidden;
 }
-
-
 
 .App {
   width: 100vw;
@@ -55,7 +53,8 @@ body {
   --shadow-2: #00000080;
   --shadow-3: #00000090;
 }
-:root, :root:has(* .white-color){
+:root,
+:root:has(* .white-color) {
   --red-color: #db2955;
   --black-color: #231f20;
   --white-color: #ffffff;
@@ -67,14 +66,13 @@ body {
   --shadow-3: #00000030;
 }
 
-
 .waiting {
   position: absolute;
   z-index: 101;
   width: 100vw;
   height: 100vh;
-  background-color:var(--red-color);
-  
+  background-color: var(--red-color);
+
   overflow: hidden;
 }
 h1 {
@@ -94,7 +92,7 @@ h1 {
 }
 .fries > * {
   position: absolute;
-  background-color:var(--white-color);
+  background-color: var(--white-color);
   background-size: cover;
   background-position: center;
   width: 88px;
@@ -107,8 +105,6 @@ h1 {
   right: 0;
   z-index: 100;
 }
-
-
 
 .status {
   position: absolute;
@@ -128,7 +124,7 @@ h1 {
 
 a {
   text-decoration: none;
-  color: unset !important
+  color: unset !important;
 }
 .login-container {
   display: flex;
@@ -141,7 +137,9 @@ a {
   width: 100%;
 }
 
-input[type="text"], input[type="password"], select {
+input[type='text'],
+input[type='password'],
+select {
   border: none;
   outline: none;
   border-radius: 0.2rem;
@@ -159,10 +157,11 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type=number] {
+input[type='number'] {
   -moz-appearance: textfield;
 }
 
-.selectable, .selectable * {
+.selectable,
+.selectable * {
   user-select: text;
 }

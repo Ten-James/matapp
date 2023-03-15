@@ -9,7 +9,7 @@ const processDishes = (socket) => {
     writeLog(socket.handshake.address, 'get_dishes');
     connection.query("SELECT d.id, d.name, d.cost, dc.name as 'category' FROM dishes d LEFT JOIN dish_categories dc ON d.category_id = dc.id", (err: MysqlError, result: IDish[]) => {
       if (err) throw err;
-      let data: IDish[] = [];
+      const data: IDish[] = [];
       result.forEach((x) => {
         // TODO: make this async and wait for it to finish
         connection.query("SELECT i.id, i.name, di.count as 'count' FROM dish$ingredients di LEFT JOIN ingredients i ON di.ingredient_id = i.id WHERE dish_id = " + x.id, (err2: MysqlError, result2: IIngredient[]) => {

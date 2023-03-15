@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { textUpperFirst } from '../../../misc/utils';
 
 import './tableView.css';
 
 import { Button, Panel } from '../../../components/common/panel';
-import { IBaseModel, FilterData, ICategoryBaseModel } from '../../../types';
+import { IBaseModel, FilterData } from '../../../types';
 import { useAdminContext } from '../../../context/adminContext';
 import { useAppContext } from '../../../context/appContext';
 import { BaseButtons } from '../../../components/tableView/baseButtons';
@@ -14,7 +14,7 @@ import { TableViewProps } from './type';
 
 const TableView = <T extends IBaseModel>({ data, getData, displayName, ...args }: TableViewProps<T>) => {
   const { selectedIDs, setSelectedIDs, setDialog } = useAdminContext();
-  const { socket, translate } = useAppContext();
+  const { translate } = useAppContext();
 
   const [filter, setFilter] = useState<FilterData<T>>(defaultFilter);
 
@@ -35,7 +35,7 @@ const TableView = <T extends IBaseModel>({ data, getData, displayName, ...args }
     if ('category' in data[0] === false) {
       return [];
     }
-    const categories: string[] = data.map((e) => (e as any as ICategoryBaseModel).category);
+    const categories: string[] = data.map((e) => ('category' in e && typeof e.category === 'string' ? e.category : '')).filter((e) => e !== '');
     return [...new Set(categories)];
   }, [data]);
 
@@ -131,7 +131,7 @@ const TableView = <T extends IBaseModel>({ data, getData, displayName, ...args }
           </Panel>
         ))}
       </div>
-      <div className="d-buttons">{args.showButtons ? <BaseButtons children={args?.additionalButtons} /> : <></>}</div>
+      <div className="d-buttons">{args.showButtons ? <BaseButtons>{args.additionalButtons}</BaseButtons> : <></>}</div>
     </div>
   );
 };

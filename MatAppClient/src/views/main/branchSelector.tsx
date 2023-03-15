@@ -1,8 +1,7 @@
-import { useContext, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import LogoSVG from '../../components/common/logo';
 import { Button, Panel } from '../../components/common/panel';
 import { GenerateFries } from '../../misc/fries';
-import { IBranch } from '../../types';
 import { useAppContext } from '../../context/appContext';
 import { useMainContext } from '../../context/mainContext';
 import { Link } from 'react-router-dom';
@@ -18,7 +17,7 @@ const BranchSelector = () => {
       setLoading(false);
       getBranches();
     }, 3000);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="App">
@@ -51,7 +50,7 @@ const BranchSelector = () => {
             style={{ marginRight: '2em' }}
             to="/"
           >
-            Go main page
+            {translate('goback')}
           </Link>
           <p>{translate('arr')}</p>
         </div>

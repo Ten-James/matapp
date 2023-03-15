@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppContext } from '../../context/appContext';
 import { useAdminContext } from '../../context/adminContext';
 import BaseDialog from '../../components/dialog/baseDialog';
@@ -26,7 +26,7 @@ export const EditDishCategoriesDialog = () => {
       sendRoute="edit_dish_categories"
       afterProcess={(data) => {
         // data contains keys that have name instead of id change that
-        let newData = {
+        const newData = {
           data: {},
         };
         Object.keys(data).forEach((key) => {
@@ -43,7 +43,7 @@ export const EditDishCategoriesDialog = () => {
       tooltip={
         <>
           {EnabledIcons.map((icon) => (
-            <div>
+            <div key={icon}>
               {translate(icon)}:<span className="material-symbols-outlined">{icon}</span>
             </div>
           ))}

@@ -1,11 +1,9 @@
-import { useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { useAdminContext } from '../../context/adminContext';
-import { useAppContext } from '../../context/appContext';
 import { IBranchData, IIngredient } from '../../types';
 import BaseDialog from '../../components/dialog/baseDialog';
 
 export const ReorderDialog = () => {
-  const { translate } = useAppContext();
   const { selectedItems } = useAdminContext();
   const storageData = useMemo(() => selectedItems as IBranchData<IIngredient>[], [selectedItems]);
 
@@ -16,12 +14,12 @@ export const ReorderDialog = () => {
     >
       <div className="selectable">
         {storageData?.map((storage) => (
-          <div>
+          <div key={storage.id}>
             <h3>{storage.name}</h3>
             {storage.data.map((ing) =>
-              ing.count! < ing.recommendedCount ? (
-                <p>
-                  {ing.recommendedCount - ing.count!}x {ing.name}{' '}
+              ing.count || 1 < ing.recommendedCount ? (
+                <p key={ing.id}>
+                  {ing.recommendedCount - (ing.count || 1)}x {ing.name}{' '}
                 </p>
               ) : null,
             )}

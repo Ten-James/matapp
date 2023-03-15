@@ -1,41 +1,44 @@
 .orders-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    display: grid;
-    grid-template: "title" auto
-    "ongoingtitle" auto
-    "ongoing" 1fr
-    "finishedtitle" auto
-    "finished" 1fr ;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template:
+    'title' auto
+    'ongoingtitle' auto
+    'ongoing' 1fr
+    'finishedtitle' auto
+    'finished' 1fr;
 }
 .orders-container .title {
-    font-size: 2em;
-    padding-left: 1em;
-    text-transform: uppercase;
+  font-size: 2em;
+  padding-left: 1em;
+  text-transform: uppercase;
 }
 
-.finished-orders, .ongoing-orders {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 2em;
-    padding: 2em;
+.finished-orders,
+.ongoing-orders {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2em;
+  padding: 2em;
 }
 
-.finished-orders > div, .ongoing-orders > div {
-    position: relative;
-    display: grid;
-    place-items: center;
-   font-size: 3em;
-   width: 2em;
-   height: 2em;
-    border: 3px solid var(--black-color);
+.finished-orders > div,
+.ongoing-orders > div {
+  position: relative;
+  display: grid;
+  place-items: center;
+  font-size: 3em;
+  width: 2em;
+  height: 2em;
+  border: 3px solid var(--black-color);
 }
 
 .finished-orders > div {
-    background-color: var(--blue-color);
+  background-color: var(--blue-color);
 }

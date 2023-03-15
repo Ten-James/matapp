@@ -30,7 +30,6 @@ select {
 }
 
 .d-table-header > div {
-
   display: grid;
   width: 85%;
   margin: 0.3em auto;

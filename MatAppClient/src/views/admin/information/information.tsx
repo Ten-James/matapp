@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Panel } from '../../../components/common/panel';
 import { Information } from '../../../types';
 import './information.css';
 import { useAppContext } from '../../../context/appContext';
-import { Bar, BarChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
+import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
 import { fillArrayWithNulls } from '../../../misc/utils';
 
 const InformationView = () => {
@@ -40,7 +40,7 @@ const InformationView = () => {
     socket.emit('get_info');
     if (visiblePanel === 'data') socket.emit('get_data');
     return () => clearInterval(int);
-  }, [visiblePanel]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [visiblePanel]);
 
   return (
     <div className="s-grid">

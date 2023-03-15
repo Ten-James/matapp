@@ -39,8 +39,7 @@ const processBranches = (socket) => {
                 name: x.name,
                 location: x.location,
                 size: x.size,
-                //@ts-ignore TODO fix this
-                data: [...result2],
+                data: [...result2] as IIngredient[],
               },
             ]);
             socket.emit('branches_storage', tmp);

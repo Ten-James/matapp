@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import BranchSelector from './branchSelector';
 import { MainContext } from '../../context/mainContext';
 import { Route, Routes } from 'react-router';
@@ -12,8 +12,9 @@ import KitchenNotStarted from './notstarted/kitchen';
 import Orders from './orders';
 
 const Main = () => {
-  const { socket } = useAppContext();
-  const [branchID, setBranchID] = useState(0);
+  const { socket, user } = useAppContext();
+  if (user === null) throw new Error('User is null');
+  const [branchID, setBranchID] = useState(user.branchId || 0);
   const [session, getSession, setSession] = useSession(socket, branchID);
 
   return (

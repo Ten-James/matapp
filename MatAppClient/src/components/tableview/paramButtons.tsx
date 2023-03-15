@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import React, { useRef } from 'react';
 import { IBaseModel, FilterData } from '../../types';
 import { useAppContext } from '../../context/appContext';
 

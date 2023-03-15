@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useAppContext } from '../../../context/appContext';
 import { useMainContext } from '../../../context/mainContext';
 import useSocket from '../../../hooks/useSocket';
@@ -16,7 +16,7 @@ interface IOrderStatus {
 
 const Kitchen = () => {
   const { socket, translate } = useAppContext();
-  const { branchID, session } = useMainContext();
+  const { session } = useMainContext();
   const [dishes, getDishes] = useSocket<IDish[]>(socket, 'dishes', []);
   const [orderStatus, setOrderStatus] = useState<IOrderStatus[]>([]);
 
@@ -61,7 +61,7 @@ const Kitchen = () => {
                 <h3>{order.displayId}</h3>
                 <div className="dishes">
                   {order.dishes
-                    .sort(([dishA, countA], [dishB, countB]) => {
+                    .sort(([dishA], [dishB]) => {
                       const A = orderStatus.find((o) => o.id === order.id)?.dishes.find((d) => d.id === dishA.id)?.done || false;
                       const B = orderStatus.find((o) => o.id === order.id)?.dishes.find((d) => d.id === dishB.id)?.done || false;
                       if (A && !B) return 1;

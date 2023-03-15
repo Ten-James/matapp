@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Button } from '../common/panel';
 import { useAdminContext } from '../../context/adminContext';
 import { useAppContext } from '../../context/appContext';
