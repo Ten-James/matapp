@@ -20,7 +20,10 @@ const Main = () => {
   return (
     <MainContext.Provider value={{ branchID, setBranchID, session, getSession, setSession }}>
       {branchID === 0 ? (
-        <BranchSelector />
+        <BranchSelector
+          goBackVisible
+          setBranchID={setBranchID}
+        />
       ) : session === null ? (
         <Routes>
           <Route

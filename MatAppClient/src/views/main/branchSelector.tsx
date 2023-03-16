@@ -3,19 +3,23 @@ import LogoSVG from '../../components/common/logo';
 import { Button, Panel } from '../../components/common/panel';
 import { GenerateFries } from '../../misc/fries';
 import { useAppContext } from '../../context/appContext';
-import { useMainContext } from '../../context/mainContext';
 import { Link } from 'react-router-dom';
 
-const BranchSelector = () => {
+interface props {
+  setBranchID: React.Dispatch<React.SetStateAction<number>>;
+  goBackVisible?: boolean;
+}
+
+const BranchSelector: React.FC<props> = ({ setBranchID, goBackVisible }) => {
   const { branches, getBranches, setLoading, translate } = useAppContext();
-  const { setBranchID } = useMainContext();
 
   useEffect(() => {
+    getBranches();
+    if (!goBackVisible) return;
     setLoading(true);
     setTimeout(GenerateFries, 20);
     setTimeout(() => {
       setLoading(false);
-      getBranches();
     }, 3000);
   }, []);
 
@@ -46,12 +50,14 @@ const BranchSelector = () => {
           ))}
         </div>
         <div>
-          <Link
-            style={{ marginRight: '2em' }}
-            to="/"
-          >
-            {translate('goback')}
-          </Link>
+          {goBackVisible ? (
+            <Link
+              style={{ marginRight: '2em' }}
+              to="/"
+            >
+              {translate('goback')}
+            </Link>
+          ) : null}
           <p>{translate('arr')}</p>
         </div>
       </Panel>

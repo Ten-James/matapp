@@ -1,0 +1,49 @@
+.r-grid {
+  position: absolute;
+  top: 0;
+  left: 7em;
+  right: 0;
+  height: 100%;
+  display: grid;
+  grid-template:
+    'name name' auto
+    'session orders' 40%
+    'graph orders' 40%
+    / 2fr 3fr;
+  margin-inline: 2em;
+}
+
+.r-name {
+  grid-area: name;
+  text-align: left;
+}
+
+.r-sessions {
+  grid-area: session;
+}
+
+.r-sessions .panel {
+  padding: 0.2em 0.6em !important;
+}
+
+.r-sessions p,
+.r-orders p {
+  line-height: 1.2;
+}
+
+.r-orders {
+  grid-area: orders;
+}
+.r-orders > .scrollable {
+  overflow-y: scroll;
+  height: 80%;
+}
+
+.r-sessions > .scrollable {
+  overflow-y: scroll;
+  height: 80%;
+}
+
+.r-graph {
+  grid-area: graph;
+}

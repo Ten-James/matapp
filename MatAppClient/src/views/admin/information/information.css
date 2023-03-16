@@ -1,4 +1,9 @@
 .s-grid {
+  position: absolute;
+  top: 0;
+  left: 7em;
+  right: 0;
+  bottom: 0;
   display: grid;
   grid-template:
     'name name' auto
@@ -6,7 +11,6 @@
     'login data' 1fr
     / 1fr 1fr;
   margin-inline: 2em;
-  height: 100vh;
 }
 
 .s-name {
@@ -17,6 +21,12 @@
 .s-status {
   grid-area: status;
 }
+
+.s-status p,
+.s-data p {
+  line-height: 1.2;
+}
+
 .s-data {
   grid-area: data;
 }

@@ -1,5 +1,5 @@
 import type { Socket } from 'socket.io';
-import { IOrder } from './types';
+import { IOrder, IReportData } from './types';
 import { writeLog } from './logger';
 import Sessions from './realtime/session';
 import * as fs from 'fs';
@@ -112,6 +112,38 @@ const processOrders = (socket: Socket) => {
     } else {
       socket.emit('status', 'no_session');
     }
+  });
+  socket.on('get_report_data', async (props: number[]) => {
+    const [branchID, sessionId] = props;
+    writeLog(socket.handshake.address, `get_report_data\n ${branchID + ' ' + sessionId}`);
+    console.log(branchID, sessionId);
+    if (branchID === 0 || branchID === null || branchID === undefined) return;
+    const orders = [] as IOrder[];
+    if (sessionId !== 0 && sessionId !== null) {
+      const orderSelect = (await query("SELECT id, serve_date as 'date', cost FROM serves WHERE session_id = ?", [sessionId])) as IOrder[];
+      const dishData = (await query(`SELECT serve_id, dish_id, count FROM serve$dishes WHERE serve_id in (${orderSelect.map((o) => o.id).join(',')})`)) as { serve_id: number; dish_id: number; count: number }[];
+      orders.push(
+        ...orderSelect.map((o) => {
+          return {
+            id: o.id,
+            date: o.date,
+            cost: o.cost,
+            displayId: 0,
+            dishes: dishData
+              .filter((d) => d.serve_id === o.id)
+              .map((d) => {
+                return { id: d.dish_id, count: d.count };
+              }),
+          } as IOrder;
+        }),
+      );
+    }
+
+    const data: IReportData = {
+      sessions: await query('SELECT id, s_date as "startTime", e_date as "endTime"  FROM serve_sessions WHERE branch_id = ?', [branchID]),
+      orders: orders,
+    };
+    socket.emit('report_data', data);
   });
 };
 

@@ -21,7 +21,7 @@ const sendInfo = (socket: Socket) => {
   const uptime = `${days.toString().padStart(2, '0')}:${hrs.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}:${Math.floor(sec).toString().padStart(2, '0')}`;
 
   connection.query(
-    `SELECT SUM(data_length + index_length) / 1024 / 1024 AS \"size\", SUM(TABLE_ROWS) AS \"rows\"
+    `SELECT SUM(data_length + index_length) / 1024 / 1024 AS "size", SUM(TABLE_ROWS) AS "rows"
 	FROM information_schema.TABLES 
 	WHERE table_schema = "matapp" 
 	GROUP BY table_schema;

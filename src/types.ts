@@ -52,9 +52,16 @@ export interface IOrder extends IBaseModel {
   type: string;
 }
 
-export interface ISession {
-  id: number;
+export interface IBaseSession extends IBaseModel {
   branchId: number;
   startTime: string;
+  endTime?: string;
+}
+export interface ISession extends IBaseSession {
   currentOrders: IOrder[];
+}
+
+export interface IReportData {
+  sessions: IBaseSession[];
+  orders: IOrder[];
 }

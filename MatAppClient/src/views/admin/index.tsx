@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import { GenerateFries } from '../../misc/fries';
-import type { IDialogOption, IBranchData, IDish, IIngredient, IUser, IOrder } from '../../types';
+import type { IDialogOption, IBranchData, IDish, IIngredient, IUser, IOrder, IReportData } from '../../types';
 import Dialog from './dialog';
 import InformationView from './information/information';
 import Navigation from './navigation';
@@ -13,6 +13,7 @@ import { useAppContext } from '../../context/appContext';
 import { AdminContext } from '../../context/adminContext';
 import useSocket from '../../hooks/useSocket';
 import { Button } from '../../components/common/panel';
+import Reports from './reports';
 
 const Admin = () => {
   const { socket, setLoading, branches, getBranches, user, clearBranches, translate } = useAppContext();
@@ -23,7 +24,7 @@ const Admin = () => {
   const [dishes, getDishes, clearDishes] = useSocket<IDish[]>(socket, 'dishes', []);
   const [users, getUsers, clearUsers] = useSocket<IUser[]>(socket, 'users', []);
   const [branchesStorages, getBranchesStorages, clearBranchesStorage] = useSocket<IBranchData<IIngredient>[]>(socket, user.access === 2 ? 'branches_storage' : 'branch_storage', []);
-  const [branchesOrders, getBranchesOrders, clearBranchesOrders] = useSocket<IBranchData<IOrder>[]>(socket, 'branches_orders', []);
+  const [reportData, getReportData, clearReportData] = useSocket<IReportData>(socket, 'report_data', { sessions: [], orders: [] });
   const [dialog, setDialog] = useState<IDialogOption>('hidden');
 
   const [selectedIDs, setSelectedIDs] = useState<number[]>([]);
@@ -34,7 +35,7 @@ const Admin = () => {
     clearDishes();
     clearUsers();
     clearBranchesStorage();
-    clearBranchesOrders();
+    clearReportData();
     clearBranches();
   };
 
@@ -46,7 +47,7 @@ const Admin = () => {
     if (location.includes('storage')) return branchesStorages.filter((branch) => selectedIDs.includes(branch.id));
     if (location.includes('branches')) return branches.filter((branch) => selectedIDs.includes(branch.id));
     return [];
-  }, [selectedIDs, ingredients, dishes, users, branches, branchesStorages, branchesOrders]);
+  }, [selectedIDs, ingredients, dishes, users, branches, branchesStorages]);
 
   useEffect(() => {
     GenerateFries();
@@ -96,8 +97,13 @@ const Admin = () => {
                 }
               />
               <Route
-                path="/branches/orders"
-                element={<></>}
+                path="/branches/reports"
+                element={
+                  <Reports
+                    data={reportData}
+                    getData={getReportData}
+                  />
+                }
               />
             </>
           ) : (
@@ -113,8 +119,13 @@ const Admin = () => {
                 }
               />
               <Route
-                path="/branches/orders"
-                element={<>test</>}
+                path="/branches/reports"
+                element={
+                  <Reports
+                    data={reportData}
+                    getData={getReportData}
+                  />
+                }
               />
             </>
           )}
