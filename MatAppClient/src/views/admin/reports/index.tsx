@@ -48,7 +48,21 @@ const Reports: React.FC<{ data: IReportData; getData: (branchId: number, session
           ))}
         </div>
       </Panel>
-      <Panel class="r-orders">{data.orders.length}</Panel>
+      <Panel class="r-orders">
+        <div className="scrollable">
+          {data.orders.map((o) => (
+            <Panel key={o.id}>
+              <div>
+                <h3>
+                  {new Date(o.date).toLocaleDateString()}: {new Date(o.date).toLocaleTimeString()}
+                </h3>
+                <p>{o.dishes.map((d) => d.count + 'x' + (dishes.find((dish) => dish.id === d.id) || { name: 'unknown' }).name).join(', ')}</p>
+                <p>cena: {o.dishes.reduce((a, b) => a + b.count * (dishes.find((d) => d.id === b.id) || { cost: 0 }).cost, 0)}</p>
+              </div>
+            </Panel>
+          ))}
+        </div>
+      </Panel>
       <Panel class="r-graph">
         <h2>cost of orders</h2>
         <ResponsiveContainer
@@ -58,7 +72,7 @@ const Reports: React.FC<{ data: IReportData; getData: (branchId: number, session
           <LineChart
             width={500}
             height={500}
-            data={data.orders.map((o) => [o.date, o.dishes.reduce((a, b) => a + b.count * (dishes.find((d) => d.id === b.id) || { cost: 0 }).cost, 0)])}
+            data={data.orders.map((o) => [new Date(o.date).toLocaleTimeString(), o.dishes.reduce((a, b) => a + b.count * (dishes.find((d) => d.id === b.id) || { cost: 0 }).cost, 0)])}
           >
             <XAxis dataKey="0" />
             <YAxis />

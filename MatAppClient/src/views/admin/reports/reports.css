@@ -26,6 +26,10 @@
   padding: 0.2em 0.6em !important;
 }
 
+.r-orders .panel {
+  padding: 0.3em 0.7em !important;
+}
+
 .r-sessions p,
 .r-orders p {
   line-height: 1.2;
@@ -36,7 +40,7 @@
 }
 .r-orders > .scrollable {
   overflow-y: scroll;
-  height: 80%;
+  height: 100%;
 }
 
 .r-sessions > .scrollable {
