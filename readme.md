@@ -7,6 +7,7 @@
 * [MatAPP](readme.md#matapp)
   * [Table of contents](readme.md#table-of-contents)
   * [Description](readme.md#description)
+  * [Screenshots](readme.md#screenshots)
   * [Features](readme.md#features)
   * [Future Features](readme.md#future-features)
   * [Installation](readme.md#installation)
@@ -18,6 +19,18 @@ Restaurant System. for ordering food and drinks from a restaurant. Also, it allo
 automatically generates a bill for the customer. manage stock and inventory.
 
 Its also part of mine final project High school exam.
+
+## Screenshots
+
+![Login](./screenshots/login.png)
+
+![Information](./screenshots/pohled-informace.png)
+
+![Ingredients](./screenshots/pohled-ingredience.png)
+
+![Cashier](./screenshots/cashier.png)
+
+![Change Password](./screenshots/zmena-hesla.png)
 
 ## Features
 

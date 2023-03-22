@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { BetterLink, SubBetterLink } from '../../../components/navigation/betterLinks';
 import LogoSVG from '../../../components/common/logo';
@@ -26,6 +26,10 @@ const Navigation = ({ userAccess }: NavigationProps) => {
   const navigate = useNavigate();
   const [Expanded, setExpanded] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    setTimeout(() => setExpanded(true), 3000);
+  }, []);
 
   return (
     <navigationContext.Provider value={{ location: location.pathname, isExpanded: Expanded }}>

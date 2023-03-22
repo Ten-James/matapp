@@ -135,7 +135,7 @@ const Cashier = () => {
         <div className="info">
           {session?.startTime ? (
             <p>
-              {translate('start_time')}: {new Date(session.startTime).toLocaleString()}
+              {translate('start_time')}: {session.startTime}
             </p>
           ) : null}
           {session?.currentOrders ? (

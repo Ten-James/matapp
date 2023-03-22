@@ -78,7 +78,7 @@ total,Total,Suma
 decline,Decline,Zamítnout
 accept,Accept,Přijmout
 start_time,Start Time,Čas začátku
-count_current_order,Count Current Order,Počet aktuálních objednávek
+count_current_order,Current order count,Počet aktuálních objednávek
 order_success,Order Success,Objednávka byla úspěšná
 no_session,No Session,Nebyla nalezena session
 order_done_success,Order Done Success,Objednávka byla úspěšně dokončena
@@ -94,10 +94,14 @@ start_session,Start Session,Začít pracovat
 wait_for_cashier,Wait for Cashier,Čeká na pokladníka
 start,Start,Začít
 arr,All right reserved,Všechna práva vyhrazena
-order_failed,Order Failed, missing,Objednávka selhala, chybí
+order_failed,Order Failed,missing,Objednávka selhala,chybí
 log_in,Log in,Přihlásit se
 lost_access,Ask manager for new access,Obraťte se na manažera pro nový přístup
 login_failed,Login Failed,Chybné přihlašovací údaje
-goto, Go to, Přejít na
-cooking_page, We are currently cooking this page, Aktuálně připravujeme tuto stránku
-goback, Go back, Vrátit se zpět
+goto,Go to,Přejít na
+cooking_page,We are currently cooking this page,Aktuálně připravujeme tuto stránku
+goback,Go back,Vrátit se zpět
+change password,Change password,Změna hesla
+create_new_password,Create new password,Vytvořit nové heslo
+change password for,Change password for,Změna hesla pro
+edit_dish_categories,Edit dish categories,Upravit kategorie pokrmů

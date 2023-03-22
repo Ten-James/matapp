@@ -17,6 +17,7 @@ export const EditDishCategoriesDialog = () => {
     socket.emit('get_dish_categories');
     socket.on('dish_categories', (data: IDishCategory[]) => {
       setDishCategories(data);
+      console.log(data);
     });
   }, [ingredients, getIngredients]);
 
@@ -58,6 +59,7 @@ export const EditDishCategoriesDialog = () => {
               comboValue={EnabledIcons.map((i) => {
                 return { name: translate(i), value: i };
               })}
+              value={item.icon}
             />
           </>
         ))}
