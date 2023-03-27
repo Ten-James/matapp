@@ -72,7 +72,7 @@ const Kitchen = () => {
                       return (
                         <div
                           onClick={() => handleDishDone(order.id, dish.id)}
-                          style={{ opacity: orderStatus.find((o) => o.id === order.id)?.dishes.find((d) => d.id === dish.id)?.done || false ? '0.25' : '1' }}
+                          style={{ opacity: orderStatus.find((o) => o.id === order.id)?.dishes?.find((d) => d.id === dish.id)?.done || false ? '0.25' : '1' }}
                           key={dish.id}
                         >
                           <p>
@@ -82,7 +82,7 @@ const Kitchen = () => {
                       );
                     })}
                 </div>
-                {orderStatus.find((o) => o.id === order.id)?.dishes.every((d) => d.done) ? (
+                {orderStatus.find((o) => o.id === order.id)?.dishes?.every((d) => d.done) ? (
                   <p
                     className="finish-order"
                     onClick={() => {

@@ -24,9 +24,9 @@
 
 .selector {
   cursor: pointer;
-  width: 20vw;
+  width: max(25vw, 300px);
   padding: 0.5em !important;
-  font-size: 0.75 !important;
+  font-size: 0.75em !important;
   margin: 0 !important;
   display: flex;
   justify-content: center;

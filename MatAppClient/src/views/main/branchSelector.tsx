@@ -39,6 +39,7 @@ const BranchSelector: React.FC<props> = ({ setBranchID, goBackVisible }) => {
               <div className="branch-name">{branch.name}</div>
               <div className="branch-location">{branch.location}</div>
               <Button
+                style={{width: "10em"}}
                 onClick={() => {
                   setBranchID(branch.id);
                 }}
@@ -52,7 +53,7 @@ const BranchSelector: React.FC<props> = ({ setBranchID, goBackVisible }) => {
         <div>
           {goBackVisible ? (
             <Link
-              style={{ marginRight: '2em' }}
+              style={{ textAlign: 'center' }}
               to="/"
             >
               {translate('goback')}

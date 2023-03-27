@@ -6,3 +6,4 @@ backend/node_modules/
 .vscode
 *-lock.json
 node_modules/
+.mypy_cache/

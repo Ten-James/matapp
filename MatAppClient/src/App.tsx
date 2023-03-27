@@ -17,10 +17,8 @@ import useStatus from './hooks/useStatus';
 import useSocket from './hooks/useSocket';
 import Main from './views/main';
 import Admin from './views/admin';
-// TODO: move to env file
 const socket = socketIOClient(import.meta.env.VITE_SERVER_API || 'http://localhost:2238');
 
-// TODO: use styled components?
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -32,7 +30,6 @@ const App = () => {
   const [theme, setTheme] = useLocalStorage<ThemeType>('mat_theme', 'light');
   const [buttonVisible, setButtonVisible] = useState(true);
   const location = useLocation();
-  //TODO- move to branchSelector
   const [branches, getBranches, clearBranches] = useSocket<IBranch[]>(socket, 'branches', []);
 
   socket.on('status', setStatusHandler);

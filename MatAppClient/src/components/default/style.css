@@ -5,4 +5,10 @@
   justify-content: center;
   gap: 1rem;
   font-size: 2em;
+  width: 80% !important;
+}
+
+
+.selector {
+  padding: .1em .5em !important;
 }
