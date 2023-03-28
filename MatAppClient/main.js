@@ -1,7 +1,4 @@
 import { app, BrowserWindow } from 'electron';
-import path from 'path';
-
-const IS_DEV = process.env.IS_IN_DEVELOPMENT || false;
 
 function createWindow() {
   // Create the main Electron window
@@ -18,15 +15,7 @@ function createWindow() {
       enableRemoteModule: true,
     },
   });
-
-  if (IS_DEV) {
-    win.loadURL('http://localhost:5173');
-    win.webContents.openDevTools({
-      mode: 'detach',
-    });
-  } else {
-    win.loadURL(`file://${path.join(__dirname, '..', 'dist', 'index.html')}`);
-  }
+    win.loadURL(process.env.CLIENT_SERVER || 'http://localhost:8080');
 }
 
 app.whenReady().then(createWindow);

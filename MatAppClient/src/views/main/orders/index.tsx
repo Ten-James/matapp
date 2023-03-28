@@ -3,12 +3,17 @@ import { useAppContext } from '../../../context/appContext';
 import { useMainContext } from '../../../context/mainContext';
 
 import './style.css';
+import { useNavigate } from 'react-router';
 
 const Orders = () => {
   const { socket, setShowButtons, branches, translate } = useAppContext();
   const { branchID, session } = useMainContext();
+  const navigate = useNavigate();
   useEffect(() => {
     setShowButtons(false);
+    return () => {
+      setShowButtons(true);
+    }
   }, []);
 
   if (!session) return null;
@@ -18,7 +23,7 @@ const Orders = () => {
 
   return (
     <div className="orders-container">
-      <h1>
+      <h1 onClick={()=>{navigate('/')}}>
         {branches.find((b) => b.id === branchID)?.name || 'not found'} {translate('orders')}
       </h1>
       <h3 className="title">{translate('preparing')}</h3>

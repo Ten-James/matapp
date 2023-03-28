@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "esbuild-cjs": "esbuild main.js --format=cjs --outfile=./dist/main.js",
     "electron:dev": "npm run esbuild-cjs && IS_IN_DEVELOPMENT=true electron .",
-    "electron:build": "npm run esbuild-cjs && electron-packager --out=release ."
+    "electron:build": "npm run esbuild-cjs && electron-packager --out=release . --overwrite --icon=public/favicon"
   },
   "dependencies": {
     "react": "^18.2.0",
