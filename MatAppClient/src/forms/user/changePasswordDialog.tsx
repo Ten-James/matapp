@@ -14,6 +14,7 @@ export const ChangePasswordDialog = () => {
     <BaseDialog
       header="Change Password"
       sendRoute=""
+      hideAccept
     >
       <>
         <h2>

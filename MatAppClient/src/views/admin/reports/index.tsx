@@ -6,7 +6,6 @@ import './reports.css';
 import { Panel } from '../../../components/common/panel';
 import { IDish, IReportData } from '../../../types';
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts';
-import { useAdminContext } from '../../../context/adminContext';
 import useSocket from '../../../hooks/useSocket';
 
 const Reports: React.FC<{ data: IReportData; getData: (branchId: number, sessionId: number) => void }> = ({ data, getData }) => {
@@ -56,15 +55,15 @@ const Reports: React.FC<{ data: IReportData; getData: (branchId: number, session
                 <h3>
                   {new Date(o.date).toLocaleDateString()}: {new Date(o.date).toLocaleTimeString()}
                 </h3>
-                <p>{o.dishes.map((d) => d.count + 'x' + (dishes.find((dish) => dish.id === d.id) || { name: 'unknown' }).name).join(', ')}</p>
-                <p>cena: {o.dishes.reduce((a, b) => a + b.count * (dishes.find((d) => d.id === b.id) || { cost: 0 }).cost, 0)}</p>
+                <p>{o.dishes.map((d) => d.count + 'x ' + (dishes.find((dish) => dish.id === d.id) || { name: 'unknown' }).name).join(', ')}</p>
+                <p>{translate("cost")}: {o.dishes.reduce((a, b) => a + b.count * (dishes.find((d) => d.id === b.id) || { cost: 0 }).cost, 0)}</p>
               </div>
             </Panel>
           ))}
         </div>
       </Panel>
       <Panel class="r-graph">
-        <h2>cost of orders</h2>
+        <h2>{translate("cost-of-orders")}</h2>
         <ResponsiveContainer
           width="100%"
           height="90%"

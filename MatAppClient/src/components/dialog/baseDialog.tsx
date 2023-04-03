@@ -9,11 +9,12 @@ interface BaseDialogProp {
   sendRoute: string;
   children: React.ReactElement;
   tooltip?: React.ReactElement;
+  hideAccept?: boolean;
   afterProcess?: (data: any) => any;
 }
 
 // TODO: make available for custom button color.
-const BaseDialog = ({ header, sendRoute, children, tooltip, afterProcess }: BaseDialogProp) => {
+const BaseDialog = ({ header, sendRoute, children, tooltip, afterProcess, hideAccept = false }: BaseDialogProp) => {
   const { translate, socket } = useAppContext();
   const [error, setError] = useState('');
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -76,13 +77,13 @@ const BaseDialog = ({ header, sendRoute, children, tooltip, afterProcess }: Base
         </div>
         <div className="dialog-buttons">
           <Button onClick={handleHide}>{translate('cancel')}</Button>
-          <Button
+          {!hideAccept ? <Button
             color="blue"
             onClick={handleSubmit}
             disabled={buttonDisabled}
           >
             {translate('confirm')}
-          </Button>
+          </Button> : null}
         </div>
       </div>
     </form>

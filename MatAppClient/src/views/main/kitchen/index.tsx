@@ -52,7 +52,7 @@ const Kitchen = () => {
       <h1>{translate('kitchen')}</h1>
       {currentOrders?.length !== 0 ? (
         <div className="kitchen-order-container">
-          {currentOrders.map((order) => {
+          {currentOrders.slice(0,5).map((order) => {
             return (
               <div
                 className="kitchen-order"
